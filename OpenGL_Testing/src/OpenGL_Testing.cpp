@@ -679,24 +679,7 @@ void setupEntities() {
 	scissors->units.push_back(scissorUnit);
 	renderer.addToRenderer(&scissorRenderer);
 
-	std::vector<Entity*> treeBO3 = ModelLoader::readModel("./cockRider.3ds");
 
-	treeUnit = new BatchUnit();
-
-	treeRenderer = RenderMode(GL_TRIANGLES, entityShader);
-	uniformData treeUD = uniformData(entityShader.uniformTable.at(0)->uniformLocation, &treeUnit->transformationMatrix,
-		BoilerPlate::Shaders::Shader::loadMat42);
-
-	for (Entity *e : treeBO3) {
-	
-		e->uniforms.push_back(treeUD);
-		treeRenderer.entityList.push_back(e);
-		e->units.push_back(treeUnit);
-	}
-	
-	renderer.addToRenderer(&treeRenderer);
-	treeUnit->transformationMatrix = glm::scale(treeUnit->transformationMatrix, glm::vec3(10, 10, 10));
-//	treeUnit->transformationMatrix = glm::rotate(treeUnit->transformationMatrix, -3.14f/2.0f, glm::vec3(1, 0, 0));
 
 	Texture *mainTexture = new Texture();
 	mainTexture->texID = postProcessPipeline->getOutputBuffer()->colour_attachments[0];//mainFrameBuffer->colour_attachments[0];
