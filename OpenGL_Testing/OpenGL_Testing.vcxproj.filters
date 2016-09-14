@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Debug\fShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\Debug\vShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\entityFShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\entityVShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\groundFShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\groundFShader2.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\groundVShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\groundVShader2.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\guiFShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\guiVShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\normalFShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\normalGShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\normalVShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\skyboxFShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\skyboxVShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\sphereFShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\sphereVShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\waterFShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\waterVShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Heartbeat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OpenGL_Testing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SphereDistace.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scissor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Heartbeat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\OpenGL_Testing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Scissor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

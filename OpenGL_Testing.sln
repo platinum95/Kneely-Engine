@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGL_Testing", "OpenGL_Testing\OpenGL_Testing.vcxproj", "{C356B98A-4DA7-4B5A-9610-C07A58B8A1F1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B493DBEF-6B93-4211-8320-6F7175214782} = {B493DBEF-6B93-4211-8320-6F7175214782}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BoilerPlate", "BoilerPlate\BoilerPlate.vcxproj", "{B493DBEF-6B93-4211-8320-6F7175214782}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C356B98A-4DA7-4B5A-9610-C07A58B8A1F1}.Debug|x64.ActiveCfg = Debug|x64
+		{C356B98A-4DA7-4B5A-9610-C07A58B8A1F1}.Debug|x64.Build.0 = Debug|x64
+		{C356B98A-4DA7-4B5A-9610-C07A58B8A1F1}.Debug|x86.ActiveCfg = Debug|Win32
+		{C356B98A-4DA7-4B5A-9610-C07A58B8A1F1}.Debug|x86.Build.0 = Debug|Win32
+		{C356B98A-4DA7-4B5A-9610-C07A58B8A1F1}.Release|x64.ActiveCfg = Release|x64
+		{C356B98A-4DA7-4B5A-9610-C07A58B8A1F1}.Release|x64.Build.0 = Release|x64
+		{C356B98A-4DA7-4B5A-9610-C07A58B8A1F1}.Release|x86.ActiveCfg = Release|Win32
+		{C356B98A-4DA7-4B5A-9610-C07A58B8A1F1}.Release|x86.Build.0 = Release|Win32
+		{B493DBEF-6B93-4211-8320-6F7175214782}.Debug|x64.ActiveCfg = Debug|x64
+		{B493DBEF-6B93-4211-8320-6F7175214782}.Debug|x64.Build.0 = Debug|x64
+		{B493DBEF-6B93-4211-8320-6F7175214782}.Debug|x86.ActiveCfg = Debug|Win32
+		{B493DBEF-6B93-4211-8320-6F7175214782}.Debug|x86.Build.0 = Debug|Win32
+		{B493DBEF-6B93-4211-8320-6F7175214782}.Release|x64.ActiveCfg = Release|x64
+		{B493DBEF-6B93-4211-8320-6F7175214782}.Release|x64.Build.0 = Release|x64
+		{B493DBEF-6B93-4211-8320-6F7175214782}.Release|x86.ActiveCfg = Release|Win32
+		{B493DBEF-6B93-4211-8320-6F7175214782}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

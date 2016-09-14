@@ -1,0 +1,54 @@
+﻿Build started 13/09/2016 20:24:20.
+     1>Project "D:\Projects\c++\VS2015\OpenGL_Testing2\BoilerPlate\BoilerPlate.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ID:\Projects\c++\VS2015\OpenGL_Testing2\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\BoilerPlate.pdb" /Gd /TP /analyze- /errorReport:prompt ModelLoader.cpp
+         ModelLoader.cpp
+     1>d:\projects\c++\vs2015\opengl_testing2\boilerplate\modelloader.cpp(59): warning C4018: '<': signed/unsigned mismatch
+     1>d:\projects\c++\vs2015\opengl_testing2\boilerplate\modelloader.cpp(61): warning C4018: '<': signed/unsigned mismatch
+     1>d:\projects\c++\vs2015\opengl_testing2\boilerplate\modelloader.cpp(69): warning C4018: '<': signed/unsigned mismatch
+     1>d:\projects\c++\vs2015\opengl_testing2\boilerplate\modelloader.cpp(79): warning C4018: '<': signed/unsigned mismatch
+     1>d:\projects\c++\vs2015\opengl_testing2\boilerplate\modelloader.cpp(89): warning C4018: '<': signed/unsigned mismatch
+       Lib:
+         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"..\libsx86\BoilerPlate.lib" glew32.lib glfw3.lib openal32.lib libsndfile.lib assimpD.lib /LIBPATH:D:\Projects\c++\VS2015\OpenGL_Testing2\libsx86 /NOLOGO Debug\AudioEntity.obj
+         Debug\AudioPlate.obj
+         Debug\BinaryLoader.obj
+         Debug\BoilerPlate.obj
+         Debug\Camera.obj
+         Debug\Constants.obj
+         Debug\Entity.obj
+         Debug\Framebuffer.obj
+         Debug\ImageLoader.obj
+         Debug\KeyHandler.obj
+         Debug\LoadAudio.obj
+         Debug\lodepng.obj
+         Debug\Maths.obj
+         Debug\ModelLoader.obj
+         Debug\MouseHandler.obj
+         Debug\ObjLoader.obj
+         Debug\PhysicsConstants.obj
+         Debug\PhysicsEntity.obj
+         Debug\PhysicsWorld.obj
+         Debug\PostProcessing.obj
+         Debug\Properties.obj
+         Debug\Renderer.obj
+         Debug\Shader.obj
+         Debug\Skybox.obj
+         Debug\Terrain.obj
+         Debug\TerrainGenerator.obj
+         Debug\Texture.obj
+         Debug\Timer.obj
+         Debug\Water.obj
+     1>openal32.lib(OpenAL32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
+     1>openal32.lib(OpenAL32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+     1>libsndfile.lib(libsndfile-1.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
+     1>libsndfile.lib(libsndfile-1.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+     1>assimpD.lib(assimp-vc140-mt.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
+     1>assimpD.lib(assimp-vc140-mt.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+     1>ModelLoader.obj : warning LNK4006: "public: enum aiReturn __thiscall aiMaterial::GetTexture(enum aiTextureType,unsigned int,struct aiString *,enum aiTextureMapping *,unsigned int *,float *,enum aiTextureOp *,enum aiTextureMapMode *)const " (?GetTexture@aiMaterial@@QBE?AW4aiReturn@@W4aiTextureType@@IPAUaiString@@PAW4aiTextureMapping@@PAIPAMPAW4aiTextureOp@@PAW4aiTextureMapMode@@@Z) already defined in assimpD.lib(assimp-vc140-mt.dll); second definition ignored
+     1>ModelLoader.obj : warning LNK4006: "public: unsigned int __thiscall aiMaterial::GetTextureCount(enum aiTextureType)const " (?GetTextureCount@aiMaterial@@QBEIW4aiTextureType@@@Z) already defined in assimpD.lib(assimp-vc140-mt.dll); second definition ignored
+         BoilerPlate.vcxproj -> D:\Projects\c++\VS2015\OpenGL_Testing2\BoilerPlate\..\libsx86\BoilerPlate.lib
+     1>Done Building Project "D:\Projects\c++\VS2015\OpenGL_Testing2\BoilerPlate\BoilerPlate.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:02.75

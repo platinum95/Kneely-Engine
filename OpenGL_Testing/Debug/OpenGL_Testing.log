@@ -1,0 +1,36 @@
+﻿Build started 13/09/2016 20:24:23.
+     1>Project "D:\Projects\c++\VS2015\OpenGL_Testing2\OpenGL_Testing\OpenGL_Testing.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /ID:\Projects\c++\VS2015\OpenGL_Testing2\include /ID:\Projects\c++\VS2015\OpenGL_Testing2\BoilerPlate /ID:\Projects\c++\VS2015\OpenGL_Testing2\OpenGL_Testing\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt src\OpenGL_Testing.cpp
+         OpenGL_Testing.cpp
+     1>d:\projects\c++\vs2015\opengl_testing2\boilerplate\postprocessing.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\include\opengl_testing.h(149): warning C4305: 'initializing': truncation from 'double' to 'float'
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(61): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(159): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(171): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(180): warning C4305: '+=': truncation from 'double' to 'float'
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(246): warning C4305: 'argument': truncation from 'double' to 'float'
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(247): warning C4305: 'argument': truncation from 'double' to 'float'
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(248): warning C4305: 'argument': truncation from 'double' to 'float'
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(254): warning C4305: 'argument': truncation from 'double' to 'float'
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(255): warning C4305: 'argument': truncation from 'double' to 'float'
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(256): warning C4305: 'argument': truncation from 'double' to 'float'
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(278): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(411): warning C4305: 'argument': truncation from 'double' to 'float'
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(441): warning C4305: '=': truncation from 'double' to 'float'
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(442): warning C4305: '=': truncation from 'double' to 'float'
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(470): warning C4244: '=': conversion from 'clock_t' to 'float', possible loss of data
+     1>d:\projects\c++\vs2015\opengl_testing2\opengl_testing\src\opengl_testing.cpp(473): warning C4244: 'initializing': conversion from 'clock_t' to 'float', possible loss of data
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Projects\c++\VS2015\OpenGL_Testing2\Debug\OpenGL_Testing.exe" /INCREMENTAL /NOLOGO /LIBPATH:D:\Projects\c++\VS2015\OpenGL_Testing2\libsx86 opengl32.lib openal32.lib glfw3.lib glew32.lib assimpD.lib libsndfile.lib BoilerPlate.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\Projects\c++\VS2015\OpenGL_Testing2\Debug\OpenGL_Testing.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\c++\VS2015\OpenGL_Testing2\Debug\OpenGL_Testing.lib" /MACHINE:X86 Debug\Heartbeat.obj
+         Debug\OpenGL_Testing.obj
+         Debug\Scissor.obj
+         Debug\SphereDistace.obj
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+         OpenGL_Testing.vcxproj -> D:\Projects\c++\VS2015\OpenGL_Testing2\Debug\OpenGL_Testing.exe
+     1>Done Building Project "D:\Projects\c++\VS2015\OpenGL_Testing2\OpenGL_Testing\OpenGL_Testing.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:04.27

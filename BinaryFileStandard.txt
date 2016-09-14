@@ -1,0 +1,14 @@
+Space for 15 individual attributes
+
+{
+char[10] name
+short type
+short dataTypeSize
+uint offset (bytes) (from start of Data block)
+uint size (bytes)
+= 10 + 2+ 2 + 4 + 4 = 22
+} x 15 = 330 bytes
+
+{
+data
+}
