@@ -1,5 +1,5 @@
 ﻿  ParticleSystem.cpp
-c:\projects\c++\vs2015\kneely-engine\boilerplate\particlesystem.cpp(18): warning C4018: '<': signed/unsigned mismatch
+c:\projects\c++\vs2015\kneely-engine\boilerplate\particlesystem.cpp(21): warning C4018: '<': signed/unsigned mismatch
 openal32.lib(OpenAL32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
 openal32.lib(OpenAL32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
 libsndfile.lib(libsndfile-1.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored

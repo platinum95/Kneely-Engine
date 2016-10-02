@@ -40,7 +40,7 @@ private:
 	ParticlePack *pPack;
 
 	BoilerPlate::Properties::BufferObjectProperties floatPropsThreeD{
-		2,
+		3,
 		sizeof(float),
 		GL_FALSE,
 		GL_ARRAY_BUFFER,

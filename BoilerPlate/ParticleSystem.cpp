@@ -13,20 +13,26 @@ ParticleSystem::~ParticleSystem() {
 
 void ParticleSystem::CreateParticleSystem(uint particle_count) {
 	float *vv = new float[particle_count * 3]; // start velocities vec3
-	float *vt = new float[particle_count]; // start times	float t_accum = 0.0f;
+	float *vt = new float[particle_count]; // start times
+	float t_accum;
+	t_accum = 0.0f;
 	int j = 0;
+	srand(120444384);
 	for (int i = 0; i < particle_count; i++) {
 		// start times
-		vt[i] = 0.0f;
+		
+		vt[i] = t_accum;
+		t_accum += 0.01f;
 		// start velocities. randomly vary x and z components
 		float randx = ((float)rand() / (float)RAND_MAX) * 1.0f - 0.5f;
 		float randz = ((float)rand() / (float)RAND_MAX) * 1.0f - 0.5f;
+		float randy = ((float)rand() / (float)RAND_MAX) * 1.0f - 0.5f;
 		vv[j] = randx; // x
-		vv[j + 1] = 1.0f; // y
+		vv[j + 1] = randy; // y
 		vv[j + 2] = randz; // z
 		j += 3;
 	}
-	initial_velocity_BO = new BufferObject(floatPropsThreeD, 0, particle_count, vv);
+	initial_velocity_BO = new BufferObject(floatPropsThreeD, 0, particle_count * 3, vv);
 	initial_time_BO = new BufferObject(floatPropsOneD, 1, particle_count, vt);
 
 	ParticleEntity = new Entity();

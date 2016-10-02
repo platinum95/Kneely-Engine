@@ -15,7 +15,8 @@ in float init_size;
 in vec3 init_colour;
 in float init_opacity;
 in float shape;
-in float lifetime;*/uniform float time;uniform vec4 emitter_position;void main(){	float elapsed_time = time - startTime;	elapsed_time = mod (elapsed_time, 5.0);	pass_time = elapsed_time;	vec4 ePos = vec4(0, 10, 0, 1);
-	ePos += vec4(init_velocity, 0) * elapsed_time + 0.5 * vec4(0.0, -1.0, 0.0, 0) * elapsed_time * elapsed_time;
-	gl_Position = projection * view * ePos;
+in float lifetime;*/uniform float time;uniform vec4 emitter_position;void main(){	float elapsed_time = time - startTime;	elapsed_time = mod (elapsed_time, 5.0);	pass_time = elapsed_time;	vec3 ePos = vec3(0, 10, 0);
+	vec3 a = vec3(0, -1, 0);
+	ePos += init_velocity * elapsed_time + 0.5 * a * elapsed_time * elapsed_time;
+	gl_Position = projection * view * vec4(ePos, 1);
 	gl_PointSize = 1.0;}
