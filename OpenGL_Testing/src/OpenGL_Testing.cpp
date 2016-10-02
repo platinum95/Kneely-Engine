@@ -172,6 +172,7 @@ void updateView() {
 
 	if (camera.position.y < terrain->getHeight(camera.position) + yOffset)
 		camera.position.y += (terrain->getHeight(camera.position) + yOffset) - camera.position.y;
+	testPSystem->UpdateParticleSystem(0.052);
 }
 
 void render() {	
@@ -699,6 +700,9 @@ void setupEntities() {
 	testTexRenderer = RenderMode(GL_TRIANGLES, guiShader);
 	testTexRenderer.entityList.push_back(testTex);
 	guiRenderer.addToRenderer(&testTexRenderer);
+
+	testPSystem = new ParticleSystem(30000, cameraUBO);
+	renderer.addToRenderer(testPSystem->getRenderMode());
 }
 
 void cleanup() {

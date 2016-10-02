@@ -19,6 +19,13 @@ void Entity::createEntity(void* _index, int _iCount) {
 	storeVIO(indices, this->indexCount);
 }
 
+void Entity::createEntity() {
+	createVAO();
+	glBindVertexArray(vaoID);
+	storeVBOs();
+	glBindVertexArray(0);
+}
+
 
 Entity::~Entity() {
 

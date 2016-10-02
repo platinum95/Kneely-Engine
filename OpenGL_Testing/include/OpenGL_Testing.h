@@ -7,6 +7,7 @@
 #include "Vector.h"
 #include "Matrix.h"
 #include <cmath>
+#include "ParticleSystem.h"
 
 #include "Vector.h"
 #include "Camera.h"
@@ -77,6 +78,8 @@ float FOV = 90;
 float Near_Plane = 0.1f;
 float Far_Plane = 1000.0f;
 float aspectRatio;
+
+ParticleSystem *testPSystem;
 
 double startingTime, changeFrameTime;
 

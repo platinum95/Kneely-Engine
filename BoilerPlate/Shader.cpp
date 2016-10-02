@@ -67,7 +67,7 @@ namespace BoilerPlate {
 				if (!success) {
 					char buffer[512];
 					glGetShaderInfoLog(id, 512, NULL, buffer);
-					std::cout << buffer << std::endl;
+					std::cout << shader.filePath << " " << buffer << std::endl;
 				}
 				else {
 					glAttachShader(this->shaderProps.programID, id);

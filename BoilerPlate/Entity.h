@@ -51,6 +51,7 @@ public:
 	Entity();
 	~Entity();
 	void createEntity(void* indices, int);
+	void createEntity();
 	void cleanUp();
 	int createVAO();
 	void bind();
