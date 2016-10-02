@@ -46,6 +46,7 @@
 #include "ModelLoader.h"
 
 #include <direct.h>
+#include "Timing.h"
 
 
 unsigned int sphereVertexCount = 119406;
@@ -161,6 +162,8 @@ float vt[4] = { 0, 1, 2, 3 };
 int phase = 0;
 int clickedExit = 0;
 int wireframe = 0, fillType = GL_LINE;
+
+uint particle_timing_id, physics_timing_id;
 
 
 

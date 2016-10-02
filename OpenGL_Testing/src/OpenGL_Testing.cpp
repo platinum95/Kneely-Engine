@@ -149,10 +149,12 @@ void updateView() {
 		PhysicsCock->addForce(glm::vec3(-1000, 0, 0));
 	}
 	
-	
+	std::chrono::nanoseconds physics_diff_nano = Timing::getTimeDiffNanos(physics_timing_id);
+	double physics_diff_double = physics_diff_nano.count() / 1000000000.0;
+
 	terrain->updateState(camera.position);
-	player->update(1.0f/60.0f);
-	PhysicsCock->update(1.0f / 60.0f);
+	player->update(physics_diff_double);
+	PhysicsCock->update(physics_diff_double);
 	camera.position = player->position;
 	int height;
 	if (player->position.x > 127.9f && player->position.x < 128.0f && player->position.z > 1113)
@@ -172,7 +174,11 @@ void updateView() {
 
 	if (camera.position.y < terrain->getHeight(camera.position) + yOffset)
 		camera.position.y += (terrain->getHeight(camera.position) + yOffset) - camera.position.y;
-	testPSystem->UpdateParticleSystem(0.052);
+
+	std::chrono::nanoseconds ps_diff_nano = Timing::getTimeDiffNanos(particle_timing_id);
+	double ps_diff_double = ps_diff_nano.count() / 1000000000.0;
+
+	testPSystem->UpdateParticleSystem(ps_diff_double);
 }
 
 void render() {	
@@ -265,6 +271,11 @@ void init() {
 
 	mouse = new MouseHandler();
 	//mouse->addCallback(&checkMouse, GLFW_MOUSE_BUTTON_LEFT);
+
+	Timing::genTimingID(&particle_timing_id, 1);
+	Timing::genTimingID(&physics_timing_id, 1);
+	Timing::start(particle_timing_id);
+	Timing::start(physics_timing_id);
 }
 
 void setupShaders() {
