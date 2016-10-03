@@ -149,7 +149,8 @@ void updateView() {
 		PhysicsCock->addForce(glm::vec3(-1000, 0, 0));
 	}
 	
-	std::chrono::nanoseconds physics_diff_nano = Timing::getTimeDiffNanos(physics_timing_id);
+	std::chrono::nanoseconds physics_diff_nano = Timing::getTimeDiff<std::chrono::nanoseconds>(physics_timing_id);
+	//std::chrono::nanoseconds physics_diff_nano = Timing::getTimeDiffNanos(physics_timing_id);
 	double physics_diff_double = physics_diff_nano.count() / 1000000000.0;
 
 	terrain->updateState(camera.position);
@@ -175,7 +176,7 @@ void updateView() {
 	if (camera.position.y < terrain->getHeight(camera.position) + yOffset)
 		camera.position.y += (terrain->getHeight(camera.position) + yOffset) - camera.position.y;
 
-	std::chrono::nanoseconds ps_diff_nano = Timing::getTimeDiffNanos(particle_timing_id);
+	std::chrono::nanoseconds ps_diff_nano = Timing::getTimeDiff<std::chrono::nanoseconds>(particle_timing_id);
 	double ps_diff_double = ps_diff_nano.count() / 1000000000.0;
 
 	testPSystem->UpdateParticleSystem(ps_diff_double);

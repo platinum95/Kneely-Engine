@@ -1,31 +1,6 @@
-﻿Build started 03/10/2016 00:10:11.
+﻿Build started 03/10/2016 13:12:28.
      1>Project "D:\Projects\c++\VS2015\Kneely-Engine\OpenGL_Testing\OpenGL_Testing.vcxproj" on node 2 (Build target(s)).
-     1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"D:\Projects\c++\VS2015\Kneely-Engine\include" /I"D:\Projects\c++\VS2015\Kneely-Engine\BoilerPlate" /I"D:\Projects\c++\VS2015\Kneely-Engine\OpenGL_Testing\include" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt src\OpenGL_Testing.cpp
-         OpenGL_Testing.cpp
-     1>d:\projects\c++\vs2015\kneely-engine\boilerplate\postprocessing.h(3): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\include\opengl_testing.h(153): warning C4305: 'initializing': truncation from 'double' to 'float'
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(29): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(61): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(156): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(157): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(161): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(173): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(181): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(187): warning C4305: '+=': truncation from 'double' to 'float'
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(253): warning C4305: 'argument': truncation from 'double' to 'float'
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(254): warning C4305: 'argument': truncation from 'double' to 'float'
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(255): warning C4305: 'argument': truncation from 'double' to 'float'
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(261): warning C4305: 'argument': truncation from 'double' to 'float'
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(262): warning C4305: 'argument': truncation from 'double' to 'float'
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(263): warning C4305: 'argument': truncation from 'double' to 'float'
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(290): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(423): warning C4305: 'argument': truncation from 'double' to 'float'
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(453): warning C4305: '=': truncation from 'double' to 'float'
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(454): warning C4305: '=': truncation from 'double' to 'float'
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(482): warning C4244: '=': conversion from 'clock_t' to 'float', possible loss of data
-     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(485): warning C4244: 'initializing': conversion from 'clock_t' to 'float', possible loss of data
-       Link:
+     1>Link:
          D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Projects\c++\VS2015\Kneely-Engine\Debug\OpenGL_Testing.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\Projects\c++\VS2015\Kneely-Engine\libsx86" opengl32.lib openal32.lib glfw3.lib glew32.lib assimpD.lib libsndfile.lib BoilerPlate.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\Projects\c++\VS2015\Kneely-Engine\Debug\OpenGL_Testing.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\c++\VS2015\Kneely-Engine\Debug\OpenGL_Testing.lib" /MACHINE:X86 Debug\Heartbeat.obj
          Debug\OpenGL_Testing.obj
          Debug\Scissor.obj
@@ -36,4 +11,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.03
+Time Elapsed 00:00:00.67

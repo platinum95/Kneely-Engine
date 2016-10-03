@@ -10,14 +10,6 @@ typedef std::chrono::high_resolution_clock::time_point tp;
 
 std::vector<tp> timestamps = std::vector<tp>();
 
-
-std::chrono::nanoseconds Timing::getTimeDiffNanos(uint id) {
-	high_resolution_clock::time_point current_time = high_resolution_clock::now();
-	std::chrono::nanoseconds duration = std::chrono::duration_cast<std::chrono::nanoseconds>(current_time - timestamps[id]);
-	timestamps[id] = current_time;
-	return duration;
-}
-
 std::chrono::steady_clock::time_point Timing::start(uint id) {
 	timestamps[id] = high_resolution_clock::now();
 	return high_resolution_clock::now();
@@ -35,5 +27,9 @@ void Timing::genTimingID(uint *buffer, uint count) {
 		buffer[i] = newId;
 	}
 	return;
+}
+
+std::vector<tp>* Timing::getTimingList() {
+	return &timestamps;
 }
 

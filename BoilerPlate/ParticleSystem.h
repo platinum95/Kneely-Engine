@@ -35,7 +35,8 @@ private:
 	void SetupBuffers();
 	const char* DEFAULT_FRAG_PATH = "res/shaders/ParticleFragmentDefaultShader.glsl";
 	const char* DEFAULT_VERT_PATH = "res/shaders/ParticleVertexDefaultShader.glsl";
-	BufferObject *initial_velocity_BO, *initial_time_BO;
+	BufferObject *initial_velocity_BO, *initial_time_BO, *initial_size_BO, *initial_colour_BO, *initial_opacity_BO, *lifetime_BO;
+
 	Entity *ParticleEntity;
 	ParticlePack *pPack;
 
