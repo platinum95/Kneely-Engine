@@ -47,13 +47,13 @@ void MouseHandler::onClickCallback(GLFWwindow* window, int button, int action, i
 	button_state[button ] = action == GLFW_PRESS ? true : false;
 	int size = callback_list[button ].size();
 	if (size == 0) return;
-	for (int i = 0; i < callback_list[button].size(); i++) {
+	for (unsigned int i = 0; i < callback_list[button].size(); i++) {
 		callback_list[button ].at(i)(action);
 	}
 }
 
 void MouseHandler::onMoveCallback(GLFWwindow* window, double xpos, double ypos){
-	mouse_position.x = xpos;
-	mouse_position.y = ypos;
+	mouse_position.x = (float) xpos;
+	mouse_position.y = (float) ypos;
 }
 

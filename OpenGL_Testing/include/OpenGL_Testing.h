@@ -34,7 +34,6 @@
 #include "PhysicsEntity.h"
 #include "PhysicsConstants.h"
 #include "PhysicsWorld.h"
-#include "Scissor.h"
 #include "Framebuffer.h"
 #include "Constants.h"
 #include "Water.h"
@@ -150,7 +149,7 @@ BrightnessAdjustModule::BrightnessData *bData;
 SaturationAdjustModule::SaturationData *sData;
 BloomEffectModule::BloomEffectData *bloomData;
 
-float updateInterval = 0.001;
+float updateInterval = 0.001f;
 float *timey = new float;
 float timeSinceWave[3] = { 0, 0, 0 };
 float timeDiff[3] = { 0, 0, 0 };

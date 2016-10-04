@@ -9,7 +9,7 @@
 unsigned int ScissorvertexCount = 93132;
 unsigned int ScissorindexCount = 136572;
 
-#define GLEW_STATIC
+
 
 //65 or 66
 
@@ -26,7 +26,7 @@ void ShowFps(GLFWwindow *pWindow) {
 //		glfwSetWindowTitle(pWindow, ss.str().c_str());
 
 		DisplayFrame = 0;
-		DisplayFrameTime = WorldTime;
+		DisplayFrameTime = (float) WorldTime;
 	}
 }
 
@@ -58,7 +58,7 @@ int main(){
 		ShowFps(glfwProps.window);
 
 		if (sendWave) {
-			*timey = glfwGetTime() * 5.3;
+			*timey = (float) glfwGetTime() * 5.3f;
 			double diff = *timey - (timeSinceWave[0] + 5.3);
 			//std::cout << glfwGetTime() << std::endl;
 			if (clippy) {
@@ -154,12 +154,11 @@ void updateView() {
 	double physics_diff_double = physics_diff_nano.count() / 1000000000.0;
 
 	terrain->updateState(camera.position);
-	player->update(physics_diff_double);
-	PhysicsCock->update(physics_diff_double);
+	player->update((float) physics_diff_double);
+	PhysicsCock->update((float) physics_diff_double);
 	camera.position = player->position;
-	int height;
-	if (player->position.x > 127.9f && player->position.x < 128.0f && player->position.z > 1113)
-		height = terrain->getHeight(camera.position);
+
+
 
 	if(player->position.y < terrain->getHeight(camera.position) + yOffset)
 		player->position.y += (terrain->getHeight(player->position) + yOffset) - player->position.y;
@@ -170,8 +169,6 @@ void updateView() {
 	
 
 	camera.updateCam();
-	if (camera.position.x > 127.9f && camera.position.x < 128.0f && camera.position.z > 1113)
-		height = terrain->getHeight(camera.position);
 
 	if (camera.position.y < terrain->getHeight(camera.position) + yOffset)
 		camera.position.y += (terrain->getHeight(camera.position) + yOffset) - camera.position.y;
@@ -179,13 +176,13 @@ void updateView() {
 	std::chrono::nanoseconds ps_diff_nano = Timing::getTimeDiff<std::chrono::nanoseconds>(particle_timing_id);
 	double ps_diff_double = ps_diff_nano.count() / 1000000000.0;
 
-	testPSystem->UpdateParticleSystem(ps_diff_double);
+	testPSystem->UpdateParticleSystem((float) ps_diff_double);
 }
 
 void render() {	
 	if (!pauseRender) {
 		glEnable(GL_CLIP_DISTANCE0);
-		water->waveOffset += 0.01;
+		water->waveOffset += 0.01f;
 		updateView();
 
 		renderer.clear();
@@ -251,17 +248,17 @@ void init() {
 	upCursor = new keyType(GLFW_KEY_UP);
 	downCursor = new keyType(GLFW_KEY_DOWN);
 	keyHandler = KeyHandler();
-	keyHandler.addToList(keyType(&(camera.yaw),			0.01, GLFW_KEY_Q, GLFW_KEY_E, GLFW_PRESS));
-	keyHandler.addToList(keyType(&(yOffset),	0.1, GLFW_KEY_R, GLFW_KEY_F, GLFW_PRESS));
-	keyHandler.addToList(keyType(&(camera.roll),		0.01, GLFW_KEY_Z, GLFW_KEY_X, GLFW_PRESS));
-	keyHandler.addToList(keyType(&(FOV),				2, GLFW_KEY_1, GLFW_KEY_2, GLFW_CLICK));
-	keyHandler.addToList(keyType(&(clickedExit),		1, GLFW_KEY_ESCAPE, GLFW_KEY_F1, GLFW_CLICK));
-	keyHandler.addToList(keyType(&(lighting.position[1]), 1, GLFW_KEY_Y, GLFW_KEY_U, GLFW_CLICK));
+	keyHandler.addToList(keyType(&(camera.yaw),			0.01f, GLFW_KEY_Q, GLFW_KEY_E, GLFW_PRESS));
+	keyHandler.addToList(keyType(&(yOffset),	0.1f, GLFW_KEY_R, GLFW_KEY_F, GLFW_PRESS));
+	keyHandler.addToList(keyType(&(camera.roll),		0.01f, GLFW_KEY_Z, GLFW_KEY_X, GLFW_PRESS));
+	keyHandler.addToList(keyType(&(FOV),				2.0f, GLFW_KEY_1, GLFW_KEY_2, GLFW_CLICK));
+	keyHandler.addToList(keyType(&(clickedExit),		1.0f, GLFW_KEY_ESCAPE, GLFW_KEY_F1, GLFW_CLICK));
+	keyHandler.addToList(keyType(&(lighting.position[1]), 1.0f, GLFW_KEY_Y, GLFW_KEY_U, GLFW_CLICK));
 	keyHandler.addToList(keyType(nullptr,				&changeWireframe2, GLFW_KEY_H, GLFW_CLICK));
 	//keyHandler.addToList(keyType(nullptr,				&disableGround, GLFW_KEY_L, GLFW_CLICK));
-	keyHandler.addToList(keyType(&(sData->amount), 0.1, GLFW_KEY_P, GLFW_KEY_SEMICOLON , GLFW_CLICK));
-	keyHandler.addToList(keyType(&(cData->amount), 0.1, GLFW_KEY_O, GLFW_KEY_L, GLFW_CLICK));
-	keyHandler.addToList(keyType(&(bData->amount), 0.1, GLFW_KEY_I, GLFW_KEY_K, GLFW_CLICK));
+	keyHandler.addToList(keyType(&(sData->amount), 0.1f, GLFW_KEY_P, GLFW_KEY_SEMICOLON , GLFW_CLICK));
+	keyHandler.addToList(keyType(&(cData->amount), 0.1f, GLFW_KEY_O, GLFW_KEY_L, GLFW_CLICK));
+	keyHandler.addToList(keyType(&(bData->amount), 0.1f, GLFW_KEY_I, GLFW_KEY_K, GLFW_CLICK));
 	keyHandler.addToList(forwardKey);
 	keyHandler.addToList(backKey);
 	keyHandler.addToList(leftKey);
@@ -288,7 +285,7 @@ void setupShaders() {
 	for (int i = 0; i < 1544; i++) {
 		heart_wave.offsetwave[i] = heartbeat[i] * 2;
 		heart_wave.offsetwave[i] -= 1;
-		int colourNum = heartbeat[i] * 16777215;
+		int colourNum = (int) heartbeat[i] * 16777215;
 		int red = (colourNum >> 16) & 0xFF;
 		int green = (colourNum >> 8) & 0xFF;
 		int blue = colourNum & 0xFF;
@@ -421,7 +418,7 @@ void setupShaders() {
 	postProcessPipeline = new PostProcessing();
 	cData = new ContrastAdjustModule::ContrastData(1);
 	bData = new BrightnessAdjustModule::BrightnessData(0);
-	sData = new SaturationAdjustModule::SaturationData(1.3);
+	sData = new SaturationAdjustModule::SaturationData(1.3f);
 	bloomData = new BloomEffectModule::BloomEffectData;
 	postProcessPipeline->RegisterEffect(ContrastAdjust, cData);
 	postProcessPipeline->RegisterEffect(BrightnessAdjust, bData);
@@ -451,8 +448,8 @@ void setupView() {
 	camera.position.y = 0;
 
 	camera.pitch = 0;
-	camera.roll = 3.14 / 2;
-	camera.yaw = 3.14;
+	camera.roll = 3.14f / 2.0f;
+	camera.yaw = 3.14f;
 
 	player = new BoilerPlate::Physics::DynamicEntity();
 	PhysicsCock = new BoilerPlate::Physics::DynamicEntity();
@@ -480,10 +477,10 @@ void checkMouse(int action) {
 		if (!isHeld) {
 			isHeld = true;
 			previousPos = mouse->getMousePosition();
-			lastClock = clock();
+			lastClock = (float) clock();
 			return;
 		}
-		float currentClock = clock();
+		float currentClock = (float) clock();
 		float clockDiff = currentClock - lastClock;
 
 		glm::vec2 currentPos = mouse->getMousePosition();
@@ -678,6 +675,7 @@ void setupEntities() {
 	water->waterPackage->clip_plane = clip_plane.plane;
 	renderer.addToRenderer(water->waterRenderMode);
 
+	/*
 	scissors = new Entity();
 	scissorUnit = new BatchUnit();
 	BufferObject* scissorVerts = new BufferObject(floatProps, 0, ScissorvertexCount, ScissorVertices);
@@ -691,7 +689,7 @@ void setupEntities() {
 	scissorRenderer.entityList.push_back(scissors);
 	scissors->units.push_back(scissorUnit);
 	renderer.addToRenderer(&scissorRenderer);
-
+	*/
 
 
 	Texture *mainTexture = new Texture();

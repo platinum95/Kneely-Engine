@@ -19,14 +19,15 @@ BinaryLoader::BinaryLoader() {
 
 std::vector<BufferObject*> BinaryLoader::readFile(const char * filepath) {
 	std::ifstream infile(filepath, std::ios::in | std::ios::binary | std::ios::ate);
-	long size = infile.tellg();
+	long size = (long) infile.tellg();
 	char* memblock = new char[size];
 	infile.seekg(0, std::ios::beg);
 	infile.read(memblock, size);
 	infile.close();
 	delete memblock;
 	
-	FILE* file = fopen(filepath, "rb");
+	FILE* file;
+	fopen_s(&file, filepath, "rb");
 	if (file == NULL) {
 		return std::vector<BufferObject*>();
 	}
@@ -37,7 +38,7 @@ std::vector<BufferObject*> BinaryLoader::readFile(const char * filepath) {
 	fileSize = size;
 	unsigned char *fileData = new unsigned char[size];
 	fclose(file);
-	file = fopen(filepath, "r");
+	fopen_s(&file, filepath, "r");
 	fread(fileData, 1, size, file);
 	memcpy(headerBlock, fileData, HEADER_SIZE);
 	
@@ -65,12 +66,12 @@ std::vector<BufferObject*> BinaryLoader::readFile(const char * filepath) {
 }
 
 void BinaryLoader::createFile(BoilerPlate::Properties::EntityProperties entProps, const char * outFile, BufferObject normals, BufferObject tex) {
-	FILE * outFileStream = fopen(outFile, "wb");
+	FILE * outFileStream;
+	fopen_s(&outFileStream, outFile, "wb");
 	header headerBlock;
 	uint indexSizeBytes = sizeof(uint) * entProps.indexSize;
 	uint vertexSizeBytes = sizeof(float) * entProps.vertexSize;
 	uint texSizeBytes = tex.size * tex.unitSize;
-	informationBlock headerInfo[15];
 
 	headerBlock.headerInfo[0] = informationBlock{
 		"Indices",
@@ -116,7 +117,8 @@ void BinaryLoader::createFile(BoilerPlate::Properties::EntityProperties entProps
 void BinaryLoader::createFile(const char * inFile, const char *outFile) {
 	//Assuming inFile is an obj...
 	BoilerPlate::Properties::EntityProperties entProps = ObjLoader::readObjProp3(inFile, 1);
-	FILE * outFileStream = fopen(outFile, "w");
+	FILE * outFileStream;
+	fopen_s(&outFileStream, outFile, "w");
 	header headerBlock;
 	headerBlock.headerInfo[0] = informationBlock{
 		"Indices",
@@ -149,7 +151,8 @@ void BinaryLoader::createFile(const char * inFile, const char *outFile) {
 }
 
 void BinaryLoader::createFile(const char* outFile, std::vector<BufferObject> bos){
-	FILE * outFileStream = fopen(outFile, "w");
+	FILE * outFileStream;
+	fopen_s(&outFileStream, outFile, "w");
 	header headerBlock;
 	headerBlock.headerInfo[0] = informationBlock{
 		"Heights",

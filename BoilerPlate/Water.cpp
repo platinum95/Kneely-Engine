@@ -176,12 +176,12 @@ void Water::waterRenderer(RenderMode *rm) {
 	Camera backCam = *wPackage->camera;
 	bool camAboveWater = wPackage->camera->position.y >= 0;
 	wPackage->camera->position.y *= -1.0f;
-	wPackage->camera->roll = (M_PI)- wPackage->camera->roll;
+	wPackage->camera->roll = (float) ((M_PI)- wPackage->camera->roll);
 	wPackage->camera->updateCam();
 	rm->deactivate();
 	wPackage->clip_plane[3] = 0;
 
-	wPackage->clip_plane[1] = wPackage->camera->position.y < 0 ? 1 : -1;
+	wPackage->clip_plane[1] = (float) (wPackage->camera->position.y < 0 ? 1 : -1);
 	wPackage->reflectionFBO->bindBuffer();
 	wPackage->reflectionFBO->clear();
 	wPackage->renderer->Render();

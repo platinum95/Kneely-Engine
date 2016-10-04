@@ -20,7 +20,7 @@ chrono::steady_clock::time_point Timing::getCurrentTime() {
 }
 
 void Timing::genTimingID(uint *buffer, uint count) {
-	for (int i = 0; i < count; i++) {
+	for (uint i = 0; i < count; i++) {
 		uint newId = timestamps.size();
 		tp timep = high_resolution_clock::now();
 		timestamps.push_back(high_resolution_clock::now());

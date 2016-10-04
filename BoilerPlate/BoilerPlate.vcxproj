@@ -73,7 +73,7 @@
     <OutDir>..\libs</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>..\libsx86\</OutDir>
+    <OutDir>$(SolutionDir)\libsx86\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -83,10 +83,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;glfw3dll.lib;glew32.lib;openal32.lib;libsndfile.lib;assimpD.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)libsx86</AdditionalLibraryDirectories>
+      <ImportLibrary>$(SolutionDir)$(TargetName).lib</ImportLibrary>
     </Link>
     <Lib>
       <AdditionalDependencies>glew32.lib;glfw3.lib;openal32.lib;libsndfile.lib;assimpD.lib;%(AdditionalDependencies)</AdditionalDependencies>

@@ -2,7 +2,7 @@
 
 #include "BoilerPlate.h"
 #include "Constants.h"
-#define GLEW_STATIC
+
 
 namespace BoilerPlate {
 
@@ -24,7 +24,7 @@ namespace BoilerPlate {
 
 
 	Properties::GLFWproperties BoilerPlate::startGLFW(Properties::displayProperties props) {
-		bool initSuccess = glfwInit();
+		int initSuccess = glfwInit();
 
 		if (props.monitor == NULL)
 			glfwProperties.monitor = props.fullscreen ? glfwGetPrimaryMonitor() : NULL;
@@ -34,7 +34,7 @@ namespace BoilerPlate {
 	  	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwProperties.window = glfwCreateWindow(props.width, props.height, props.title, glfwProperties.monitor, props.share); // Windowed
-		glfwProperties.success = (glfwProperties.window) && initSuccess ? true : false;
+		glfwProperties.success = (glfwProperties.window) && initSuccess ? 1 : 0;
 		glfwMakeContextCurrent(glfwProperties.window);
 
 		Constants::DisplayProps = props;

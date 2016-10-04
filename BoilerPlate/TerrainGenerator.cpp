@@ -13,7 +13,7 @@ float MAX_HEIGHT = 40.0f;
 float HEIGHT_SCALE = MAX_HEIGHT / (float) RAND_MAX;
 float PI_O2 = 3.1415f / 2.0f;
 TerrainGenerator::TerrainGenerator() {
-	srand(time(NULL));
+	srand((unsigned int) time(NULL));
 }
 
 
@@ -38,9 +38,9 @@ float TerrainGenerator::getHeight(int x, int z, float mag1, float mag2, float ma
 }
 
 void TerrainGenerator::generateSeed() {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	seed = 2483647;//(rand() % RAND_MAX);
-	seed = ((float)seed / (float) RAND_MAX) * (4294967295.0f/2.0f);
+	seed = (unsigned int) (((float)seed / (float) RAND_MAX) * (4294967295.0f/2.0f));
 }
 
 float TerrainGenerator::getSmoothNoise(int x, int z) {
@@ -55,7 +55,7 @@ float TerrainGenerator::getNoise(int x, int z) {
 	int n = x * 45 + z * 57;
 	n = (n << 13) ^ n;
 	int nn = (n*(n*n * 60493 + 19990303) + 1376312589) & 0x7fffffff;
-	float toReturn = 1.0 - ((double)nn / 1073741824.0);
+	float toReturn = (float) (1.0 - ((double)nn / 1073741824.0));
 	return toReturn * MAX_HEIGHT;
 
 }

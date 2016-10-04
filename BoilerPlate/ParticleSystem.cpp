@@ -23,7 +23,7 @@ void ParticleSystem::CreateParticleSystem(uint particle_count) {
 	float t_accum;
 	t_accum = 0.0f;
 	int j = 0;
-	for (int i = 0; i < particle_count; i++) {
+	for (unsigned int i = 0; i < particle_count; i++) {
 		// start times
 		init_time_data[i] = t_accum;
 		t_accum += 0.01f;
@@ -44,17 +44,17 @@ void ParticleSystem::CreateParticleSystem(uint particle_count) {
 		float deltaG = (((float)rand() / (float)RAND_MAX) - 0.5f) * 0.2f;
 		float deltaB = (((float)rand() / (float)RAND_MAX) - 0.5f) * 0.2f;
 		init_colour_data[j] = 1.0f;	//r
-		init_colour_data[j + 1] = 0.5498 + deltaG; // g
-		init_colour_data[j + 2] = 0.27 + deltaB; // b
+		init_colour_data[j + 1] = 0.5498f + deltaG; // g
+		init_colour_data[j + 2] = 0.27f + deltaB; // b
 
 
 		// start velocities. randomly vary x and z components
 		float randx = ((float)rand() / (float)RAND_MAX) * 1.0f - 0.5f;
 		float randz = ((float)rand() / (float)RAND_MAX) * 1.0f - 0.5f;
 		float randy = ((float)rand() / (float)RAND_MAX) * 1.0f - 0.5f;
-		init_velocity_data[j] = randx * 2.0; // x
-		init_velocity_data[j + 1] = randy * 2.0; // y
-		init_velocity_data[j + 2] = randz * 2.0; // z
+		init_velocity_data[j] = randx * 2.0f; // x
+		init_velocity_data[j + 1] = randy * 2.0f; // y
+		init_velocity_data[j + 2] = randz * 2.0f; // z
 		j += 3;
 	}
 
@@ -97,7 +97,8 @@ void ParticleSystem::UpdateParticleSystem(float time_passed) {
 
 void ParticleSystem::RenderParticleSystem(RenderMode * rm) {
 	glEnable(GL_PROGRAM_POINT_SIZE);
-	glEnable(GL_BLEND);
+	glEnable(GL_BLEND);
+
 	ParticlePack *pp = (ParticlePack*) rm->data;
 	
 	rm->shader.useShader();

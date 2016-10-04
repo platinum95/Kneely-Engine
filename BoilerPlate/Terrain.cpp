@@ -30,7 +30,7 @@ Terrain::Terrain(float worldSize, unsigned int meshSize, const char* filepath, B
 	uint groundMeshSize = (dataCount * 2);
 	float* meshData = new float[groundMeshSize];
 	float* meshFileData = (float*) groundMeshFile->data;
-	for (int i = 0; i < dataCount; i++) {
+	for (unsigned int i = 0; i < dataCount; i++) {
 		uint meshFileLoc = i * 3;
 		uint meshLoc = i * 2;
 		meshData[meshLoc] = meshFileData[meshFileLoc];
@@ -83,10 +83,10 @@ void Terrain::generateChunk(int xPos, int zPos) {
 	float *dataLoc = (float*)heightVBO->data;
 	float *normLoc = (float*)normalVBO->data;
 
-	for (int x = 0; x < this->meshSize; x++) {
+	for (unsigned int x = 0; x < this->meshSize; x++) {
 
 		int xWPos = x + ((this->meshSize-1)*xPos);
-		for (int z = 0; z < this->meshSize; z++) {
+		for (unsigned int z = 0; z < this->meshSize; z++) {
 			int zWPos = z - ((this->meshSize-1) * (zPos));
 			uint xIndex = z * this->meshSize;
 			uint index = xIndex + x;
@@ -136,10 +136,10 @@ void Terrain::generateChunk(int xPos, int zPos, float mag1, float mag2, float ma
 	newUnit->transformationMatrix = glm::translate(worldPos);
 	chunkEntity->units.push_back(newUnit);
 
-	for (int x = 0; x < this->meshSize; x++) {
+	for (unsigned int x = 0; x < this->meshSize; x++) {
 
 		int xWPos = x + ((this->meshSize - 1)*xPos);
-		for (int z = 0; z < this->meshSize; z++) {
+		for (unsigned int z = 0; z < this->meshSize; z++) {
 			int zWPos = z - ((this->meshSize - 1) * (zPos));
 			uint xIndex = z * this->meshSize;
 			uint index = xIndex + x;
@@ -169,14 +169,14 @@ void Terrain::generateChunk(int xPos, int zPos, float from1, float from2, float 
 	float diff1 = -(from1 - to1) / (this->meshSize - 1);
 	float diff2 = -(from2 - to2) / (this->meshSize - 1);
 	float diff3 = -(from3 - to3) / (this->meshSize - 1);
-	for (int x = 0; x < this->meshSize; x++) {
+	for (unsigned int x = 0; x < this->meshSize; x++) {
 
 		int xWPos = x + ((this->meshSize - 1)*xPos);
 		float send1 = from1 + (diff1 * x);
 		float send2 = from2 + (diff2 * x);
 		float send3 = from3 + (diff3 * x);
 
-		for (int z = 0; z < this->meshSize; z++) {
+		for (unsigned int z = 0; z < this->meshSize; z++) {
 			int zWPos = z - ((this->meshSize - 1) * (zPos));
 			uint xIndex = z * this->meshSize;
 			uint index = xIndex + x;
@@ -295,7 +295,7 @@ float Terrain::getHeight(glm::vec3 worldPos){
 	worldPos.x -= this->worldSize * tc->xPos;
 	worldPos.z -= this->worldSize * tc->zPos;
 	worldPos.z = this->meshSize - worldPos.z;
-	int index = ((worldPos.z > 0.0f ? floor(worldPos.z) : ceil(worldPos.z)) * this->meshSize) + (worldPos.x ? floor(worldPos.x) : ceil(worldPos.x));
+	int index = (int) (((worldPos.z > 0.0f ? floor(worldPos.z) : ceil(worldPos.z)) * this->meshSize) + (worldPos.x ? floor(worldPos.x) : ceil(worldPos.x)));
 	float* hdata = (float*) tc->heightBO->data;
 	float height = hdata[index];
 	return height;

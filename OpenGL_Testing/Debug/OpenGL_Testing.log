@@ -1,14 +1,3 @@
-﻿Build started 03/10/2016 13:12:28.
-     1>Project "D:\Projects\c++\VS2015\Kneely-Engine\OpenGL_Testing\OpenGL_Testing.vcxproj" on node 2 (Build target(s)).
-     1>Link:
-         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Projects\c++\VS2015\Kneely-Engine\Debug\OpenGL_Testing.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\Projects\c++\VS2015\Kneely-Engine\libsx86" opengl32.lib openal32.lib glfw3.lib glew32.lib assimpD.lib libsndfile.lib BoilerPlate.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\Projects\c++\VS2015\Kneely-Engine\Debug\OpenGL_Testing.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\c++\VS2015\Kneely-Engine\Debug\OpenGL_Testing.lib" /MACHINE:X86 Debug\Heartbeat.obj
-         Debug\OpenGL_Testing.obj
-         Debug\Scissor.obj
-         Debug\SphereDistace.obj
-     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-         OpenGL_Testing.vcxproj -> D:\Projects\c++\VS2015\Kneely-Engine\Debug\OpenGL_Testing.exe
-     1>Done Building Project "D:\Projects\c++\VS2015\Kneely-Engine\OpenGL_Testing\OpenGL_Testing.vcxproj" (Build target(s)).
-
-Build succeeded.
-
-Time Elapsed 00:00:00.67
+﻿LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  OpenGL_Testing.vcxproj -> \\134.226.32.3\ugrad\omaolaip\My Documents\Visual Studio 2015\Projects\Kneely-Engine\Debug\OpenGL_Testing.exe
+  OpenGL_Testing.vcxproj -> \\134.226.32.3\ugrad\omaolaip\My Documents\Visual Studio 2015\Projects\Kneely-Engine\Debug\OpenGL_Testing.pdb (Full PDB)

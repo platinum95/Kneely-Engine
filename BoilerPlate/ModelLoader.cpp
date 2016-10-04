@@ -56,9 +56,9 @@ Entity *ModelLoader::processMesh(aiMesh inMesh, const aiScene* inScene) {
 	newProp.indices = new unsigned int[inMesh.mNumFaces * 3];
 
 	int j = -1;
-	for (int i = 0; i < inMesh.mNumFaces; i++) {
+	for (unsigned int i = 0; i < inMesh.mNumFaces; i++) {
 		aiFace face = inMesh.mFaces[i];
-		for(int k = 0; k < face.mNumIndices; k++)
+		for(unsigned int k = 0; k < face.mNumIndices; k++)
 			newProp.indices[++j] = face.mIndices[k];
 	}
 
@@ -66,7 +66,7 @@ Entity *ModelLoader::processMesh(aiMesh inMesh, const aiScene* inScene) {
 	if (inMesh.HasPositions()) {
 		newProp.vertices = new float[inMesh.mNumVertices * 3];
 		int j = -1;
-		for (int i = 0; i < inMesh.mNumVertices; i++) {
+		for (unsigned int i = 0; i < inMesh.mNumVertices; i++) {
 			newProp.vertices[++j] = inMesh.mVertices[i].x;
 			newProp.vertices[++j] = inMesh.mVertices[i].y;
 			newProp.vertices[++j] = inMesh.mVertices[i].z;
@@ -76,7 +76,7 @@ Entity *ModelLoader::processMesh(aiMesh inMesh, const aiScene* inScene) {
 	if (inMesh.HasNormals()) {
 		newProp.normals = new float[inMesh.mNumVertices * 3];
 		int j = -1;
-		for (int i = 0; i < inMesh.mNumVertices; i++) {
+		for (unsigned int i = 0; i < inMesh.mNumVertices; i++) {
 			newProp.normals[++j] = inMesh.mNormals[i].x;
 			newProp.normals[++j] = inMesh.mNormals[i].y;
 			newProp.normals[++j] = inMesh.mNormals[i].z;
@@ -86,7 +86,7 @@ Entity *ModelLoader::processMesh(aiMesh inMesh, const aiScene* inScene) {
 	if (inMesh.HasTextureCoords(0)) {
 		float* texCoords = new float[inMesh.mNumVertices * 2];
 		int j = -1;
-		for (int i = 0; i < inMesh.mNumVertices; i++) {
+		for (unsigned int i = 0; i < inMesh.mNumVertices; i++) {
 			texCoords[++j] = inMesh.mTextureCoords[0][i].x;
 			texCoords[++j] = inMesh.mTextureCoords[0][i].y;
 		}

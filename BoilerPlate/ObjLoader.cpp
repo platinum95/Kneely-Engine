@@ -36,7 +36,7 @@ BoilerPlate::Properties::EntityProperties ObjLoader::readObjProp(const char * fi
 		}
 
 		else if (nextChar == "f") {
-			float x, y, z;
+			unsigned int x, y, z;
 			fileStream >> x >> y >> z;
 
 			index.push_back(x);
@@ -54,14 +54,14 @@ BoilerPlate::Properties::EntityProperties ObjLoader::readObjProp(const char * fi
 	indexData = new unsigned int[index.size()];
 
 	int j = -1;
-	for (int i = 0; i < vertex.size(); i++) {
+	for (unsigned int i = 0; i < vertex.size(); i++) {
 		vertexData[++j] = vertex.at(i).x;
 		vertexData[++j] = vertex.at(i).y;
 		vertexData[++j] = vertex.at(i).z;
 	}
 
 
-	for (int i = 0; i < index.size(); i++) {
+	for (unsigned int i = 0; i < index.size(); i++) {
 		indexData[i] = ((unsigned int)index.at(i)) - (unsigned int)offset;
 	}
 
@@ -103,10 +103,8 @@ BoilerPlate::Properties::EntityProperties ObjLoader::readObjProp2(const char * f
 			int x, y, z;
 			int a, b, c;
 			char nothing;
-			int nothingInt;
 			fileStream >> x;
 			fileStream >> nothing;
-			//fileStream >> nothingInt;
 			fileStream >> nothing;
 			fileStream >> a;
 			fileStream >> y >> nothing >> nothing >> b
@@ -137,20 +135,20 @@ BoilerPlate::Properties::EntityProperties ObjLoader::readObjProp2(const char * f
 	indexData = new unsigned int[index.size()];
 
 	int j = -1;
-	for (int i = 0; i < vertex.size(); i++) {
+	for (unsigned int i = 0; i < vertex.size(); i++) {
 		vertexData[++j] = vertex.at(i).x;
 		vertexData[++j] = vertex.at(i).y;
 		vertexData[++j] = vertex.at(i).z;
 	}
 	 j = -1;
-	for (int i = 0; i < normal.size(); i++) {
+	for (unsigned int i = 0; i < normal.size(); i++) {
 		normalData[++j] = normal.at(i).x;
 		normalData[++j] = normal.at(i).y;
 		normalData[++j] = normal.at(i).z;
 	}
 
 
-	for (int i = 0; i < index.size(); i++) {
+	for (unsigned int i = 0; i < index.size(); i++) {
 		indexData[i] = ((unsigned int)index.at(i)) - (unsigned int)offset;
 		/*
 		unsigned int indexVal = indexData[i];
@@ -158,7 +156,7 @@ BoilerPlate::Properties::EntityProperties ObjLoader::readObjProp2(const char * f
 		normalData2[indexVal] = normalData[normalVal];
 		*/
 	}
-	for (int i = 0; i < index.size(); i+=3) {
+	for (unsigned int i = 0; i < index.size(); i+=3) {
 		GLushort ia = indexData[i];
 		GLushort ib = indexData[i + 1];
 		GLushort ic = indexData[i + 2];
@@ -168,7 +166,7 @@ BoilerPlate::Properties::EntityProperties ObjLoader::readObjProp2(const char * f
 		normal[ia] = normal[ib] = normal[ic] = thisNormal;
 	}
 	j = -1;
-	for (int i = 0; i < vertex.size(); i++) {
+	for (unsigned int i = 0; i < vertex.size(); i++) {
 		normalData2[++j] = normal.at(i).x;
 		normalData2[++j] = normal.at(i).y;
 		normalData2[++j] = normal.at(i).z;
@@ -180,7 +178,7 @@ BoilerPlate::Properties::EntityProperties ObjLoader::readObjProp2(const char * f
 	out << "unsigned int indexCount = " << index.size() << ";\n";
 	out << "float sphereVertices[] = {\n";
 
-	for (int i = 0; i < vertex.size() * 3; i++) {
+	for (unsigned int i = 0; i < vertex.size() * 3; i++) {
 		char endChar = (i == (vertex.size() * 3) - 1) ? ' ' : ',';
 		out << vertexData[i] << endChar << '\n';
 	}
@@ -188,13 +186,13 @@ BoilerPlate::Properties::EntityProperties ObjLoader::readObjProp2(const char * f
 	out << "};\n";
 	out << "float scissorNormals[] = {\n";
 	j = -1;
-	for (int i = 0; i < vertex.size() * 3; i++) {
+	for (unsigned int i = 0; i < vertex.size() * 3; i++) {
 		char endChar = (i == (vertex.size() * 3 ) - 1) ? ' ' : ',';
 		out << normalData2[i] << endChar << '\n';
 	}
 	out << "};\n";
 	out << "unsigned int scissorIndices[] = {\n";
-	for (int i = 0; i < index.size(); i++) {
+	for (unsigned int i = 0; i < index.size(); i++) {
 		char endChar = (i == index.size() - 1) ? ' ' : ',';
 		out << indexData[i] << endChar << '\n';
 	}
@@ -261,7 +259,6 @@ BoilerPlate::Properties::EntityProperties ObjLoader::readObjProp3(const char * f
 			int a, b, c;
 			int u, v, w;
 			char nothing;
-			int nothingInt;
 			if(vExist)
 				fileStream >> x;
 			if(vtExist || vnExist)
@@ -320,18 +317,18 @@ BoilerPlate::Properties::EntityProperties ObjLoader::readObjProp3(const char * f
 
 	indexData = new unsigned int[index.size()];
 
-	for (int i = 0; i < index.size(); i++) {
+	for (unsigned int i = 0; i < index.size(); i++) {
 		indexData[i] = ((unsigned int)index.at(i)) - (unsigned int)offset;
 	}
-	for (int i = 0; i < normalIndex.size(); i++) {
+	for (unsigned int i = 0; i < normalIndex.size(); i++) {
 		normalIndex[i] = ((unsigned int)normalIndex.at(i)) - (unsigned int)offset;
 	}
-	for (int i = 0; i < textureIndex.size(); i++) {
+	for (unsigned int i = 0; i < textureIndex.size(); i++) {
 		textureIndex[i] = ((unsigned int)textureIndex.at(i)) - (unsigned int)offset;
 	}
 
 	int j = -1;
-	for (int i = 0; i < vertex.size(); i++) {
+	for (unsigned int i = 0; i < vertex.size(); i++) {
 		int holder = j;
 		vertexData[++j] = vertex.at(i).x;
 		vertexData[++j] = vertex.at(i).y;
@@ -341,7 +338,7 @@ BoilerPlate::Properties::EntityProperties ObjLoader::readObjProp3(const char * f
 	}
 
 	j = -1;
-	for (int i = 0; i < normal.size(); i++) {
+	for (unsigned int i = 0; i < normal.size(); i++) {
 		j++;
 		normalData[indexData[j]] = normal.at(normalIndex[i]).x;
 		j++;

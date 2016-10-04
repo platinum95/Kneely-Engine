@@ -89,11 +89,13 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(SolutionDir)include;$(SolutionDir)BoilerPlate;$(SolutionDir)OpenGL_Testing\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>opengl32.lib;openal32.lib;glfw3.lib;glew32.lib;assimpD.lib;libsndfile.lib;BoilerPlate.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;BoilerPlate.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)libsx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
@@ -174,13 +176,11 @@
   <ItemGroup>
     <ClCompile Include="src\Heartbeat.cpp" />
     <ClCompile Include="src\OpenGL_Testing.cpp" />
-    <ClCompile Include="src\Scissor.cpp" />
     <ClCompile Include="src\SphereDistace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Heartbeat.h" />
     <ClInclude Include="include\OpenGL_Testing.h" />
-    <ClInclude Include="include\Scissor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

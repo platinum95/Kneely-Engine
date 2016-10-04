@@ -32,7 +32,8 @@ ImageData ImageLoader::loadPNG(const char * filePath) {
 }
 
 ImageData ImageLoader::loadRAW(const char * filePath) {
-	FILE *inFile = fopen(filePath, "rb");
+	FILE *inFile;
+	fopen_s(&inFile, filePath, "rb");
 	RawHeader header;
 	std::vector<unsigned char> imageData = std::vector<unsigned char>();
 	fread(&header, sizeof(RawHeader), 1, inFile);
@@ -60,7 +61,8 @@ void ImageLoader::PNGtoRAW(const char * filePath, const char * outFilePath) {
 		pngData.dataSize
 	};
 
-	FILE *outFile = fopen(outFilePath, "wb");
+	FILE *outFile;
+	fopen_s(&outFile, outFilePath, "wb");
 	fwrite(&fileHeader, 3 * sizeof(unsigned int), 1, outFile);
 	fwrite(&pngData.imageData[0], pngData.dataSize, 1, outFile);
 	fclose(outFile);
