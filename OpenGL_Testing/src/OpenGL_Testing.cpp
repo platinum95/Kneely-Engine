@@ -150,7 +150,6 @@ void updateView() {
 	}
 	
 	std::chrono::nanoseconds physics_diff_nano = Timing::getTimeDiff<std::chrono::nanoseconds>(physics_timing_id);
-	//std::chrono::nanoseconds physics_diff_nano = Timing::getTimeDiffNanos(physics_timing_id);
 	double physics_diff_double = physics_diff_nano.count() / 1000000000.0;
 
 	terrain->updateState(camera.position);
@@ -177,6 +176,9 @@ void updateView() {
 	double ps_diff_double = ps_diff_nano.count() / 1000000000.0;
 
 	testPSystem->UpdateParticleSystem((float) ps_diff_double);
+	timeytime += 0.15f;
+	snakePos.z -= 0.00015f;
+	snakeUnit->transformationMatrix = glm::translate(snakeUnit->transformationMatrix, snakePos);
 }
 
 void render() {	
@@ -351,6 +353,18 @@ void setupShaders() {
 	entityShader.addShaderType(entityVPath, GL_VERTEX_SHADER);
 	entityShader.addShaderType(entityFPath, GL_FRAGMENT_SHADER);
 	entityShader.LoadShader();
+
+	snakeShader.RegisterAttribute("position", 0);
+	snakeShader.RegisterAttribute("normal", 1);
+	snakeShader.RegisterAttribute("texCoords", 2);
+	snakeShader.RegisterUniform("translation");
+	snakeShader.RegisterUniform("time");
+	snakeShader.registerUBO(cameraUBO);
+	snakeShader.registerUBO(lightingUBO);
+	snakeShader.registerUBO(clipUBO);
+	snakeShader.addShaderType(snakeVPath, GL_VERTEX_SHADER);
+	snakeShader.addShaderType(snakeFPath, GL_FRAGMENT_SHADER);
+	snakeShader.LoadShader();
 
 	guiShader.RegisterAttribute("position", 0);
 	guiShader.RegisterAttribute("texCoords", 1);
@@ -676,13 +690,10 @@ void setupEntities() {
 	renderer.addToRenderer(water->waterRenderMode);
 
 	/*
-	scissors = new Entity();
 	scissorUnit = new BatchUnit();
-	BufferObject* scissorVerts = new BufferObject(floatProps, 0, ScissorvertexCount, ScissorVertices);
-	BufferObject* scissorNorms = new BufferObject(floatProps, 1, ScissorvertexCount, scissorNormals);
-	scissors->registerBufferObject(scissorVerts);
-	scissors->registerBufferObject(scissorNorms);
-	scissors->createEntity(scissorIndices, ScissorindexCount);
+
+	std::vector<Entity*> *scisEnt = ModelLoader::readModel("./res/entities/Scissors.obj");
+	scissors = (*scisEnt)[0];
 	scissors->uniforms.push_back(uniformData(entityShader.uniformTable.at(0)->uniformLocation, &scissorUnit->transformationMatrix,
 			BoilerPlate::Shaders::Shader::loadMat42));
 	scissorRenderer = RenderMode(GL_TRIANGLES, entityShader);
@@ -693,7 +704,7 @@ void setupEntities() {
 
 
 	Texture *mainTexture = new Texture();
-	mainTexture->texID = postProcessPipeline->getOutputBuffer()->colour_attachments[0];//mainFrameBuffer->colour_attachments[0];
+	mainTexture->texID = postProcessPipeline->getOutputBuffer()->colour_attachments[0];
 	mainTexture->registerParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	mainTexture->registerParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	mainTexture->target = GL_TEXTURE_2D;
@@ -711,7 +722,22 @@ void setupEntities() {
 	testTexRenderer.entityList.push_back(testTex);
 	guiRenderer.addToRenderer(&testTexRenderer);
 
-	testPSystem = new ParticleSystem(30000, cameraUBO);
+	snake = new Entity();
+	snakeUnit = new BatchUnit();
+	std::vector<Entity*> *snakeEnt = ModelLoader::readModel(snakeFile);
+	(*snakeEnt)[0]->uniforms.push_back(uniformData(snakeShader.uniformTable.at(0)->uniformLocation, &snakeUnit->transformationMatrix,
+		BoilerPlate::Shaders::Shader::loadMat42));
+	(*snakeEnt)[0]->uniforms.push_back(uniformData(snakeShader.uniformTable.at(1)->uniformLocation, &timeytime,
+		BoilerPlate::Shaders::Shader::loadFloat2));
+
+	snakeRenderer = RenderMode(GL_TRIANGLES, snakeShader);
+	snakeRenderer.entityList.push_back((*snakeEnt)[0]);
+	(*snakeEnt)[0]->units.push_back(snakeUnit);
+	renderer.addToRenderer(&snakeRenderer);
+	snakeUnit->transformationMatrix = glm::mat4();
+	snakePos = glm::vec3(0, 0, 0);
+
+	testPSystem = new ParticleSystem(300, cameraUBO);
 	renderer.addToRenderer(testPSystem->getRenderMode());
 }
 

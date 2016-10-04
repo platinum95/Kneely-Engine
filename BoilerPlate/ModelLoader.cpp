@@ -26,19 +26,18 @@ static const BoilerPlate::Properties::BufferObjectProperties floatProps{
 ModelLoader::ModelLoader() {
 }
 
-std::vector<Entity*> ModelLoader::readModel(const char * filePath) {
-	std::vector<Entity*> MeshVec = std::vector<Entity*>();
+std::vector<Entity*> *ModelLoader::readModel(const char * filePath) {
+	std::vector<Entity*> *MeshVec = new std::vector<Entity*>();
 	std::vector<BoilerPlate::Properties::EntityProperties> EntPropVec = std::vector<BoilerPlate::Properties::EntityProperties>();
-	Assimp::Importer import;
-	const struct aiScene* scene = import.ReadFile(filePath, aiProcess_Triangulate | aiProcess_FlipUVs);
+	Assimp::Importer *import = new Assimp::Importer;
+	const struct aiScene* scene = import->ReadFile(filePath, aiProcess_Triangulate | aiProcess_FlipUVs);
 	if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
-		std::cout << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
+		std::cout << "ERROR::ASSIMP::" << import->GetErrorString() << std::endl;
 		return MeshVec;
 	}
 	std::string directory = std::string(filePath).substr(0, std::string(filePath).find_last_of('/'));
 	
 	processNode(scene->mRootNode, scene, MeshVec);
-
 
 	return MeshVec;
 }
@@ -147,11 +146,11 @@ std::vector<Texture*> ModelLoader::loadMaterialTextures(aiMaterial* mat, aiTextu
 	return textures;
 }
 
-void ModelLoader::processNode(aiNode* node, const aiScene* scene, std::vector<Entity*> &propList) {
+void ModelLoader::processNode(aiNode* node, const aiScene* scene, std::vector<Entity*> *propList) {
 	// Process all the node's meshes (if any)
 	for (GLuint i = 0; i < node->mNumMeshes; i++) {
 		aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
-		propList.push_back(processMesh(*mesh, scene));
+		propList->push_back(processMesh(*mesh, scene));
 	}
 	// Then do the same for each of its children
 	for (GLuint i = 0; i < node->mNumChildren; i++) {

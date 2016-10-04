@@ -70,7 +70,7 @@ BoilerPlate::Properties::displayProperties displayProps = {
 
 BoilerPlate::Properties::GLFWproperties glfwProps;
 BoilerPlate::Properties::GLEWproperties glewProps;
-BoilerPlate::Shaders::Shader sphereShader, groundShader2, normalShader, skyboxShader, entityShader, guiShader, waterShader;
+BoilerPlate::Shaders::Shader sphereShader, groundShader2, normalShader, skyboxShader, entityShader, guiShader, waterShader, snakeShader;
 BoilerPlate::Maths::vec3 eye(0, 0, 0);
 BoilerPlate::Physics::DynamicEntity *player, *PhysicsCock;
 Framebuffer *reflectionFBO, *refractionFBO;
@@ -90,8 +90,9 @@ const char *skyboxVPath = "./res/shaders/skyboxVShader.glsl", *skyboxFPath = "./
 const char *entityVPath = "./res/shaders/entityVShader.glsl", *entityFPath = "./res/shaders/entityFShader.glsl";
 const char *guiVPath = "./res/shaders/guiVShader.glsl", *guiFPath = "./res/shaders/guiFShader.glsl";
 const char *waterVPath = "./res/shaders/waterVShader.glsl", *waterFPath = "./res/shaders/waterFShader.glsl";
-Entity *sphere, *ground, *scissors, *testTex, *tree;
-BatchUnit *groundGroup, *scissorUnit, *treeUnit;
+const char *snakeVPath = "./res/shaders/snakeVShader.glsl", *snakeFPath = "./res/shaders/snakeFShader.glsl";
+Entity *sphere, *ground, *scissors, *testTex, *tree, *snake;
+BatchUnit *groundGroup, *scissorUnit, *treeUnit, *snakeUnit;
 Skybox *skybox;
 Texture *groundTex;
 Camera camera;
@@ -103,6 +104,7 @@ glm::vec3 cockPos(0, 0, 0);
 
 MouseHandler *mouse;
 void updateActiveEntities();
+float timeytime = 0;
 
 PostProcessing *postProcessPipeline;
 WAV_File* testFile;
@@ -112,6 +114,8 @@ bool sendWave = false;
 float waveAlpha = 0.0;
 glm::mat4 translation[25];
 glm::vec4 clipPlane = glm::vec4(0, -1, 0, 8);
+
+glm::vec3 snakePos;
 
 Framebuffer *mainFrameBuffer, *toScreenBuffer;
 
@@ -164,7 +168,7 @@ int wireframe = 0, fillType = GL_LINE;
 
 uint particle_timing_id, physics_timing_id;
 
-
+const char* snakeFile = "./res/entities/snake.obj";
 
 float waterPlaneTex[8] = {
 	0, 1,
@@ -241,7 +245,7 @@ BufferObject *sphereVerticesBO;
 WaterPackage *waterPackage;
 
 uniformData timeUniform, projectionUniform, viewUniform, timeDiffUniform, waveformUniform, boxMVP;
-RenderMode sphereRenderer, normalRenderer, skyboxRenderer, groundRenderer, scissorRenderer, testTexRenderer, waterRenderer, treeRenderer;
+RenderMode sphereRenderer, normalRenderer, skyboxRenderer, groundRenderer, scissorRenderer, testTexRenderer, waterRenderer, treeRenderer, snakeRenderer;
 
 Renderer renderer, guiRenderer;
 
