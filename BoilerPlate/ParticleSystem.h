@@ -10,17 +10,22 @@ struct ParticlePack {
 	glm::mat4 transformation_matrix;
 	float time;
 	uint particle_count;
+	glm::vec4 emitter_pos;
+	glm::vec3 base_direction;
 };
 
 
 class ParticleSystem {
 public:
 	ParticleSystem(uint Particle_Count, uniformData *cameraUBO);
+	ParticleSystem(uint Particle_Count, uniformData *cameraUBO, glm::vec3 base_direction);
 	~ParticleSystem();
 
 	
 	void UpdateParticleSystem(float time_passed);
-
+	void UpdateEmitterPos(glm::vec3 pos);
+	void MoveEmitterPos(glm::vec3 pos);
+	void UpdateBaseDirection(glm::vec3 direction);
 	static void RenderParticleSystem(RenderMode *rm);
 
 	RenderMode* getRenderMode();
@@ -31,7 +36,7 @@ private:
 	uniformData *time, *emitter_pos;
 	float timeVal;
 	void CreateShader(uniformData *cameraUBO);
-	void CreateParticleSystem(uint particle_count);
+	void CreateParticleSystem(uint particle_count, glm::vec3 base_direction);
 	void SetupBuffers();
 	const char* DEFAULT_FRAG_PATH = "res/shaders/ParticleFragmentDefaultShader.glsl";
 	const char* DEFAULT_VERT_PATH = "res/shaders/ParticleVertexDefaultShader.glsl";

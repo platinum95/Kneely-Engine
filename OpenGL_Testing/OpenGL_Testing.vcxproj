@@ -168,6 +168,8 @@
     <None Include="res\shaders\normalVShader.glsl" />
     <None Include="res\shaders\skyboxFShader.glsl" />
     <None Include="res\shaders\skyboxVShader.glsl" />
+    <None Include="res\shaders\snakeFShader.glsl" />
+    <None Include="res\shaders\snakeVShader.glsl" />
     <None Include="res\shaders\sphereFShader.glsl" />
     <None Include="res\shaders\sphereVShader.glsl" />
     <None Include="res\shaders\waterFShader.glsl" />

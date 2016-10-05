@@ -179,6 +179,10 @@ void updateView() {
 	timeytime += 0.15f;
 	snakePos.z -= 0.00015f;
 	snakeUnit->transformationMatrix = glm::translate(snakeUnit->transformationMatrix, snakePos);
+	glm::vec4 basePos(0, 0, 0, 1);
+	glm::vec4 newEmitterPos = snakeUnit->transformationMatrix * basePos;
+	newEmitterPos += glm::vec4(0, 3.0, 4.5, 0);
+	testPSystem->UpdateEmitterPos(newEmitterPos);
 }
 
 void render() {	
@@ -737,7 +741,7 @@ void setupEntities() {
 	snakeUnit->transformationMatrix = glm::mat4();
 	snakePos = glm::vec3(0, 0, 0);
 
-	testPSystem = new ParticleSystem(300, cameraUBO);
+	testPSystem = new ParticleSystem(30000, cameraUBO, glm::vec3(0, 0, 10));
 	renderer.addToRenderer(testPSystem->getRenderMode());
 }
 
