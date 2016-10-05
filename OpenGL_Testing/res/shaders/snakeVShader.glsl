@@ -26,14 +26,20 @@ layout (std140) uniform clip_plane{
 	vec4 plane;
 };
 
+float radToPi(float rad){
+	return rad * 57.6;
+}
+
 void main(){
 	float zPos = position.z;
 	pass_time = time;
 	float timey = mod(time, 6.28);
-	pass_colour = vec3(mod(timey * position.z * 2.0, 1.0), mod(timey * position.z /2.0, 1.0), timey * position.y);
+	float sinBase = 0.03 * zPos + timey*0.02;
+	float beta = 0.3;
+	pass_colour = vec3(sin(radToPi(sinBase + 0)) + beta, sin(radToPi(sinBase + 2)) + beta  , sin(radToPi(sinBase + 4))) + beta;
 	float sinVal = position.z - timey;
-	float offset = 2.0 * sin(sinVal);
-	float offsetC = 2.0 * cos(sinVal );
+	float offset = 0.7 * sin(sinVal);
+	float offsetC = 2.0 * cos(sinVal);
 	vec3 offsetPos = position;
 	offsetPos.y += offset;
 	offsetPos.x += offsetC;

@@ -26,7 +26,8 @@ void main(){
 	float brightness = max(nDotl, 0.2);
 	vec3 diffuse = vec3(brightness, brightness, brightness) * pass_colour;
 	FragColor = vec4(diffuse, 1.0);
-	BrightColor = vec4(0, 0, 0, 1);
+	BrightColor = vec4(diffuse, 1);
+
 	
 }
 
