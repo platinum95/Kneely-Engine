@@ -1,3 +1,5 @@
-﻿LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
-  OpenGL_Testing.vcxproj -> \\134.226.32.3\ugrad\omaolaip\My Documents\Visual Studio 2015\Projects\Kneely-Engine\Debug\OpenGL_Testing.exe
-  OpenGL_Testing.vcxproj -> \\134.226.32.3\ugrad\omaolaip\My Documents\Visual Studio 2015\Projects\Kneely-Engine\Debug\OpenGL_Testing.pdb (Full PDB)
+﻿Build started 05/10/2016 23:45:58.
+
+Build succeeded.
+
+Time Elapsed 00:00:00.00

@@ -1,6 +1,6 @@
 #include "PhysicsEntity.h"
 #include "PhysicsConstants.h"
-
+#include "glm/gtx/transform.hpp"
 
 namespace BoilerPlate {
 	namespace Physics {
@@ -10,6 +10,7 @@ namespace BoilerPlate {
 			position = glm::vec3(0, 0, 0);
 			forces = glm::vec3(0, 0, 0);
 			rotation = glm::vec3(0, 0, 0);
+			rotationMat = glm::mat4(1.0);
 			mass = 20;
 		}
 
@@ -18,6 +19,7 @@ namespace BoilerPlate {
 			position = pos;
 			forces = glm::vec3(0, 0, 0);
 			rotation = rot;
+			rotationMat = glm::mat4(1.0);
 			mass = 20;
 		}
 		PhysicsEntity::PhysicsEntity(){
@@ -25,7 +27,24 @@ namespace BoilerPlate {
 			position = glm::vec3(0, 0, 0);
 			forces = glm::vec3(0, 0, 0);
 			rotation = glm::vec3(0, 0, 0);
+			rotationMat = glm::mat4(1.0);
+
 			mass = 20;
+		}
+
+		void PhysicsEntity::rotate(glm::vec3 axis, float angle) {
+			rotationMat = glm::rotate(angle, axis);
+			right = rotationMat[0];
+			up = rotationMat[1];
+			forward = rotationMat[2];
+//			glm::mat4 currentBasis = glm::mat4(glm::vec4(right, 0), glm::vec4(up, 0), glm::vec4(forward, 0), glm::vec4(0, 0, 0, 0));
+//			glm::mat4 newBasis = rotation * currentBasis;
+//			newBasis.
+
+		}
+
+		void PhysicsEntity::ChangeBasis(glm::vec3 _right, glm::vec3 _up, glm::vec3 _forward) {
+			rotationMat = glm::mat4(glm::vec4(_right, 0), glm::vec4(_up, 0),  glm::vec4(_forward, 0), glm::vec4(0, 0, 0, 1));
 		}
 
 		void PhysicsEntity::addForce(glm::vec3 _forces) {

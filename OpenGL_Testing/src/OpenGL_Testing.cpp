@@ -142,19 +142,12 @@ void updateView() {
 	if (spaceKey->isDownDown) {
 		player->addForce(glm::vec3(0, amount, 0));
 	}
-	if (upCursor->isDownDown) {
-		PhysicsCock->addForce(glm::vec3(1000, 0, 0));
-	}
-	if (downCursor->isDownDown) {
-		PhysicsCock->addForce(glm::vec3(-1000, 0, 0));
-	}
 	
 	std::chrono::nanoseconds physics_diff_nano = Timing::getTimeDiff<std::chrono::nanoseconds>(physics_timing_id);
 	double physics_diff_double = physics_diff_nano.count() / 1000000000.0;
 
 	terrain->updateState(camera.position);
 	player->update((float) physics_diff_double);
-	PhysicsCock->update((float) physics_diff_double);
 	camera.position = player->position;
 
 
@@ -175,14 +168,14 @@ void updateView() {
 	std::chrono::nanoseconds ps_diff_nano = Timing::getTimeDiff<std::chrono::nanoseconds>(particle_timing_id);
 	double ps_diff_double = ps_diff_nano.count() / 1000000000.0;
 
-	testPSystem->UpdateParticleSystem((float) ps_diff_double);
+	updateSnakes();
 	timeytime += 0.15f;
-	snakePos.z -= 0.00015f;
-	snakeUnit->transformationMatrix = glm::translate(snakeUnit->transformationMatrix, snakePos);
+	/*
 	glm::vec4 basePos(0, 0, 0, 1);
-	glm::vec4 newEmitterPos = snakeUnit->transformationMatrix * basePos;
+	glm::vec4 newEmitterPos = snakeUnit[0].transformationMatrix * basePos;
 	newEmitterPos += glm::vec4(0, 3.0, 4.5, 0);
 	testPSystem->UpdateEmitterPos(newEmitterPos);
+	*/
 }
 
 void render() {	
@@ -278,8 +271,10 @@ void init() {
 
 	Timing::genTimingID(&particle_timing_id, 1);
 	Timing::genTimingID(&physics_timing_id, 1);
+	Timing::genTimingID(&snake_timing_id, 1);
 	Timing::start(particle_timing_id);
 	Timing::start(physics_timing_id);
+	Timing::start(snake_timing_id);
 }
 
 void setupShaders() {
@@ -470,7 +465,6 @@ void setupView() {
 	camera.yaw = 3.14f;
 
 	player = new BoilerPlate::Physics::DynamicEntity();
-	PhysicsCock = new BoilerPlate::Physics::DynamicEntity();
 
 	lighting.position[0] = 0.0f;
 	lighting.position[1] = 90.0f;
@@ -492,26 +486,26 @@ void updateViewProps() {
 
 void checkMouse(int action) {
 	if (mouse->isDown(GLFW_MOUSE_BUTTON_LEFT)) {
-		if (!isHeld) {
-			isHeld = true;
-			previousPos = mouse->getMousePosition();
-			lastClock = (float) clock();
+		if (!isMouseHeld) {
+			isMouseHeld = true;
+			previousMousePos = mouse->getMousePosition();
+			lastMouseClock = (float) clock();
 			return;
 		}
 		float currentClock = (float) clock();
-		float clockDiff = currentClock - lastClock;
+		float clockDiff = currentClock - lastMouseClock;
 
 		glm::vec2 currentPos = mouse->getMousePosition();
-		glm::vec2 posVector = currentPos - previousPos;
+		glm::vec2 posVector = currentPos - previousMousePos;
 		clockDiff = clockDiff == 0 ? 1 : clockDiff;
 		float magsPerClock = posVector.length() / clockDiff;
-		previousPos = currentPos;
-		lastClock = currentClock;
+		previousMousePos = currentPos;
+		lastMouseClock = currentClock;
 		camera.moveBy(posVector * (magsPerClock * 0.01f));
 	}
-	if (!mouse->isDown(0) && isHeld) {
-		previousPos = glm::vec2(0, 0);
-		isHeld = false;
+	if (!mouse->isDown(0) && isMouseHeld) {
+		previousMousePos = glm::vec2(0, 0);
+		isMouseHeld = false;
 	}
 
 }
@@ -727,22 +721,22 @@ void setupEntities() {
 	guiRenderer.addToRenderer(&testTexRenderer);
 
 	snake = new Entity();
-	snakeUnit = new BatchUnit();
 	std::vector<Entity*> *snakeEnt = ModelLoader::readModel(snakeFile);
-	(*snakeEnt)[0]->uniforms.push_back(uniformData(snakeShader.uniformTable.at(0)->uniformLocation, &snakeUnit->transformationMatrix,
-		BoilerPlate::Shaders::Shader::loadMat42));
 	(*snakeEnt)[0]->uniforms.push_back(uniformData(snakeShader.uniformTable.at(1)->uniformLocation, &timeytime,
 		BoilerPlate::Shaders::Shader::loadFloat2));
-
+	(*snakeEnt)[0]->transformationLocation = snakeShader.uniformTable.at(0)->uniformLocation;
 	snakeRenderer = RenderMode(GL_TRIANGLES, snakeShader);
 	snakeRenderer.entityList.push_back((*snakeEnt)[0]);
-	(*snakeEnt)[0]->units.push_back(snakeUnit);
-	renderer.addToRenderer(&snakeRenderer);
-	snakeUnit->transformationMatrix = glm::mat4();
-	snakePos = glm::vec3(0, 0, 0);
+	snakes = std::vector<Snake*>(30);
+	for (int i = 0; i < 30; i++) {
+		snakes[i] = new Snake(cameraUBO, renderer);
+		(*snakeEnt)[0]->units.push_back(snakes[i]->getUnit());
+		
+	}
 
-	testPSystem = new ParticleSystem(30000, cameraUBO, glm::vec3(0, 0, 10));
-	renderer.addToRenderer(testPSystem->getRenderMode());
+	renderer.addToRenderer(&snakeRenderer);
+	
+	
 }
 
 void cleanup() {
@@ -752,6 +746,17 @@ void cleanup() {
 	delete sphere;
 	remove("./temp");
 	delete water;
+}
+
+
+
+void updateSnakes() {
+	float timeDiff = Timing::getTimeDiff<std::chrono::nanoseconds>(snake_timing_id).count();
+	timeDiff /= 1000000000.0f;
+	
+	for (int i = 0; i < 30; i++) {
+		snakes[i]->updateSnake(timeDiff);
+	}
 }
 
 void changeWireframe(void* nothiung) {

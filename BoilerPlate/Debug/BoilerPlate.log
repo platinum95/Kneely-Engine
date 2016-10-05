@@ -1,40 +1,5 @@
-﻿  AudioEntity.cpp
-  AudioPlate.cpp
-  BinaryLoader.cpp
-  BoilerPlate.cpp
-  Camera.cpp
-  Constants.cpp
-  Entity.cpp
-  Framebuffer.cpp
-  ImageLoader.cpp
-  KeyHandler.cpp
-  LoadAudio.cpp
-  lodepng.cpp
-  Maths.cpp
-  ModelLoader.cpp
-  MouseHandler.cpp
-  ObjLoader.cpp
-  ParticleSystem.cpp
-  PhysicsConstants.cpp
-  PhysicsEntity.cpp
-  PhysicsWorld.cpp
-  PostProcessing.cpp
-  Properties.cpp
-  Renderer.cpp
-  Shader.cpp
-  Skybox.cpp
-  Terrain.cpp
-  TerrainGenerator.cpp
-  Texture.cpp
-  Timer.cpp
-  Timing.cpp
-  Water.cpp
-openal32.lib(OpenAL32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
-openal32.lib(OpenAL32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-libsndfile.lib(libsndfile-1.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
-libsndfile.lib(libsndfile-1.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-assimpD.lib(assimp-vc140-mt.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
-assimpD.lib(assimp-vc140-mt.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-ModelLoader.obj : warning LNK4006: "public: enum aiReturn __thiscall aiMaterial::GetTexture(enum aiTextureType,unsigned int,struct aiString *,enum aiTextureMapping *,unsigned int *,float *,enum aiTextureOp *,enum aiTextureMapMode *)const " (?GetTexture@aiMaterial@@QBE?AW4aiReturn@@W4aiTextureType@@IPAUaiString@@PAW4aiTextureMapping@@PAIPAMPAW4aiTextureOp@@PAW4aiTextureMapMode@@@Z) already defined in assimpD.lib(assimp-vc140-mt.dll); second definition ignored
-ModelLoader.obj : warning LNK4006: "public: unsigned int __thiscall aiMaterial::GetTextureCount(enum aiTextureType)const " (?GetTextureCount@aiMaterial@@QBEIW4aiTextureType@@@Z) already defined in assimpD.lib(assimp-vc140-mt.dll); second definition ignored
-  BoilerPlate.vcxproj -> \\134.226.32.3\ugrad\omaolaip\My Documents\Visual Studio 2015\Projects\Kneely-Engine\\libsx86\BoilerPlate.lib
+﻿Build started 05/10/2016 23:45:58.
+
+Build succeeded.
+
+Time Elapsed 00:00:00.00
