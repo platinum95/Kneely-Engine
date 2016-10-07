@@ -55,11 +55,13 @@ Terrain::Terrain(float worldSize, unsigned int meshSize, const char* filepath, B
 	TerrainRenderMode = new RenderMode(GL_TRIANGLES, groundShader);
 	TerrainRenderMode->entityList.push_back(chunkEntity);
 	TerrainRenderMode->p = &Terrain::RenderTerrain;
-
+	meshDataHolder = meshData;
+	meshVBOHolder = meshVBOs;
 }
 
 
 Terrain::~Terrain() {
+	
 }
 
 void Terrain::generateChunk(int xPos, int zPos) {
@@ -227,6 +229,11 @@ void Terrain::RenderTerrain(RenderMode* rm) {
 	
 
 	rm->shader.stopShader();
+}
+
+void Terrain::clearMeshData() {
+	delete[] meshDataHolder;
+	BinaryLoader::freeData(meshVBOHolder);
 }
 
 
@@ -410,6 +417,8 @@ void Terrain::loadChunk(TerrainChunk* tc){
 	tc->normalsBO->data = height[1]->data;
 	loadVBO(tc->heightBO);
 	loadVBO(tc->normalsBO);
+//	loader.freeData(height);
+	free(height[1]->data);
 	tc->loaded = true;
 
 }

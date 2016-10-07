@@ -33,10 +33,8 @@ void ShowFps(GLFWwindow *pWindow) {
 
 int main(){
 	int beatCount = 63;
-	changeFrameTimer = new Timer(EXT_TIMER, false);
+	changeFrameTimer = new Timer(EXT_TIMER, true);
 	changeFrameTimer->addEvent(new TimerEvent(&changeWireframe, nullptr, 11.52110));
-	//changeFrameTimer->addEvent(new TimerEvent(&enableClip, nullptr, 75.2));
-	//changeFrameTimer->addEvent(new TimerEvent(&disableSphere, nullptr, 76));
 	init();
 	startingTime = glfwGetTime();
 	changeFrameTime = startingTime + 5;
@@ -73,8 +71,10 @@ int main(){
 				beatCount++;
 				if (beatCount == 65)
 					enableClip(NULL);
-				if (beatCount == 66)
+				if (beatCount == 66) {
 					disableSphere(NULL);
+					changeFrameTimer->end();
+				}
 				timeSinceWave[0] = *timey;
 				timeSinceWave[1] = timeSinceWave[0] + 3;
 				if (waveAlpha < 1)
@@ -651,9 +651,10 @@ void setupEntities() {
 	terrain->chunkEntity->createEntity(groundTest2[0]->data, groundTest2[0]->size);
 	terrain->chunkEntity->active = false;
 	terrain->chunkEntity->transformationLocation = groundShader2.uniformTable.at(0)->uniformLocation;
+	terrain->clearMeshData();
 
-
-
+	loader.freeData(groundTest2);
+	loader.freeData(groundTest);
 
 	double start = clock();
 	std::cout << "Start gen: " << start << "\n";

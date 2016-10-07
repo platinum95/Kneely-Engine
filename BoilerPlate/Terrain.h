@@ -32,7 +32,7 @@ public:
 	void loadVBO(BufferObject* BO);
 	static void RenderTerrain(RenderMode*);
 	RenderMode *TerrainRenderMode;
-
+	void clearMeshData();
 
 	Entity *chunkEntity;
 private:
@@ -49,6 +49,7 @@ private:
 	void saveChunk(TerrainChunk*);
 	void unloadChunk(TerrainChunk*);
 	std::string getFilename(int x, int z);
-
+	float* meshDataHolder;
+	std::vector<BufferObject*> meshVBOHolder;
 };
 

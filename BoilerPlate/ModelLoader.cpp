@@ -121,6 +121,13 @@ Entity *ModelLoader::processMesh(aiMesh inMesh, const aiScene* inScene) {
 	newEnt->registerBufferObject(newVert);
 	newEnt->registerBufferObject(newNorms);
 	newEnt->createEntity(newProp.indices, newProp.indexSize);
+	delete[] newProp.indices;
+	delete[] newProp.vertices;
+	delete newVert;
+	if (inMesh.HasNormals()) {
+		delete[] newProp.normals;
+		delete newNorms;
+	}
 
 	return newEnt;
 }

@@ -6,7 +6,7 @@ const unsigned int RAW_HEADER_SIZE = 3 * sizeof(unsigned int);
 struct ImageData {
 	unsigned int width, height, dataSize;
 	void* data;
-	std::vector<unsigned char> imageData;
+//	std::vector<unsigned char> imageData;
 
 	~ImageData();
 };

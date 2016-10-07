@@ -180,13 +180,13 @@ void BinaryLoader::createFile(const char* outFile, std::vector<BufferObject> bos
 void BinaryLoader::freeData(std::vector<BufferObject*> list) {
 
 	for (BufferObject *BO : list) {
-		delete(BO->data);
+		free(BO->data);
 	}
 }
 
 void BinaryLoader::freeData(BufferObject* toFree) {
 
-	delete toFree->data;
+	free(toFree->data);
 }
 
 BinaryLoader::~BinaryLoader() {

@@ -89,7 +89,19 @@ void ParticleSystem::CreateParticleSystem(uint particle_count, glm::vec3 base_di
 	pPack->particle_count = particle_count;
 	timeVal = 0;
 
-	delete init_velocity_data, init_time_data, init_size_data, init_colour_data, init_opacity_data, lifetime_data;
+	delete[] init_velocity_data; 
+	delete[] init_time_data;
+	delete[] init_size_data;
+	delete[] init_colour_data;
+	delete[] init_opacity_data; 
+	delete[] lifetime_data;
+
+	delete initial_velocity_BO;
+	delete initial_time_BO;
+	delete initial_size_BO;
+	delete initial_colour_BO;
+	delete initial_opacity_BO;
+	delete lifetime_BO;
 
 }
 

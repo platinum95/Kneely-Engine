@@ -72,15 +72,20 @@ void Timer::checkEvents() {
 }
 
 void Timer::checkEventsSorted() {
-	if (events.size() > 0) {
-		//double dur = currentTime - events[0]->time;
-		//std::chrono::duration<double> cdur(dur);
-
-//		if (dur < -2)
-			//std::this_thread::sleep_for(cdur);
-		
-
+	if (events.size() <= 0) {
+		runThread = false;
+		return;
 	}
+	double timeDiff =  events[0]->time - currentTime;
+	if (timeDiff > 0.2)
+		std::this_thread::sleep_for(std::chrono::milliseconds((int) (timeDiff * 1000.0)));
+	timeDiff = events[0]->time - currentTime;
+	if (timeDiff < 0.0) {
+		events[0]->p(events[0]->data);
+		events.erase(events.begin());
+	}
+	
+	
 }
 
 void Timer::checkTimesSelf() {

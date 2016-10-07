@@ -23,7 +23,7 @@ ImageData ImageLoader::loadPNG(const char * filePath) {
 		height,
 		imageData.size() * sizeof(unsigned char),
 		data,
-		imageData
+//		imageData
 	};
 	//Delete this stuff
 
@@ -48,7 +48,7 @@ ImageData ImageLoader::loadRAW(const char * filePath) {
 		header.height,
 		header.dataSize,
 		data,
-		imageData
+	//	imageData
 	};
 	return output;
 }
@@ -64,13 +64,13 @@ void ImageLoader::PNGtoRAW(const char * filePath, const char * outFilePath) {
 	FILE *outFile;
 	fopen_s(&outFile, outFilePath, "wb");
 	fwrite(&fileHeader, 3 * sizeof(unsigned int), 1, outFile);
-	fwrite(&pngData.imageData[0], pngData.dataSize, 1, outFile);
+	//fwrite(&pngData.imageData[0], pngData.dataSize, 1, outFile);
 	fclose(outFile);
 }
 
 void ImageLoader::freeData(ImageData in) {
-	in.imageData.clear();
-	delete in.data;
+//	in.imageData.clear();
+	delete[] in.data;
 }
 
 
@@ -78,7 +78,7 @@ ImageData::~ImageData() {
 	if (data != NULL) {
 	//	delete data;
 	}
-	if (imageData.size() > 0) {
-		imageData.clear();
-	}
+//	if (imageData.size() > 0) {
+//		imageData.clear();
+//	}
 }
