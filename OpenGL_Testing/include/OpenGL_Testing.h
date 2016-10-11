@@ -157,7 +157,6 @@ Skybox *skybox;
 Texture *groundTex;
 Water *water;
 WaterPackage *waterPackage;
-ParticleSystem *testPSystem;
 
 BufferObject *sphereVerticesBO;
 uniformData *cameraUBO, *waveformUBO, *lightingUBO, *clipUBO;
@@ -198,7 +197,7 @@ BoilerPlate::Properties::displayProperties displayProps = {
 	"Test",		//Title
 	NULL,		//Monitor
 	NULL,		//Shared context
-	false		//Fullscreen
+	true		//Fullscreen
 };
 
 

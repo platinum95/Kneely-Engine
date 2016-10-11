@@ -28,7 +28,7 @@ void Snake::updateSnake(float timeDiff) {
 	snakeDirDeriv += snakeDirSecDeriv * timeDiff;
 	snakeDir += snakeDirDeriv * timeDiff;
 	snakeDir = glm::normalize(snakeDir);
-	snakePos += glm::vec3(snakeDir.x * 5*  timeDiff, snakeDir.y * 5 * timeDiff, snakeDir.z * 5 * timeDiff);
+	snakePos -= glm::vec3(snakeDir.x * 5*  timeDiff, snakeDir.y * 5 * timeDiff, snakeDir.z * 5 * timeDiff);
 	snakeUnit.transformationMatrix = glm::mat4();
 
 	glm::vec3 y(0.0, -snakeDir.z, snakeDir.y);

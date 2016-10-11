@@ -38,7 +38,7 @@ std::vector<BufferObject*> BinaryLoader::readFile(const char * filepath) {
 	fileSize = size;
 	unsigned char *fileData = new unsigned char[size];
 	fclose(file);
-	fopen_s(&file, filepath, "r");
+	fopen_s(&file, filepath, "rb");
 	fread(fileData, 1, size, file);
 	memcpy(headerBlock, fileData, HEADER_SIZE);
 	

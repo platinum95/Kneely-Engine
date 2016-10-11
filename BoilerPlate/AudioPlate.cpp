@@ -9,7 +9,6 @@ AudioPlate::AudioPlate() {
 	if (device == NULL) {
 		return;
 	}
-	std::cout << "Star:2 " << clock() << std::endl;
 	ALCcontext* context = alcCreateContext(device, NULL);
 	if (context == NULL) {
 		return;

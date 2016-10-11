@@ -57,11 +57,12 @@ Entity *ModelLoader::processMesh(aiMesh inMesh, const aiScene* inScene) {
 	int j = -1;
 	for (unsigned int i = 0; i < inMesh.mNumFaces; i++) {
 		aiFace face = inMesh.mFaces[i];
+		
 		for(unsigned int k = 0; k < face.mNumIndices; k++)
 			newProp.indices[++j] = face.mIndices[k];
 	}
 
-
+	
 	if (inMesh.HasPositions()) {
 		newProp.vertices = new float[inMesh.mNumVertices * 3];
 		int j = -1;

@@ -1,5 +1,35 @@
-﻿Build started 07/10/2016 13:57:08.
+﻿Build started 11/10/2016 22:49:26.
+     1>Project "D:\Projects\c++\VS2015\Kneely-Engine\OpenGL_Testing\OpenGL_Testing.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"D:\Projects\c++\VS2015\Kneely-Engine\include" /I"D:\Projects\c++\VS2015\Kneely-Engine\BoilerPlate" /I"D:\Projects\c++\VS2015\Kneely-Engine\OpenGL_Testing\include" /ZI /nologo /W3 /WX- /MP /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt src\Heartbeat.cpp src\OpenGL_Testing.cpp src\Snake.cpp src\SphereDistace.cpp
+         Heartbeat.cpp
+         OpenGL_Testing.cpp
+         Snake.cpp
+         SphereDistace.cpp
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(138): warning C4244: '=': conversion from '__int64' to 'double', possible loss of data
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(147): warning C4244: '=': conversion from '__int64' to 'double', possible loss of data
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(160): warning C4244: '=': conversion from '__int64' to 'double', possible loss of data
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(168): warning C4244: '=': conversion from '__int64' to 'double', possible loss of data
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(173): warning C4244: '=': conversion from '__int64' to 'double', possible loss of data
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(182): warning C4244: '=': conversion from '__int64' to 'double', possible loss of data
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(186): warning C4244: '=': conversion from '__int64' to 'double', possible loss of data
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(219): warning C4244: '=': conversion from '__int64' to 'double', possible loss of data
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(228): warning C4244: '=': conversion from '__int64' to 'double', possible loss of data
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(239): warning C4244: '=': conversion from '__int64' to 'double', possible loss of data
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(726): warning C4018: '<': signed/unsigned mismatch
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(746): warning C4244: 'initializing': conversion from '__int64' to 'float', possible loss of data
+     1>d:\projects\c++\vs2015\kneely-engine\opengl_testing\src\opengl_testing.cpp(749): warning C4018: '<': signed/unsigned mismatch
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\Projects\c++\VS2015\Kneely-Engine\Debug\OpenGL_Testing.exe" /INCREMENTAL /NOLOGO /LIBPATH:"D:\Projects\c++\VS2015\Kneely-Engine\libsx86" opengl32.lib BoilerPlate.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"D:\Projects\c++\VS2015\Kneely-Engine\Debug\OpenGL_Testing.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\Projects\c++\VS2015\Kneely-Engine\Debug\OpenGL_Testing.lib" /MACHINE:X86 /PROFILE Debug\Heartbeat.obj
+         Debug\OpenGL_Testing.obj
+         Debug\Snake.obj
+         Debug\SphereDistace.obj
+     1>LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/PROFILE' specification
+     1>Heartbeat.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+         OpenGL_Testing.vcxproj -> D:\Projects\c++\VS2015\Kneely-Engine\Debug\OpenGL_Testing.exe
+     1>Done Building Project "D:\Projects\c++\VS2015\Kneely-Engine\OpenGL_Testing\OpenGL_Testing.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.00
+Time Elapsed 00:00:02.50

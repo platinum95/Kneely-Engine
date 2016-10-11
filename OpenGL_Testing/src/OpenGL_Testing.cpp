@@ -9,8 +9,6 @@
 unsigned int ScissorvertexCount = 93132;
 unsigned int ScissorindexCount = 136572;
 
-
-
 //65 or 66
 
 void ShowFps(GLFWwindow *pWindow) {
@@ -29,7 +27,6 @@ void ShowFps(GLFWwindow *pWindow) {
 		DisplayFrameTime = (float) WorldTime;
 	}
 }
-
 
 int main(){
 	glfwProps = boiler.startGLFW(displayProps);
@@ -108,78 +105,6 @@ void updateActiveEntities() {
 			//	BU->active = true;
 		}
 
-}
-
-void updateView() {
-	updateViewProps();
-	checkMouse(0);
-	if(terrain->chunkEntity->active != groundOn){
-	//	terrain->chunkEntity->active = groundOn;
-	}
-	
-	
-	lighting.position[0] = camera.position.x;
-	lighting.position[1] = camera.position.y;
-	lighting.position[2] = camera.position.z;
-	lighting.colour[0] = 1.0f;//(sin(glfwGetTime()) + 1.0f)/2.0f * 0.8f + 0.2f;
-	lighting.colour[1] = 1.0f;//(cos(glfwGetTime()) + 1.0f)/2.0f + 0.2f;
-	lighting.colour[2] = 1.0f;// (sin(glfwGetTime()* 16.0f) + 1.0f) / 2.2f + 0.2f;
-	
-	glm::vec4 direction = camera.direction;
-	float amount = 500.0f;
-	if (forwardKey->isDownDown) {
-		player->addForce(glm::vec3(direction.x * amount, direction.y *amount, direction.z * amount));
-	}
-	if (backKey->isDownDown) {
-		player->addForce(glm::vec3(direction.x * -amount, direction.y *-amount, direction.z * -amount));
-		//camera.moveZ(-0.5);
-	}
-	glm::vec3 rDir = glm::vec3(direction);
-	rDir = glm::rotateY(rDir, glm::pi<float>() * 0.5f);
-	if (rightKey->isDownDown) {
-		player->addForce(glm::vec3(rDir.x * -amount, rDir.y *-amount, rDir.z * -amount));
-	}
-	if (leftKey->isDownDown) {
-		player->addForce(glm::vec3(rDir.x * amount, rDir.y *amount, rDir.z * amount));
-	}
-	if (spaceKey->isDownDown) {
-		player->addForce(glm::vec3(0, amount, 0));
-	}
-	
-	std::chrono::nanoseconds physics_diff_nano = Timing::getTimeDiff<std::chrono::nanoseconds>(physics_timing_id);
-	double physics_diff_double = physics_diff_nano.count() / 1000000000.0;
-
-	terrain->updateState(camera.position);
-	player->update((float) physics_diff_double);
-	camera.position = player->position;
-
-
-
-	if(player->position.y < terrain->getHeight(camera.position) + yOffset)
-		player->position.y += (terrain->getHeight(player->position) + yOffset) - player->position.y;
-
-
-	//roll is pitch - x
-	//yaw is yaw -y
-	
-
-	camera.updateCam();
-
-	if (camera.position.y < terrain->getHeight(camera.position) + yOffset)
-		camera.position.y += (terrain->getHeight(camera.position) + yOffset) - camera.position.y;
-
-	std::chrono::nanoseconds ps_diff_nano = Timing::getTimeDiff<std::chrono::nanoseconds>(particle_timing_id);
-	double ps_diff_double = ps_diff_nano.count() / 1000000000.0;
-	testPSystem->UpdateParticleSystem(ps_diff_double);
-
-	updateSnakes();
-	timeytime += 0.15f;
-	
-	glm::vec4 basePos(0, 0, 0, 1);
-	glm::vec4 newEmitterPos = snakes[0]->getUnit()->transformationMatrix * basePos;
-	newEmitterPos += glm::vec4(0, 3.0, 4.5, 0);
-	testPSystem->UpdateEmitterPos(newEmitterPos);
-	
 }
 
 void render() {	
@@ -467,8 +392,6 @@ void setupShaders() {
 	postProcessPipeline->RegisterEffect(BrightnessAdjust, bData);
 	postProcessPipeline->RegisterEffect(SaturationAdjust, sData);
 	postProcessPipeline->RegisterEffect(BloomEffect, bloomData);
-	Framebuffer *testBuffer = new Framebuffer();
-	testBuffer->genTextureAttachment();
 	postProcessPipeline->generatePostProcess(mainFrameBuffer);
 
 
@@ -512,6 +435,64 @@ void updateViewProps() {
 	projection = glm::perspective(fov2, aspectRatio, Near_Plane, Far_Plane);
 }
 
+void updateView() {
+	updateViewProps();
+	checkMouse(0);
+
+	lighting.position[0] = camera.position.x;
+	lighting.position[1] = camera.position.y;
+	lighting.position[2] = camera.position.z;
+	lighting.colour[0] = 1.0f;// (sin(glfwGetTime()) + 1.0f) / 2.0f * 0.8f + 0.2f;
+	lighting.colour[1] = 1.0f;//(cos(glfwGetTime()) + 1.0f)/2.0f + 0.2f;
+	lighting.colour[2] = 1.0f;// (sin(glfwGetTime()* 16.0f) + 1.0f) / 2.2f + 0.2f;
+
+	glm::vec4 direction = camera.direction;
+	float amount = 500.0f;
+	if (forwardKey->isDownDown) {
+		player->addForce(glm::vec3(direction.x * amount, direction.y *amount, direction.z * amount));
+	}
+	if (backKey->isDownDown) {
+		player->addForce(glm::vec3(direction.x * -amount, direction.y *-amount, direction.z * -amount));
+	}
+
+	glm::vec3 rDir = glm::vec3(direction);
+	rDir = glm::rotateY(rDir, glm::pi<float>() * 0.5f);
+	if (rightKey->isDownDown) {
+		player->addForce(glm::vec3(rDir.x * -amount, rDir.y *-amount, rDir.z * -amount));
+	}
+	if (leftKey->isDownDown) {
+		player->addForce(glm::vec3(rDir.x * amount, rDir.y *amount, rDir.z * amount));
+	}
+	if (spaceKey->isDownDown) {
+		player->addForce(glm::vec3(0, amount, 0));
+	}
+
+	std::chrono::nanoseconds physics_diff_nano = Timing::getTimeDiff<std::chrono::nanoseconds>(physics_timing_id);
+	double physics_diff_double = physics_diff_nano.count() / 1000000000.0;
+
+	terrain->updateState(camera.position);
+	player->update((float)physics_diff_double);
+	camera.position = player->position;
+
+
+
+	if (player->position.y < terrain->getHeight(camera.position) + yOffset)
+		player->position.y += (terrain->getHeight(player->position) + yOffset) - player->position.y;
+
+
+	//roll is pitch - x
+	//yaw is yaw -y
+
+
+	camera.updateCam();
+
+	if (camera.position.y < terrain->getHeight(camera.position) + yOffset)
+		camera.position.y += (terrain->getHeight(camera.position) + yOffset) - camera.position.y;
+
+	updateSnakes();
+	timeytime += 0.15f;
+
+}
 
 void checkMouse(int action) {
 	if (mouse->isDown(GLFW_MOUSE_BUTTON_LEFT)) {
@@ -539,6 +520,7 @@ void checkMouse(int action) {
 
 }
 
+/*
 BufferObject genTexShit() {
 	float* texCoordData = new float[256 * 256 * 2];
 	int arpos = 0;
@@ -560,8 +542,6 @@ BufferObject genTexShit() {
 }
 
 
-
-/*
 float* calcNorm(int x, int z, ImageData data) {
 	unsigned char* idata = (unsigned char*)data.data;
 	float heightL = getHeight(x - 1, z, idata);
@@ -600,30 +580,24 @@ BufferObject *getNormals(BoilerPlate::Properties::EntityProperties obj, ImageDat
 }
 
 */
+
 void setupEntities() {
-
-
-	BinaryLoader loader;
-	std::vector<BufferObject*> testList = loader.readFile("./res/entities/sphereEntity.bin");
-
-
-	testList[1]->update(floatProps, 0);
-	testList[2]->update(floatProps, 1);
-	testList[3]->update(floatProps, 2);
-
-	
 	renderer = Renderer();
 	
 	skybox = new Skybox(skyboxShader);
 	skybox->genTextures(skyboxFiles2);
 	renderer.addToRenderer(&skybox->renderMode);
 
+	std::vector<BufferObject*> SphereData = BinaryLoader::readFile("./res/entities/sphereEntity.bin");
+	SphereData[1]->update(floatProps, 0);
+	SphereData[2]->update(floatProps, 1);
+	SphereData[3]->update(floatProps, 2);
 
 	sphere = new Entity();
-	sphere->registerBufferObject(testList[1]);
-	sphere->registerBufferObject(testList[3]);
-	sphere->registerBufferObject(testList[2]);
-	sphere->createEntity(testList[0]->data, testList[0]->size);
+	sphere->registerBufferObject(SphereData[1]);
+	sphere->registerBufferObject(SphereData[3]);
+	sphere->registerBufferObject(SphereData[2]);
+	sphere->createEntity(SphereData[0]->data, SphereData[0]->size);
 	sphereRenderer = RenderMode(GL_TRIANGLES, sphereShader);
 	sphereRenderer.entityList.push_back(sphere);
 	sphere->uniforms.push_back(uniformData(sphereShader.uniformTable.at(0)->uniformLocation,
@@ -635,15 +609,10 @@ void setupEntities() {
 	sphere->units.push_back(new BatchUnit());
 	renderer.addToRenderer(&sphereRenderer);
 
-	loader.freeData(testList);
+	BinaryLoader::freeData(SphereData);
 
-	
-
-//  ImageLoader::PNGtoRAW("./res/images/waterDUDV.png", "./res/images/waterDUDV.raw");
-//	ImageLoader::PNGtoRAW("./res/images/water_normal.png", "./res/images/water_normal.raw");
 
 	ImageData grass = ImageLoader::loadRAW("./res/images/grass.raw");
-	//ImageData grass = ImageLoader::loadPNG("./res/images/imogen.png");
 	groundTex = new Texture(grass, GL_TEXTURE_2D);
 	groundTex->registerParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	groundTex->registerParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
@@ -653,21 +622,10 @@ void setupEntities() {
 	groundTex->updateTexture();
 	ImageLoader::freeData(grass);
 
-
-	
-	std::vector<BufferObject*> groundTest = loader.readFile("./res/entities/groundA.bin");
-	groundTest[1]->update(floatProps, 0);
-	groundTest[2]->update(floatProps, 2);
-	groundTest[3]->update(floatProps, 1);
-
-
-
 	TerrainGenerator::generateSeed();
 
-	std::vector<BufferObject*> groundTest2 = loader.readFile("./res/entities/groundA.bin");
+	std::vector<BufferObject*> groundTest2 = BinaryLoader::readFile("./res/entities/groundA.bin");
 	groundTest2[3]->update(floatProps, 2);
-
-	
 
 	terrain = new Terrain(256, 256, "./res/entities/groundA.bin", groundShader2);
 	terrain->chunkEntity->registerBufferObject(groundTest2[3]);
@@ -681,11 +639,10 @@ void setupEntities() {
 	terrain->chunkEntity->transformationLocation = groundShader2.uniformTable.at(0)->uniformLocation;
 	terrain->clearMeshData();
 
-	loader.freeData(groundTest2);
-	loader.freeData(groundTest);
+	BinaryLoader::freeData(groundTest2);
+
 
 	double start = clock();
-	std::cout << "Start gen: " << start << "\n";
 //	terrain->generateChunk(0, 0, 1, 2, 7);
 //	terrain->generateChunk(1, 0, 1, 2, 7, 0.1f, 1, 2);
 //	terrain->generateChunk(2, 0, 0.1f, 1, 2);
@@ -749,36 +706,29 @@ void setupEntities() {
 	testTexRenderer.entityList.push_back(testTex);
 	guiRenderer.addToRenderer(&testTexRenderer);
 
-	std::vector<BufferObject*> snakeBOList = loader.readFile("./res/entities/snake.bin");
+	std::vector<BufferObject*> snakeBOList = BinaryLoader::readFile("./res/entities/snake.bin");
 	snakeBOList[1]->update(floatProps, 0);
 	snakeBOList[2]->update(floatProps, 1);
 
-	std::vector<Entity*> *snakeEnt = ModelLoader::readModel(snakeFile);
-	snake = new Entity();// (*snakeEnt)[0];
+	snake = new Entity();
 	snake->registerBufferObject(snakeBOList[1]);
 	snake->registerBufferObject(snakeBOList[2]);
-	snake->createEntity(testList[0]->data, testList[0]->size/4);
+	snake->createEntity(snakeBOList[0]->data, snakeBOList[0]->size );
 
 	snake->uniforms.push_back(uniformData(snakeShader.uniformTable.at(1)->uniformLocation, &timeytime,
 		BoilerPlate::Shaders::Shader::loadFloat2));
 	snake->transformationLocation = snakeShader.uniformTable.at(0)->uniformLocation;
 	snakeRenderer = RenderMode(GL_TRIANGLES, snakeShader);
-	snakeRenderer.entityList.push_back((*snakeEnt)[0]);
+	snakeRenderer.entityList.push_back(snake);
 	snakes = std::vector<Snake*>(10);
 	for (int i = 0; i < snakes.size(); i++) {
 		snakes[i] = new Snake(cameraUBO);
 		snake->units.push_back(snakes[i]->getUnit());
 		renderer.addToRenderer(snakes[i]->getParticleSystem()->getRenderMode());
 	}
-
-	
 	renderer.addToRenderer(&snakeRenderer);
-	
-//	ModelLoader::freeData(snake);
-//	delete snake->VBOs[0];
+	BinaryLoader::freeData(snakeBOList);
 
-	testPSystem = new ParticleSystem(30000, cameraUBO, glm::vec3(0, 10, 0));
-//	renderer.addToRenderer(testPSystem->getRenderMode());
 }
 
 void cleanup() {
@@ -789,8 +739,6 @@ void cleanup() {
 	remove("./temp");
 	delete water;
 }
-
-
 
 void updateSnakes() {
 	float timeDiff = Timing::getTimeDiff<std::chrono::nanoseconds>(snake_timing_id).count();
