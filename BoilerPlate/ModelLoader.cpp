@@ -109,11 +109,6 @@ Entity *ModelLoader::processMesh(aiMesh inMesh, const aiScene* inScene) {
 		}
 	}
 	
-
-
-
-
-
 	newProp.indexSize;
 	newProp.vertexSize = inMesh.mNumVertices;
 	BufferObject* newVert = new BufferObject(floatProps, 0, newProp.vertexSize*3, newProp.vertices);
@@ -121,15 +116,15 @@ Entity *ModelLoader::processMesh(aiMesh inMesh, const aiScene* inScene) {
 	newEnt->registerBufferObject(newVert);
 	newEnt->registerBufferObject(newNorms);
 	newEnt->createEntity(newProp.indices, newProp.indexSize);
-	delete[] newProp.indices;
-	delete[] newProp.vertices;
-	delete newVert;
-	if (inMesh.HasNormals()) {
-		delete[] newProp.normals;
-		delete newNorms;
-	}
 
 	return newEnt;
+}
+void ModelLoader::freeData(Entity *_ent) {
+	for (BufferObject* BO : _ent->VBOs) {
+		delete[] BO->data;
+	//	delete BO;
+	}
+	delete[] _ent->indices;
 }
 
 std::vector<Texture*> ModelLoader::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) {

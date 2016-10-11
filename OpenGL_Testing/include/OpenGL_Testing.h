@@ -52,7 +52,8 @@
 
 //Functions
 int main();
-void init();
+void splashScreen();
+void Initialise();
 void render();
 void updateView();
 void setupShaders();
@@ -100,6 +101,10 @@ static bool clipOn = false;
 bool clippy = false;
 bool pauseRender = false;
 
+//Initialisation state
+bool InitialisationComplete = false;
+std::string currentJob = "";
+
 //Input variables
 MouseHandler *mouse;
 static glm::vec2 previousMousePos;
@@ -144,7 +149,7 @@ BoilerPlate::Shaders::Shader sphereShader, groundShader2, normalShader, skyboxSh
 BoilerPlate::Physics::DynamicEntity *player, physicSnakes[30];
 
 Entity *sphere, *ground, *scissors, *testTex, *snake;
-uint particle_timing_id, physics_timing_id, snake_timing_id;
+uint particle_timing_id, physics_timing_id, snake_timing_id, performance_checking_id;
 BatchUnit *groundGroup, *scissorUnit, *treeUnit, *snakeUnit;
 
 std::vector<Snake*> snakes;
@@ -152,6 +157,7 @@ Skybox *skybox;
 Texture *groundTex;
 Water *water;
 WaterPackage *waterPackage;
+ParticleSystem *testPSystem;
 
 BufferObject *sphereVerticesBO;
 uniformData *cameraUBO, *waveformUBO, *lightingUBO, *clipUBO;

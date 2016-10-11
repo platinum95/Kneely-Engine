@@ -18,15 +18,13 @@ ImageData ImageLoader::loadPNG(const char * filePath) {
 	
 	unsigned char* data = new unsigned char[imageData.size()];
 	memcpy(data, &imageData[0], imageData.size() * sizeof(unsigned char));
+	imageData.clear();
 	ImageData output = {
 		width,
 		height,
 		imageData.size() * sizeof(unsigned char),
 		data,
-//		imageData
 	};
-	//Delete this stuff
-
 
 	return output;
 }
@@ -69,7 +67,6 @@ void ImageLoader::PNGtoRAW(const char * filePath, const char * outFilePath) {
 }
 
 void ImageLoader::freeData(ImageData in) {
-//	in.imageData.clear();
 	delete[] in.data;
 }
 

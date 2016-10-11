@@ -6,14 +6,16 @@
 
 class Snake {
 public:
-	Snake(uniformData *CameraUBO, Renderer renderer);
+	Snake();
+	Snake(uniformData *CameraUBO);
 	~Snake();
 	void updateSnake(float timeDiff);
 	BatchUnit *getUnit();
+	ParticleSystem * getParticleSystem();
 
 private:
 	glm::vec3 snakePos, snakeDir, snakeDirDeriv, snakeDirSecDeriv;
 	BatchUnit snakeUnit;
-	ParticleSystem pSystem;
+	ParticleSystem *pSystem;
 };
 

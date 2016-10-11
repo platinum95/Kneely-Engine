@@ -95,14 +95,6 @@ void ParticleSystem::CreateParticleSystem(uint particle_count, glm::vec3 base_di
 	delete[] init_colour_data;
 	delete[] init_opacity_data; 
 	delete[] lifetime_data;
-
-	delete initial_velocity_BO;
-	delete initial_time_BO;
-	delete initial_size_BO;
-	delete initial_colour_BO;
-	delete initial_opacity_BO;
-	delete lifetime_BO;
-
 }
 
 void ParticleSystem::UpdateParticleSystem(float time_passed) {
@@ -116,6 +108,7 @@ void ParticleSystem::UpdateParticleSystem(float time_passed) {
 
 void ParticleSystem::UpdateEmitterPos(glm::vec3 pos){
 	pPack->emitter_pos = glm::vec4(pos, 1.0);
+
 }
 
 void ParticleSystem::MoveEmitterPos(glm::vec3 pos){
@@ -125,6 +118,11 @@ void ParticleSystem::MoveEmitterPos(glm::vec3 pos){
 void ParticleSystem::UpdateBaseDirection(glm::vec3 direction) {
 	pPack->base_direction = direction;
 }
+
+ParticlePack* ParticleSystem::getParticlePack() {
+	return this->pPack;
+}
+
 void ParticleSystem::RenderParticleSystem(RenderMode * rm) {
 	glEnable(GL_PROGRAM_POINT_SIZE);
 	glEnable(GL_BLEND);
@@ -142,7 +140,8 @@ void ParticleSystem::RenderParticleSystem(RenderMode * rm) {
 
 	BoilerPlate::Shaders::Shader::loadVec42(rm->shader.uniformTable[1]->uniformLocation, glm::value_ptr(pp->emitter_pos));
 	BoilerPlate::Shaders::Shader::loadVec32(rm->shader.uniformTable[2]->uniformLocation, glm::value_ptr(pp->base_direction));
-	
+	BoilerPlate::Shaders::Shader::loadMat42(rm->shader.uniformTable[3]->uniformLocation, glm::value_ptr(pp->transformation_matrix));
+
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 	glDrawArrays(GL_POINTS, 0, pp->particle_count);
@@ -168,6 +167,7 @@ void ParticleSystem::CreateShader(uniformData *cameraUBO) {
 	particleShader->RegisterUniform("time");
 	particleShader->RegisterUniform("emitter_position");
 	particleShader->RegisterUniform("base_direction");
+	particleShader->RegisterUniform("transformationMatrix");
 	particleShader->registerUBO(cameraUBO);
 	particleShader->addShaderType(DEFAULT_VERT_PATH, GL_VERTEX_SHADER);
 	particleShader->addShaderType(DEFAULT_FRAG_PATH, GL_FRAGMENT_SHADER);

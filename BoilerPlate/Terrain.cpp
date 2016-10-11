@@ -334,14 +334,14 @@ void Terrain::updateState(glm::vec3 worldPos){
 
 void Terrain::updateActiveChunks(){
 	int midX = currentChunkPosx, midZ = currentChunkPosz;
-	int aX = currentChunkPosx - 1, aZ = midZ - 1;
-	int bX = currentChunkPosx	 , bZ = midZ - 1;
-	int cX = currentChunkPosx + 1, cZ = midZ - 1;
-	int dX = currentChunkPosx + 1, dZ = midZ	;
-	int eX = currentChunkPosx + 1, eZ = midZ + 1;
-	int fX = currentChunkPosx	 , fZ = midZ + 1;
-	int gX = currentChunkPosx - 1, gZ = midZ + 1;
-	int hX = currentChunkPosx - 1, hZ = midZ 	;
+	int aX = midX - 1, aZ = midZ - 1;
+	int bX = midX,	   bZ = midZ - 1;
+	int cX = midX + 1, cZ = midZ - 1;
+	int dX = midX + 1, dZ = midZ	;
+	int eX = midX + 1, eZ = midZ + 1;
+	int fX = midX,	   fZ = midZ + 1;
+	int gX = midX - 1, gZ = midZ + 1;
+	int hX = midX - 1, hZ = midZ 	;
 
 	BatchUnit *newUnits[9];
 	for(int i = 0; i < 9; i++){
@@ -417,10 +417,20 @@ void Terrain::loadChunk(TerrainChunk* tc){
 	tc->normalsBO->data = height[1]->data;
 	loadVBO(tc->heightBO);
 	loadVBO(tc->normalsBO);
-//	loader.freeData(height);
-	free(height[1]->data);
+
+	free(tc->normalsBO->data);
 	tc->loaded = true;
 
+}
+
+void Terrain::loadChunkHeights(TerrainChunk* tc) {
+	std::string filename = getFilename(tc->xPos, tc->zPos);
+	BinaryLoader loader;
+	uint attribs[1] = { 0 };
+	std::vector<BufferObject*> height = loader.readFile(filename.c_str(), attribs, 1);
+	tc->heightBO->data = height[0]->data;
+	loadVBO(tc->heightBO);
+	tc->loaded = true;
 }
 void Terrain::saveChunk(TerrainChunk* tc){
 	std::string filename = getFilename(tc->xPos, tc->zPos);
@@ -429,13 +439,12 @@ void Terrain::saveChunk(TerrainChunk* tc){
 	bos.push_back(*(tc->heightBO));
 	bos.push_back(*(tc->normalsBO));
 	loader.createFile(filename.c_str(), bos);
-
 }
 
 void Terrain::unloadChunk(TerrainChunk* tc){
 	if(tc->loaded){
-		delete tc->heightBO->data;
-		delete tc->normalsBO->data;
+		BinaryLoader::freeData(tc->heightBO);
+//		BinaryLoader::freeData(tc->normalsBO);
 	}
 	tc->loaded = false;
 }

@@ -65,6 +65,56 @@ std::vector<BufferObject*> BinaryLoader::readFile(const char * filepath) {
 	return outputlist;
 }
 
+std::vector<BufferObject*> BinaryLoader::readFile(const char* filepath, unsigned int* attributes, unsigned int count) {
+	std::ifstream infile(filepath, std::ios::in | std::ios::binary | std::ios::ate);
+	long size = (long)infile.tellg();
+	char* memblock = new char[size];
+	infile.seekg(0, std::ios::beg);
+	infile.read(memblock, size);
+	infile.close();
+	delete memblock;
+
+	FILE* file;
+	fopen_s(&file, filepath, "rb");
+	if (file == NULL) {
+		return std::vector<BufferObject*>();
+	}
+	std::vector<BufferObject*> outputlist = std::vector<BufferObject*>();
+	header* headerBlock = new header;
+	fseek(file, 0, SEEK_END);
+	long fileSize;
+	fileSize = size;
+	unsigned char *fileData = new unsigned char[size];
+	fclose(file);
+	fopen_s(&file, filepath, "r");
+	fread(fileData, 1, size, file);
+	memcpy(headerBlock, fileData, HEADER_SIZE);
+
+	unsigned char* dataStart = &fileData[HEADER_SIZE];
+
+	for (int j = 0; j < count; j++) {
+		int i = attributes[j];
+
+		informationBlock currentBlock = headerBlock->headerInfo[i];
+		if (currentBlock.dimension <= 0 || currentBlock.dimension > 100)
+			continue;
+		void * data = malloc(currentBlock.size);
+		memcpy(data, &dataStart[currentBlock.offset], currentBlock.size);
+		BufferObject *newOb = new BufferObject();
+		newOb->data = data;
+		newOb->size = currentBlock.size / currentBlock.dataTypeSize;
+		newOb->unitSize = currentBlock.dataTypeSize;
+		newOb->dimension = currentBlock.dimension;
+		newOb->title = currentBlock.name;
+		outputlist.push_back(newOb);
+	}
+
+	delete headerBlock;
+	delete(fileData);
+	fclose(file);
+	return outputlist;
+}
+
 void BinaryLoader::createFile(BoilerPlate::Properties::EntityProperties entProps, const char * outFile, BufferObject normals, BufferObject tex) {
 	FILE * outFileStream;
 	fopen_s(&outFileStream, outFile, "wb");
@@ -185,8 +235,8 @@ void BinaryLoader::freeData(std::vector<BufferObject*> list) {
 }
 
 void BinaryLoader::freeData(BufferObject* toFree) {
-
 	free(toFree->data);
+	//delete toFree;
 }
 
 BinaryLoader::~BinaryLoader() {

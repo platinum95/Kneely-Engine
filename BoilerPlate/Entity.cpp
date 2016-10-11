@@ -28,14 +28,18 @@ void Entity::createEntity() {
 
 
 Entity::~Entity() {
-
-
+	for (BufferObject *bo : this->VBOs) {
+		glDeleteBuffers(1, &bo->vboID);
+	}
+	VBOs.clear();
 }
 
 void Entity::cleanUp() {
 	for (BufferObject *bo : VBOs) {
+		glDeleteBuffers(1, &bo->vboID);
 		delete bo;
 	}
+	VBOs.clear();
 }
 
 int Entity::createVAO() {

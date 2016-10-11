@@ -40,6 +40,7 @@ public:
 
 	BinaryLoader();
 	static std::vector<BufferObject*> readFile(const char* filepath);
+	static std::vector<BufferObject*> readFile(const char* filepath, unsigned int* attributes, unsigned int count);
 	void createFile(BoilerPlate::Properties::EntityProperties entProps, const char* outFile, BufferObject norm,  BufferObject tex);
 	void createFile(const char* inFile, const char* outFile);
 	void createFile(const char* filename, std::vector<BufferObject> bos);

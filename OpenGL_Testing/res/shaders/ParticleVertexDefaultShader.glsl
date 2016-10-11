@@ -24,6 +24,7 @@ out float pass_opacity;
 uniform float time;
 uniform vec4 emitter_position;
 uniform vec3 base_direction;
+uniform mat4 transformationMatrix;
 
 void main(){
 	pass_colour = init_colour;
@@ -36,11 +37,11 @@ void main(){
 		pass_opacity = max(decay_time/lifetime_decay, 0);
 	}
 	pass_time = elapsed_time;
-	vec3 ePos = vec3(emitter_position.xyz);
+	vec3 ePos = vec3(0, 0, 0);//vec3(emitter_position.xyz);
 	vec3 a = vec3(0, -1, 1);
 	vec3 velocity = init_velocity + base_direction;
 	ePos += velocity * elapsed_time + 0.5 * a * elapsed_time * elapsed_time;
-	gl_Position = projection * view * vec4(ePos, 1);
+	gl_Position = projection * view * transformationMatrix * vec4(ePos, 1);
 	gl_PointSize = init_size;
 
 }

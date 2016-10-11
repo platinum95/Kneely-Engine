@@ -46,6 +46,7 @@ private:
 	int currentChunkPosx, currentChunkPosz;
 	BatchUnit *currentUnits[9];
 	void loadChunk(TerrainChunk*);
+	void loadChunkHeights(TerrainChunk*);
 	void saveChunk(TerrainChunk*);
 	void unloadChunk(TerrainChunk*);
 	std::string getFilename(int x, int z);

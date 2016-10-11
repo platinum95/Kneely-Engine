@@ -32,22 +32,24 @@ void ShowFps(GLFWwindow *pWindow) {
 
 
 int main(){
-	int beatCount = 63;
-	changeFrameTimer = new Timer(EXT_TIMER, true);
-	changeFrameTimer->addEvent(new TimerEvent(&changeWireframe, nullptr, 11.52110));
-	init();
-	startingTime = glfwGetTime();
-	changeFrameTime = startingTime + 5;
-	glfwSetTime(10.0);
-	changeFrameTimer->setTime(glfwGetTime());
-	changeFrameTimer->start();
+	glfwProps = boiler.startGLFW(displayProps);
+	glewExperimental = GL_TRUE;
+	glewProps = boiler.startGLEW();
+
+	
+//	std::thread InitialisationThread(Initialise);
+//	InitialisationThread.detach();
+	splashScreen();
+	Initialise();
+	while (!InitialisationComplete) {
+		;
+	}
+
 #ifndef NO_AUDIO
 	music->playSound(*testFile->buffer);
 #endif
-	*timey = 0;
 	double lastTime = clock();
-
-
+	int beatCount = 63;
 	while (!glfwWindowShouldClose(glfwProps.window) && clickedExit < 1) {
 		double timeSince = (clock() - lastTime) / CLOCKS_PER_SEC;
 		lastTime = clock();
@@ -89,6 +91,7 @@ int main(){
 		updateView();
 	}
 	cleanup();
+	
 	changeFrameTimer->end();
     return 0;
 }
@@ -167,15 +170,16 @@ void updateView() {
 
 	std::chrono::nanoseconds ps_diff_nano = Timing::getTimeDiff<std::chrono::nanoseconds>(particle_timing_id);
 	double ps_diff_double = ps_diff_nano.count() / 1000000000.0;
+	testPSystem->UpdateParticleSystem(ps_diff_double);
 
 	updateSnakes();
 	timeytime += 0.15f;
-	/*
+	
 	glm::vec4 basePos(0, 0, 0, 1);
-	glm::vec4 newEmitterPos = snakeUnit[0].transformationMatrix * basePos;
+	glm::vec4 newEmitterPos = snakes[0]->getUnit()->transformationMatrix * basePos;
 	newEmitterPos += glm::vec4(0, 3.0, 4.5, 0);
 	testPSystem->UpdateEmitterPos(newEmitterPos);
-	*/
+	
 }
 
 void render() {	
@@ -200,15 +204,21 @@ void render() {
 	}
 }
 
-void init() {
-	_mkdir("temp");
-	glfwProps = boiler.startGLFW(displayProps);
-	glewExperimental = GL_TRUE;
-	glewProps = boiler.startGLEW();
+void Initialise() {
+	Timing::genTimingID(&performance_checking_id, 1);
+	Timing::start(performance_checking_id);
+	double performance_time = 0;
+	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
+	std::cout << "Starting at: " << performance_time << std::endl;
 
+	changeFrameTimer = new Timer(EXT_TIMER, true);
+	changeFrameTimer->addEvent(new TimerEvent(&changeWireframe, nullptr, 11.52110));
 	glEnable(GL_CLIP_DISTANCE0);
 	glEnable(GL_COLOR_MATERIAL);
+	_mkdir("temp");
 	
+	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
+	std::cout << "First bits at: " << performance_time << std::endl;
 
 	audioPlate = new AudioPlate();
 	testFile = new WAV_File();
@@ -217,17 +227,24 @@ void init() {
 	audioPlate->loadAudio(testFile);
 	audioPlate->setListenerData();
 	music = new AudioEntity();
+	
 
 	LoadAudio::freeData(*testFile);
+	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
+	std::cout << "Audio: " << performance_time << std::endl;
 
 	BoilerPlate::Physics::PhysicsConstants::gravity = -9.81f;
 	BoilerPlate::Physics::PhysicsConstants::drag_coef = 0.001f;
 
 
 	setupView();
+	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
+	std::cout << "View: " << performance_time << std::endl;
+
 	setupShaders();
 
-
+	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
+	std::cout << "Shaders: " << performance_time << std::endl;
 
 	
 	wireframe = GL_FILL;
@@ -235,8 +252,12 @@ void init() {
 		heartbeat[i] *= 2;
 		heartbeat[i] -= 1;
 	}
+	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
+	std::cout << "Heartbeat: " << performance_time << std::endl;
 
 	setupEntities();
+	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
+	std::cout << "Entities: " << performance_time << std::endl;
 
 	*timey = 0;
 	forwardKey = new keyType(keyType(GLFW_KEY_W));
@@ -268,6 +289,8 @@ void init() {
 
 	mouse = new MouseHandler();
 	//mouse->addCallback(&checkMouse, GLFW_MOUSE_BUTTON_LEFT);
+	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
+	std::cout << "Inputs: " << performance_time << std::endl;
 
 	Timing::genTimingID(&particle_timing_id, 1);
 	Timing::genTimingID(&physics_timing_id, 1);
@@ -275,6 +298,19 @@ void init() {
 	Timing::start(particle_timing_id);
 	Timing::start(physics_timing_id);
 	Timing::start(snake_timing_id);
+	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
+	std::cout << "Timers: " << performance_time << std::endl;
+
+	startingTime = glfwGetTime();
+	changeFrameTime = startingTime + 5;
+	glfwSetTime(10.0);
+	changeFrameTimer->setTime(glfwGetTime());
+	changeFrameTimer->start();
+
+	*timey = 0;
+	InitialisationComplete = true;
+	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
+	std::cout << "Other timers: " << performance_time << std::endl;
 }
 
 void setupShaders() {
@@ -365,13 +401,7 @@ void setupShaders() {
 	snakeShader.addShaderType(snakeFPath, GL_FRAGMENT_SHADER);
 	snakeShader.LoadShader();
 
-	guiShader.RegisterAttribute("position", 0);
-	guiShader.RegisterAttribute("texCoords", 1);
-	guiShader.RegisterUniform("tex");
-	guiShader.RegisterTexture("tex", 0);
-	guiShader.addShaderType(guiVPath, GL_VERTEX_SHADER);
-	guiShader.addShaderType(guiFPath, GL_FRAGMENT_SHADER);
-	guiShader.LoadShader();
+	
 
 	guiShader.useShader();
 	int zero = 0, one = 1, two = 2, three = 3;
@@ -443,7 +473,6 @@ void setupShaders() {
 
 
 }
-
 
 void setupView() {
 	aspectRatio = (float)displayProps.width / (float)displayProps.height;
@@ -576,7 +605,6 @@ void setupEntities() {
 
 	BinaryLoader loader;
 	std::vector<BufferObject*> testList = loader.readFile("./res/entities/sphereEntity.bin");
-//	loader.createFile("./tree2.obj", "./res/entities/tree2.bin");
 
 
 	testList[1]->update(floatProps, 0);
@@ -721,23 +749,36 @@ void setupEntities() {
 	testTexRenderer.entityList.push_back(testTex);
 	guiRenderer.addToRenderer(&testTexRenderer);
 
-	snake = new Entity();
+	std::vector<BufferObject*> snakeBOList = loader.readFile("./res/entities/snake.bin");
+	snakeBOList[1]->update(floatProps, 0);
+	snakeBOList[2]->update(floatProps, 1);
+
 	std::vector<Entity*> *snakeEnt = ModelLoader::readModel(snakeFile);
-	(*snakeEnt)[0]->uniforms.push_back(uniformData(snakeShader.uniformTable.at(1)->uniformLocation, &timeytime,
+	snake = new Entity();// (*snakeEnt)[0];
+	snake->registerBufferObject(snakeBOList[1]);
+	snake->registerBufferObject(snakeBOList[2]);
+	snake->createEntity(testList[0]->data, testList[0]->size/4);
+
+	snake->uniforms.push_back(uniformData(snakeShader.uniformTable.at(1)->uniformLocation, &timeytime,
 		BoilerPlate::Shaders::Shader::loadFloat2));
-	(*snakeEnt)[0]->transformationLocation = snakeShader.uniformTable.at(0)->uniformLocation;
+	snake->transformationLocation = snakeShader.uniformTable.at(0)->uniformLocation;
 	snakeRenderer = RenderMode(GL_TRIANGLES, snakeShader);
 	snakeRenderer.entityList.push_back((*snakeEnt)[0]);
-	snakes = std::vector<Snake*>(30);
-	for (int i = 0; i < 30; i++) {
-		snakes[i] = new Snake(cameraUBO, renderer);
-		(*snakeEnt)[0]->units.push_back(snakes[i]->getUnit());
-		
+	snakes = std::vector<Snake*>(10);
+	for (int i = 0; i < snakes.size(); i++) {
+		snakes[i] = new Snake(cameraUBO);
+		snake->units.push_back(snakes[i]->getUnit());
+		renderer.addToRenderer(snakes[i]->getParticleSystem()->getRenderMode());
 	}
 
+	
 	renderer.addToRenderer(&snakeRenderer);
 	
-	
+//	ModelLoader::freeData(snake);
+//	delete snake->VBOs[0];
+
+	testPSystem = new ParticleSystem(30000, cameraUBO, glm::vec3(0, 10, 0));
+//	renderer.addToRenderer(testPSystem->getRenderMode());
 }
 
 void cleanup() {
@@ -755,7 +796,7 @@ void updateSnakes() {
 	float timeDiff = Timing::getTimeDiff<std::chrono::nanoseconds>(snake_timing_id).count();
 	timeDiff /= 1000000000.0f;
 	
-	for (int i = 0; i < 30; i++) {
+	for (int i = 0; i < snakes.size(); i++) {
 		snakes[i]->updateSnake(timeDiff);
 	}
 }
@@ -791,4 +832,61 @@ static void forwardRelease(void*) {
 void disableGround(void*){
 	//groundOn = !groundOn;
 	pauseRender = !pauseRender;
+}
+
+void splashScreen() {
+
+	ImageData loadingImage = ImageLoader::loadPNG("./res/images/loading.png");
+	Texture loadingTex = Texture(loadingImage, GL_TEXTURE_2D);
+	loadingTex.registerParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	loadingTex.registerParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	loadingTex.registerParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+	loadingTex.registerParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+	loadingTex.textureBank = GL_TEXTURE0;
+	loadingTex.updateTexture();
+	ImageLoader::freeData(loadingImage);
+
+	float loadingVerts[8] = {
+		-1, -1,
+		-1, 1,
+		1, -1,
+		1, 1
+	};
+
+	float loadingTexCoords[8] = {
+		0, 1.0f,
+		0, 0,
+		1, 1,
+		1, 0
+	};
+
+	Entity loadingEntity = Entity();
+	BufferObject* testVerts = new BufferObject(floatPropsTwoD, 0, 8, loadingVerts);
+	BufferObject* testTexs = new BufferObject(floatPropsTwoD, 1, 8, loadingTexCoords);
+	loadingEntity.registerBufferObject(testVerts);
+	loadingEntity.registerBufferObject(testTexs);
+	loadingEntity.textures.push_back(&loadingTex);
+	loadingEntity.createEntity(testTexIndices, 6);
+	loadingEntity.units.push_back(new BatchUnit());
+
+	guiShader.RegisterAttribute("position", 0);
+	guiShader.RegisterAttribute("texCoords", 1);
+	guiShader.RegisterUniform("tex");
+	guiShader.RegisterTexture("tex", 0);
+	guiShader.addShaderType(guiVPath, GL_VERTEX_SHADER);
+	guiShader.addShaderType(guiFPath, GL_FRAGMENT_SHADER);
+	guiShader.LoadShader();
+
+	Renderer loadingRenderer;
+	RenderMode loadingRenderMode = RenderMode(GL_TRIANGLES, guiShader);
+	loadingRenderMode.entityList.push_back(&loadingEntity);
+	loadingRenderer.addToRenderer(&loadingRenderMode);
+
+	loadingRenderer.clear();
+	loadingRenderer.Render();
+
+	glfwSwapBuffers(glfwProps.window);
+
+	loadingEntity.cleanUp();
+	loadingTex.deleteTexture();
 }

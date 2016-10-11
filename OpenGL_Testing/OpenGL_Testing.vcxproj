@@ -97,6 +97,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>opengl32.lib;BoilerPlate.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)libsx86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -113,6 +114,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)libs;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32.lib;BoilerPlate.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -176,15 +178,15 @@
     <None Include="res\shaders\waterVShader.glsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Snake.cpp" />
     <ClCompile Include="src\Heartbeat.cpp" />
     <ClCompile Include="src\OpenGL_Testing.cpp" />
+    <ClCompile Include="src\Snake.cpp" />
     <ClCompile Include="src\SphereDistace.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Heartbeat.h" />
     <ClInclude Include="include\OpenGL_Testing.h" />
-    <ClInclude Include="Snake.h" />
+    <ClInclude Include="include\Snake.h" />
     <ClInclude Include="Strings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

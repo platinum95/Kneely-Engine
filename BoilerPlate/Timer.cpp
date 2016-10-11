@@ -33,14 +33,14 @@ void Timer::start() {
 
 void Timer::stop() {
 	runThread = false;
-
-
 }
 
 void Timer::end() {
-	stop();
-	looper = false;
-	timerThread.join();
+	if (runThread != false) {
+		stop();
+		looper = false;
+		timerThread.join();
+	}
 }
 
 void Timer::addEvent(TimerEvent *_te) {

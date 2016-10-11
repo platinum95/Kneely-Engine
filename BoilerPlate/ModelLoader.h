@@ -14,6 +14,7 @@ class ModelLoader {
 public:
 	ModelLoader();
 	static std::vector<Entity*>* readModel(const char* filePath);
+	static void freeData(Entity*);
 	~ModelLoader();
 private:
 	

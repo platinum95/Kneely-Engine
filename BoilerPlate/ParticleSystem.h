@@ -27,6 +27,7 @@ public:
 	void MoveEmitterPos(glm::vec3 pos);
 	void UpdateBaseDirection(glm::vec3 direction);
 	static void RenderParticleSystem(RenderMode *rm);
+	ParticlePack *getParticlePack();
 
 	RenderMode* getRenderMode();
 
