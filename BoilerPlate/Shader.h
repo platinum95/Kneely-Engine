@@ -60,14 +60,18 @@ namespace BoilerPlate {
 			std::string uniformName;
 			GLuint uniformLocation;
 			uniform(std::string _uniformName)
-				: uniformName(_uniformName){
+				: uniformName(_uniformName), p(NULL){
 			}
 			uniform(std::string _uniformName, void* _data)
-				: uniformName(_uniformName), data(_data) {
+				: uniformName(_uniformName), data(_data), p(NULL) {
+			}
+			uniform(std::string _uniformName, void* _data, void((*_p)(GLint, void*)))
+				: uniformName(_uniformName), data(_data), p(_p){
 			}
 			uniformType type;
 			GLint textureUnit;
 			void *data;
+			void(*p)(GLint, void*);
 		};
 
 		struct shaderType {
@@ -116,6 +120,7 @@ namespace BoilerPlate {
 			static void loadFloatArray1544(GLint location, void * value);
 			static void loadUBOData(uniformData _ud);
 			static void loadVec32(GLint location, void* vector);
+			static void loadVec2(GLint location, void* vector);
 			static void loadVec42(GLint location, void* vector);
 			static void loadBool2(GLint location, void* val);
 			static void loadInt2(GLint location, void* val);

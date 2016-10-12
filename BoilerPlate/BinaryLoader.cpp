@@ -92,7 +92,7 @@ std::vector<BufferObject*> BinaryLoader::readFile(const char* filepath, unsigned
 
 	unsigned char* dataStart = &fileData[HEADER_SIZE];
 
-	for (int j = 0; j < count; j++) {
+	for (unsigned int j = 0; j < count; j++) {
 		int i = attributes[j];
 
 		informationBlock currentBlock = headerBlock->headerInfo[i];

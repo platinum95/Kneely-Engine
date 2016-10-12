@@ -187,6 +187,11 @@ namespace BoilerPlate {
 			glUniform3f(location, val->x, val->y, val->z);
 		}
 
+		void Shader::loadVec2(GLint location, void* vector) {
+			glm::vec2* val = (glm::vec2*) vector;
+			glUniform2f(location, val->x, val->y);
+		}
+
 		void Shader::loadVec42(GLint location, void* vector) {
 			glm::vec4* val = (glm::vec4*) vector;
 			glUniform4f(location, val->x, val->y, val->z, val->w);

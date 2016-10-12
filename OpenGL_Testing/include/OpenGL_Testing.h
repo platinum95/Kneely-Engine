@@ -192,12 +192,12 @@ BoilerPlate::Properties::BufferObjectProperties floatPropsTwoD  {
 };
 
 BoilerPlate::Properties::displayProperties displayProps = {
-	1367,		//width
-	768,		//height
+	1920,		//width
+	1080,		//height
 	"Test",		//Title
 	NULL,		//Monitor
 	NULL,		//Shared context
-	true		//Fullscreen
+	false		//Fullscreen
 };
 
 

@@ -24,7 +24,7 @@ void BloomEffect(){
 	;//	return;
 	} 
 
-	vec2 iResolution = vec2(1367, 768);
+	vec2 iResolution = resolution;
 	vec2 uv = vec2(gl_FragCoord.xy / iResolution.xy);
 	vec4 out_colour = blur(colour_attachment_1, uv, iResolution.xy, vec2(0, 1));
 	out_colour += 0.5 * blur(colour_attachment_1, uv, iResolution.xy, vec2(1, 0));

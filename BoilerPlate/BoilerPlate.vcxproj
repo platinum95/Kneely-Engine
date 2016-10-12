@@ -73,7 +73,7 @@
     <OutDir>..\libs</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <OutDir>$(SolutionDir)\libsx86\</OutDir>
+    <OutDir>$(SolutionDir)libsx86\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -230,6 +230,8 @@
   <ItemGroup>
     <None Include="..\OpenGL_Testing\res\shaders\ParticleFragmentDefaultShader.glsl" />
     <None Include="..\OpenGL_Testing\res\shaders\ParticleVertexDefaultShader.glsl" />
+    <None Include="..\OpenGL_Testing\res\shaders\PostProcessingBloomShader.glsl" />
+    <None Include="..\OpenGL_Testing\res\shaders\PostProcessingVertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

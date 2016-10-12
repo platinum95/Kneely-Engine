@@ -16,12 +16,6 @@
     <Filter Include="Audio">
       <UniqueIdentifier>{b3ad1c44-dc47-44f8-bf78-5ee1d23354b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Audio\Header Files">
-      <UniqueIdentifier>{aa5e1409-8f1a-4295-b419-33195f10fbf5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Audio\Source Files">
-      <UniqueIdentifier>{5aa48791-b8d5-437d-acb5-3f4c8a70b538}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Model">
       <UniqueIdentifier>{d82af9ea-7d18-4c83-81fa-2f4c3ab40448}</UniqueIdentifier>
     </Filter>
@@ -53,15 +47,6 @@
     </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioPlate.h">
-      <Filter>Audio\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadAudio.h">
-      <Filter>Audio\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="AudioEntity.h">
-      <Filter>Audio\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Framebuffer.h">
       <Filter>Header Files</Filter>
@@ -135,6 +120,15 @@
     <ClInclude Include="Timing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AudioEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioPlate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadAudio.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoilerPlate.cpp">
@@ -148,15 +142,6 @@
     </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LoadAudio.cpp">
-      <Filter>Audio\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioPlate.cpp">
-      <Filter>Audio\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AudioEntity.cpp">
-      <Filter>Audio\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Framebuffer.cpp">
       <Filter>Source Files</Filter>
@@ -230,12 +215,27 @@
     <ClCompile Include="Timing.cpp">
       <Filter>Management</Filter>
     </ClCompile>
+    <ClCompile Include="AudioEntity.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioPlate.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadAudio.cpp">
+      <Filter>Audio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\OpenGL_Testing\res\shaders\ParticleFragmentDefaultShader.glsl">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\OpenGL_Testing\res\shaders\ParticleVertexDefaultShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\OpenGL_Testing\res\shaders\PostProcessingVertexShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\OpenGL_Testing\res\shaders\PostProcessingBloomShader.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

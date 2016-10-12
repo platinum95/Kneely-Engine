@@ -75,8 +75,12 @@ bool PostProcessing::generatePostProcess(Framebuffer *_inBuffer) {
 	for (PostProcessingModule *ppm : modules) {
 
 		for (BoilerPlate::Shaders::uniform *uniform : ppm->uniforms) {
-			screenEntity->uniforms.push_back(uniformData(uniform->uniformLocation,
+			if(uniform->p == NULL)
+				screenEntity->uniforms.push_back(uniformData(uniform->uniformLocation,
 				uniform->data, &BoilerPlate::Shaders::Shader::loadFloat2));
+			else
+				screenEntity->uniforms.push_back(uniformData(uniform->uniformLocation,
+					uniform->data, uniform->p));
 		}
 	}
 

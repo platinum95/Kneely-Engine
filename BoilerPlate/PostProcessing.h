@@ -24,6 +24,7 @@ public:
 	std::string getMain() { return main; }
 	std::string getBody() { return function; }
 	std::vector<BoilerPlate::Shaders::uniform*> uniforms;
+	std::vector<uniformData*> uniformDatas;
 
 protected:
 	const char* function;
@@ -122,13 +123,17 @@ struct BloomEffectModule : public PostProcessingModule {
 	public:
 		float amount;
 		int AttachmentID;
+		glm::vec2 ScreenResolution;
+		BloomEffectData(float _amount, int _attachment_id, glm::vec2 _res) 
+			: amount(_amount), AttachmentID(_attachment_id), ScreenResolution(_res) {};
 	};
 	BloomEffectModule(BloomEffectData *inData) { 
 		constants = (void*)inData; 
 		type = BloomEffect;
-		header = "uniform float BloomAmount;\n";
+		header = "uniform float BloomAmount;\nuniform vec2 resolution;";
 		main =  "BloomEffect();\n";
 		uniforms.push_back(new BoilerPlate::Shaders::uniform("BloomAmount", &(inData->amount)));
+		uniforms.push_back(new BoilerPlate::Shaders::uniform("resolution", &(inData->ScreenResolution), BoilerPlate::Shaders::Shader::loadVec2));
 		shaderLocation = "res/shaders/PostProcessingBloomShader.glsl";
 		getFunction();
 	}

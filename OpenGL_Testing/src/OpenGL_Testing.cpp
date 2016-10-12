@@ -387,7 +387,7 @@ void setupShaders() {
 	cData = new ContrastAdjustModule::ContrastData(1);
 	bData = new BrightnessAdjustModule::BrightnessData(0);
 	sData = new SaturationAdjustModule::SaturationData(1.3f);
-	bloomData = new BloomEffectModule::BloomEffectData;
+	bloomData = new BloomEffectModule::BloomEffectData(1, 1, glm::vec2(Constants::DisplayProps.width, Constants::DisplayProps.height));
 	postProcessPipeline->RegisterEffect(ContrastAdjust, cData);
 	postProcessPipeline->RegisterEffect(BrightnessAdjust, bData);
 	postProcessPipeline->RegisterEffect(SaturationAdjust, sData);
