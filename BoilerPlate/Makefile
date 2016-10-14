@@ -1,6 +1,7 @@
 IDIR = /usr/include
+LOCAL_INCLUDE = ../include
 CC=g++
-CFLAGS=-I$(IDIR) -O0 -w -std=c++11 -pg -D_DEBUG -g -c -Wall
+CFLAGS=-I$(IDIR) -I$(LOCAL_INCLUDE) -O0 -w -std=c++11 -fpermissive -pg -D_DEBUG -g -c -Wall
 
 ODIR=obj
 LDIR =../lib
@@ -10,7 +11,7 @@ LIBS=-lm
 _DEPS = GL\GLEW.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = Properties.o  ImageLoader.o TerrainGenerator.o Constants.o Terrain.o Timer.o KeyHandler.o AudioEntity.o Skybox.o AudioPlate.o LoadAudio.o BoilerPlate.o Camera.o Texture.o Entity.o PhysicsWorld.o PhysicsEntity.o PhysicsConstants.o BinaryLoader.o ObjLoader.o Renderer.o lodepng.o Framebuffer.o Shader.o
+_OBJ = Properties.o  ImageLoader.o TerrainGenerator.o Constants.o Terrain.o Timer.o KeyHandler.o AudioEntity.o Skybox.o AudioPlate.o LoadAudio.o BoilerPlate.o Camera.o Texture.o Entity.o PhysicsWorld.o PhysicsEntity.o PhysicsConstants.o BinaryLoader.o ObjLoader.o Renderer.o lodepng.o Water.o Framebuffer.o Shader.o ModelLoader.o MouseHandler.o ParticleSystem.o PostProcessing.o Timing.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 # Specify the target file and the install directory
@@ -56,12 +57,15 @@ $(ODIR)/ImageLoader.o : ImageLoader.cpp $(ODIR)/lodepng.o
 	$(CC) -c -o $(ODIR)/ImageLoader.o ImageLoader.cpp
 
 $(ODIR)/AudioPlate.o : AudioPlate.cpp $(ODIR)/LoadAudio.o
-	$(CC) -c -o $(ODIR)/AudioPlate.o AudioPlate.cpp
+	$(CC) -c -o $(ODIR)/AudioPlate.o AudioPlate.cpp $(CFLAGS)
 	
 $(ODIR)/PhysicsConstants.o : PhysicsConstants.cpp 
 	$(CC) -c -o $@ $< $(CFLAGS)
 	
 $(ODIR)/PhysicsEntity.o : PhysicsEntity.cpp 
+	$(CC) -c -o $@ $< $(CFLAGS)
+
+$(ODIR)/ModelLoader.o : ModelLoader.cpp 
 	$(CC) -c -o $@ $< $(CFLAGS)
 	
 $(ODIR)/Framebuffer.o : Framebuffer.cpp $(ODIR)/Constants.o

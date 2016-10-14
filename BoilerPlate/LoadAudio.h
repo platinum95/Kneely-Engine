@@ -2,8 +2,8 @@
 #ifndef LOADAUDIO_H
 #define LOADAUDIO_H
 #include <string.h>
-#include <AL/al.h>
-#include <AL/alc.h>
+#include "AL/al.h"
+#include "AL/alc.h"
 #include <fstream>
 
 /*

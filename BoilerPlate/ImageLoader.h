@@ -24,5 +24,8 @@ public:
 	static ImageData loadRAW(const char* filePath);
 	static void PNGtoRAW(const char* filePath, const char * outFilePath);
 	static void freeData(ImageData);
+
+private:
+	static void fopen_s(FILE **f, const char *name, const char *mode);
 };
 

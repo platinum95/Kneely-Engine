@@ -16,6 +16,10 @@ volatile long BinaryLoader::fileSize = 0;
 BinaryLoader::BinaryLoader() {
 }
 
+void fopen_s(FILE **f, const char *name, const char *mode) {
+    *f = fopen(name, mode);
+    return;
+}
 
 std::vector<BufferObject*> BinaryLoader::readFile(const char * filepath) {
 	std::ifstream infile(filepath, std::ios::in | std::ios::binary | std::ios::ate);

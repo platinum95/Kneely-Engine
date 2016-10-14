@@ -2,6 +2,7 @@
 #include <time.h>
 #include <iostream>
 #include <fstream>
+#include <stdio.h>
 
 ImageLoader::ImageLoader() {
 }
@@ -28,6 +29,13 @@ ImageData ImageLoader::loadPNG(const char * filePath) {
 
 	return output;
 }
+
+
+void ImageLoader::fopen_s(FILE **f, const char *name, const char *mode) {
+    *f = fopen(name, mode);
+    return;
+}
+
 
 ImageData ImageLoader::loadRAW(const char * filePath) {
 	FILE *inFile;

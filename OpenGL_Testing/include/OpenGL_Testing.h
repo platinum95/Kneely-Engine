@@ -40,14 +40,12 @@
 #include "Water.h"
 #include "MouseHandler.h"
 #include "PostProcessing.h"
-#include "Maths.h"
-#include <glm\gtx\euler_angles.hpp>
+#include <glm/gtx/euler_angles.hpp>
 #include "Strings.h"
 #include "ModelLoader.h"
-#include "glm\gtx\euler_angles.hpp"
 #include "Snake.h"
 
-#include <direct.h>
+//#include <direct.h>
 #include "Timing.h"
 
 //Functions

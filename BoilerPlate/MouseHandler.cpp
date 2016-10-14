@@ -7,7 +7,7 @@ std::vector<void(*)(int)> *MouseHandler::callback_list;
 
 MouseHandler::MouseHandler() {
 	unsigned char pixels[16 * 16 * 4];
-	memset(pixels, 0xff, sizeof(pixels));
+//	memset(pixels, 0xff, sizeof(pixels));
 	GLFWimage image;
 	image.width = 16;
 	image.height = 16;

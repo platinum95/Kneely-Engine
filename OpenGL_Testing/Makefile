@@ -1,8 +1,8 @@
 
 LDFLAGS= ../libsx86/BoilerPlate.a -lGL -lopenal -lGLEW 
-INCLUDEDIR = -I/usr/include -I/usr/local/include -I../BoilerPlate -I./include
+INCLUDEDIR = -I/usr/include -I/usr/local/include -I../BoilerPlate -I./include -I../include
 CC=g++
-CFLAGS= -w -std=c++11 -g -O0 -Wall -Wextra
+CFLAGS= -w -std=c++11 -g -O0 -Wall -Wextra -fpermissive
 GLFWPKGCA = `pkg-config --cflags glfw3`
 GLFWPKGCB = `pkg-config --static --libs glfw3`
 
@@ -15,7 +15,7 @@ LIBS=-lm
 _DEPS = GL\GLEW.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = Heartbeat.o Scissors.o
+_OBJ = Heartbeat.o Snake.o 
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 # Specify the target file and the install directory
@@ -25,15 +25,21 @@ INSTALLDIR  = ../binaries
 .PHONY: all
 all: OpenGL_Testing
 
-OpenGL_Testing : src/OpenGL_Testing.cpp $(OBJ)
-	$(CC) $(GLFWPKGCA) -o $@ $< $(LDFLAGS) $(INCLUDEDIR) $(CFLAGS) $(GLFWPKGCB)
-
+$(ODIR)/%.o : %.cpp
+	$(CC) -c -o $@ $< $(CFLAGS)
 
 $(ODIR)/Heartbeat.o : src/Heartbeat.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 	
-$(ODIR)/Scissors.o : src/Scissors.cpp
-	$(CC) -c -o $@ $< $(INCLUDEDIR) $(CFLAGS)
+$(ODIR)/Snake.o : src/Snake.cpp
+	$(CC) -c -o $(ODIR)/Snake.o Snake.cpp
+
+
+OpenGL_Testing : src/OpenGL_Testing.cpp $(OBJ) 
+	$(CC) $(GLFWPKGCA) -o $@ $< $(ODIR)/Snake.o $(ODIR)/Heartbeat.o $(LDFLAGS) $(INCLUDEDIR) $(CFLAGS) $(GLFWPKGCB)
+
+
+
 	
 clean:
 	rm ./build/*.o

@@ -21,10 +21,10 @@ namespace Timing {
 	}
 	
 	//Initialise timer with current time
-	std::chrono::steady_clock::time_point start(uint id);
+	std::chrono::high_resolution_clock::time_point start(uint id);
 
 	//Get the current system time
-	std::chrono::steady_clock::time_point getCurrentTime();
+	std::chrono::high_resolution_clock::time_point getCurrentTime();
 	std::vector<std::chrono::high_resolution_clock::time_point>* getTimingList();
 
 }

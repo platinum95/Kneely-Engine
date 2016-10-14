@@ -140,7 +140,7 @@ void Initialise() {
 	changeFrameTimer->addEvent(new TimerEvent(&changeWireframe, nullptr, 11.52110));
 	glEnable(GL_CLIP_DISTANCE0);
 	glEnable(GL_COLOR_MATERIAL);
-	_mkdir("temp");
+	//_mkdir("temp");
 	
 	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
 	std::cout << "First bits at: " << performance_time << std::endl;

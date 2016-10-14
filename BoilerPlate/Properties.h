@@ -1,8 +1,8 @@
 #ifndef PROPERTIES_H
 #define PROPERTIES_H
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
+#include "GL/glew.h"
+#include "GLFW/glfw3.h"
 #include <typeinfo>
 
 namespace BoilerPlate {

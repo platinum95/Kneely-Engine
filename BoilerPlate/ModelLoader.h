@@ -1,6 +1,6 @@
 #pragma once
 
-#include "assimp\Importer.hpp"
+#include "assimp/Importer.hpp"
 #include "Properties.h"
 #include <vector>
 #include "Entity.h"

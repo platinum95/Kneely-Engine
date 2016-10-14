@@ -10,12 +10,12 @@ typedef std::chrono::high_resolution_clock::time_point tp;
 
 std::vector<tp> timestamps = std::vector<tp>();
 
-std::chrono::steady_clock::time_point Timing::start(uint id) {
+std::chrono::high_resolution_clock::time_point Timing::start(uint id) {
 	timestamps[id] = high_resolution_clock::now();
 	return high_resolution_clock::now();
 }
 
-chrono::steady_clock::time_point Timing::getCurrentTime() {
+chrono::high_resolution_clock::time_point Timing::getCurrentTime() {
 	return high_resolution_clock::now();
 }
 
