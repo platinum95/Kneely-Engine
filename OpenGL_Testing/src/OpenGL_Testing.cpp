@@ -344,6 +344,8 @@ void setupShaders() {
 	groundShader2.RegisterUniform("tex");
 	groundShader2.RegisterUniform("clippy");
 	groundShader2.RegisterUniform("clipPlane");
+	groundShader2.RegisterTexture("tex", 0);
+	groundShader2.RegisterTexture("normalTex", 1);
 	groundShader2.registerUBO(cameraUBO);
 	groundShader2.registerUBO(lightingUBO);
 	groundShader2.registerUBO(clipUBO);
@@ -611,16 +613,8 @@ void setupEntities() {
 
 	BinaryLoader::freeData(SphereData);
 
+	ground_imp.load_ground_textures();
 
-	ImageData grass = ImageLoader::loadRAW("./res/images/grass.raw");
-	groundTex = new Texture(grass, GL_TEXTURE_2D);
-	groundTex->registerParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	groundTex->registerParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	groundTex->registerParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
-	groundTex->registerParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
-	groundTex->textureBank = GL_TEXTURE0;
-	groundTex->updateTexture();
-	ImageLoader::freeData(grass);
 
 	TerrainGenerator::generateSeed();
 
@@ -629,7 +623,9 @@ void setupEntities() {
 
 	terrain = new Terrain(256, 256, "./res/entities/groundA.bin", groundShader2);
 	terrain->chunkEntity->registerBufferObject(groundTest2[3]);
-	terrain->chunkEntity->textures.push_back(groundTex);
+	terrain->chunkEntity->textures.push_back(ground_imp.ground_colour_tex);
+	terrain->chunkEntity->textures.push_back(ground_imp.ground_normal_tex);
+
 	terrain->chunkEntity->uniforms.push_back(uniformData(groundShader2.uniformTable.at(2)->uniformLocation,
 			&clippy, &BoilerPlate::Shaders::Shader::loadBool2));
 	terrain->chunkEntity->uniforms.push_back(uniformData(groundShader2.uniformTable.at(3)->uniformLocation,
@@ -745,7 +741,7 @@ void updateSnakes() {
 	timeDiff /= 1000000000.0f;
 	
 	for (int i = 0; i < snakes.size(); i++) {
-		snakes[i]->updateSnake(timeDiff);
+		snakes[i]->updateSnake(timeDiff, timeytime);
 	}
 }
 

@@ -4,7 +4,7 @@
 layout (location = 0) out vec4 FragColor;
 layout (location = 1) out vec4 BrightColor;  
 
-uniform sampler2D tex;
+uniform sampler2D tex, normalTex;
 in vec2 texCoords;
 in vec4 vertPos;
 in vec3 toLightVector;

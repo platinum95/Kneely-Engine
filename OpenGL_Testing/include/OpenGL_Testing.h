@@ -46,7 +46,7 @@
 #include "ModelLoader.h"
 #include "glm\gtx\euler_angles.hpp"
 #include "Snake.h"
-
+#include "Ground.h"
 #include <direct.h>
 #include "Timing.h"
 
@@ -154,10 +154,9 @@ BatchUnit *groundGroup, *scissorUnit, *treeUnit, *snakeUnit;
 
 std::vector<Snake*> snakes;
 Skybox *skybox;
-Texture *groundTex;
 Water *water;
 WaterPackage *waterPackage;
-
+Ground ground_imp;
 BufferObject *sphereVerticesBO;
 uniformData *cameraUBO, *waveformUBO, *lightingUBO, *clipUBO;
 uniformData timeUniform, projectionUniform, viewUniform, timeDiffUniform, waveformUniform, boxMVP;
@@ -192,8 +191,8 @@ BoilerPlate::Properties::BufferObjectProperties floatPropsTwoD  {
 };
 
 BoilerPlate::Properties::displayProperties displayProps = {
-	1920,		//width
-	1080,		//height
+	1366,		//width
+	740,		//height
 	"Test",		//Title
 	NULL,		//Monitor
 	NULL,		//Shared context

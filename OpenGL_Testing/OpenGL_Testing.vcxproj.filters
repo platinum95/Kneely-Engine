@@ -95,6 +95,9 @@
     <ClCompile Include="src\Snake.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ground.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Heartbeat.h">
@@ -103,10 +106,10 @@
     <ClInclude Include="include\OpenGL_Testing.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Strings.h">
+    <ClInclude Include="include\Ground.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\Snake.h">
+    <ClInclude Include="include\Strings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

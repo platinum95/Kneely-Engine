@@ -178,16 +178,17 @@
     <None Include="res\shaders\waterVShader.glsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Ground.cpp" />
     <ClCompile Include="src\Heartbeat.cpp" />
     <ClCompile Include="src\OpenGL_Testing.cpp" />
     <ClCompile Include="src\Snake.cpp" />
     <ClCompile Include="src\SphereDistace.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Ground.h" />
     <ClInclude Include="include\Heartbeat.h" />
     <ClInclude Include="include\OpenGL_Testing.h" />
-    <ClInclude Include="include\Snake.h" />
-    <ClInclude Include="Strings.h" />
+    <ClInclude Include="include\Strings.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

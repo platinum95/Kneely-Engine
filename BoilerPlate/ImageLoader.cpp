@@ -15,17 +15,17 @@ ImageData ImageLoader::loadPNG(const char * filePath) {
 	std::vector<unsigned char> imageData;
 	unsigned width, height;
 	unsigned error = lodepng::decode(imageData, width, height, filePath);
+	unsigned int size = imageData.size();
+	unsigned char* data = new unsigned char[size];
+	memcpy(data, &imageData[0], size * sizeof(unsigned char));
 	
-	unsigned char* data = new unsigned char[imageData.size()];
-	memcpy(data, &imageData[0], imageData.size() * sizeof(unsigned char));
-	imageData.clear();
 	ImageData output = {
 		width,
 		height,
-		imageData.size() * sizeof(unsigned char),
+		size * sizeof(unsigned char),
 		data,
 	};
-
+	imageData.clear();
 	return output;
 }
 
@@ -62,7 +62,7 @@ void ImageLoader::PNGtoRAW(const char * filePath, const char * outFilePath) {
 	FILE *outFile;
 	fopen_s(&outFile, outFilePath, "wb");
 	fwrite(&fileHeader, 3 * sizeof(unsigned int), 1, outFile);
-	//fwrite(&pngData.imageData[0], pngData.dataSize, 1, outFile);
+	fwrite(pngData.data, pngData.dataSize, 1, outFile);
 	fclose(outFile);
 }
 

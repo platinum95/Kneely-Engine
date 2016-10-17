@@ -3,7 +3,7 @@
 
 out vec4 FragColor;
 
-uniform sampler2D tex;
+uniform sampler2D tex, normalTex;
 in vec2 texCoords;
 in vec4 vertPos;
 in vec3 toLightVector;
@@ -16,6 +16,8 @@ layout (std140) uniform light{
 	vec3 lightColour;
 };
 
+vec3 getNormal(vec2 _coord);
+
 void main(){
 
 	vec3 unitNormal = normalize(surfaceNormal);
@@ -24,7 +26,8 @@ void main(){
 	float nDotl = dot(unitNormal, unitLightVector);
 	float brightness = max(nDotl, 0.4);
 	vec3 diffuse = vec3(brightness, brightness, brightness);// * lightColour;
-	
+	vec3 normal = getNormal(texCoords);
+
 	if(clipp == 1){
 		FragColor = vec4(0, 0.5, 0, 1);
 	}
@@ -33,4 +36,12 @@ void main(){
 	}
 	
 	
+}
+
+vec3 getNormal(vec2 _coord){
+	vec3 normal = vec3(texture(normalTex, _coord));
+	normal.r = normal.r * 2.0 - 1.0;
+	normal.g = normal.g * 2.0 - 1.0;
+	normal.b = normal.b * 2.0 - 1.0;
+	return normalize(normal);
 }
