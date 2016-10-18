@@ -45,4 +45,6 @@ void main(){
 	toLightVector = lightpos - worldPos.xyz;
 	
 	gl_Position = relPos;
+
+	
 }

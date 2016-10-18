@@ -19,7 +19,8 @@ layout (std140) uniform light{
 vec3 getNormal(vec2 _coord);
 
 void main(){
-
+	
+	vec4 normalMapValue = (texture(normalTex, texCoords) + 1.0) / 2.0;
 	vec3 unitNormal = normalize(surfaceNormal);
 	vec3 unitLightVector = normalize(toLightVector);
 	

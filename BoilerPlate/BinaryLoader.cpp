@@ -202,7 +202,7 @@ void BinaryLoader::createFile(const char * inFile, const char *outFile) {
 
 void BinaryLoader::createFile(const char* outFile, std::vector<BufferObject> bos){
 	FILE * outFileStream;
-	fopen_s(&outFileStream, outFile, "w");
+	fopen_s(&outFileStream, outFile, "wb");
 	header headerBlock;
 	headerBlock.headerInfo[0] = informationBlock{
 		"Heights",
@@ -218,12 +218,28 @@ void BinaryLoader::createFile(const char* outFile, std::vector<BufferObject> bos
 		bos[0].size * 4,
 		bos[1].size * 4
 	};
-	for (int i = 2; i < 15; i++) {
+	headerBlock.headerInfo[2] = informationBlock{
+		"Tangents",
+		3,
+		4,
+		bos[0].size * 4 + bos[1].size * 4,
+		bos[2].size * 4
+	};
+	headerBlock.headerInfo[3] = informationBlock{
+		"bitans",
+		3,
+		4,
+		bos[0].size * 4 + bos[1].size * 4 + bos[2].size * 4,
+		bos[3].size * 4
+	};
+	for (int i = 4; i < 15; i++) {
 		headerBlock.headerInfo[i].dimension = 0;
 	}
 	fwrite(&headerBlock, sizeof(header), 1, outFileStream);
 	fwrite(bos[0].data, 1, bos[0].size * 4, outFileStream);
 	fwrite(bos[1].data, 1, bos[1].size * 4, outFileStream);
+	fwrite(bos[2].data, 1, bos[2].size * 4, outFileStream);
+	fwrite(bos[3].data, 1, bos[3].size * 4, outFileStream);
 	fclose(outFileStream);
 }
 

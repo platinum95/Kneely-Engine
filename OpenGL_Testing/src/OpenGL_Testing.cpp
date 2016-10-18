@@ -340,12 +340,14 @@ void setupShaders() {
 	groundShader2.RegisterAttribute("height", 1);
 	groundShader2.RegisterAttribute("textureCoords", 2);
 	groundShader2.RegisterAttribute("normal", 3);
+	groundShader2.RegisterAttribute("tangent", 4);
+	groundShader2.RegisterAttribute("bitangent", 5);
 	groundShader2.RegisterUniform("translation");
 	groundShader2.RegisterUniform("tex");
 	groundShader2.RegisterUniform("clippy");
 	groundShader2.RegisterUniform("clipPlane");
 	groundShader2.RegisterTexture("tex", 0);
-	groundShader2.RegisterTexture("normalTex", 1);
+	groundShader2.RegisterTexture("normalTex", 2);
 	groundShader2.registerUBO(cameraUBO);
 	groundShader2.registerUBO(lightingUBO);
 	groundShader2.registerUBO(clipUBO);
@@ -583,6 +585,7 @@ BufferObject *getNormals(BoilerPlate::Properties::EntityProperties obj, ImageDat
 
 */
 
+
 void setupEntities() {
 	renderer = Renderer();
 	
@@ -625,7 +628,6 @@ void setupEntities() {
 	terrain->chunkEntity->registerBufferObject(groundTest2[3]);
 	terrain->chunkEntity->textures.push_back(ground_imp.ground_colour_tex);
 	terrain->chunkEntity->textures.push_back(ground_imp.ground_normal_tex);
-
 	terrain->chunkEntity->uniforms.push_back(uniformData(groundShader2.uniformTable.at(2)->uniformLocation,
 			&clippy, &BoilerPlate::Shaders::Shader::loadBool2));
 	terrain->chunkEntity->uniforms.push_back(uniformData(groundShader2.uniformTable.at(3)->uniformLocation,
@@ -639,17 +641,14 @@ void setupEntities() {
 
 
 	double start = clock();
-//	terrain->generateChunk(0, 0, 1, 2, 7);
-//	terrain->generateChunk(1, 0, 1, 2, 7, 0.1f, 1, 2);
-//	terrain->generateChunk(2, 0, 0.1f, 1, 2);
 
-	for(int i = -4; i < 5; i++){
-		for(int j = -4; j < 5; j++){
+	for(int i = -1; i < 1; i++){
+		for(int j = -1; j < 1; j++){
 			terrain->registerChunk(i, j);
+			//terrain->generateChunk(i, j);
+			
 		}
 	}
-
-	//terrain->generateChunk(0, 0);
 
 	terrain->updateActiveChunks();
 	terrain->updateCurrentUnits();

@@ -159,9 +159,7 @@
     <None Include="..\Debug\vShader.glsl" />
     <None Include="res\shaders\entityFShader.glsl" />
     <None Include="res\shaders\entityVShader.glsl" />
-    <None Include="res\shaders\groundFShader.glsl" />
     <None Include="res\shaders\groundFShader2.glsl" />
-    <None Include="res\shaders\groundVShader.glsl" />
     <None Include="res\shaders\groundVShader2.glsl" />
     <None Include="res\shaders\guiFShader.glsl" />
     <None Include="res\shaders\guiVShader.glsl" />

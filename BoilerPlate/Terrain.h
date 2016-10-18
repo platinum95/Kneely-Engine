@@ -4,7 +4,7 @@
 #include "Renderer.h"
 
 struct TerrainChunk{
-	BufferObject *heightBO, *normalsBO;
+	BufferObject *heightBO, *normalsBO, *tangentBO, *bitangentBO;
 	int xPos;
 	int zPos;
 	bool onScreen;
@@ -42,7 +42,7 @@ private:
 	static int DATA_LENGTH;
 	GLuint ivboID;
 	void genHeightVBO(BufferObject* heightVBO);
-	void genNormalVBO(BufferObject* normalVBO);
+	void genBasisVBO(BufferObject* normalVBO, GLuint attrib);
 	int currentChunkPosx, currentChunkPosz;
 	BatchUnit *currentUnits[9];
 	void loadChunk(TerrainChunk*);
@@ -52,5 +52,6 @@ private:
 	std::string getFilename(int x, int z);
 	float* meshDataHolder;
 	std::vector<BufferObject*> meshVBOHolder;
+	glm::vec3 *getTangent(float xPos, float yPos);
 };
 

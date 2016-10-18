@@ -74,10 +74,18 @@ void Terrain::generateChunk(int xPos, int zPos) {
 	newChunkData->zPos = zPos;
 	newChunkData->heightBO = new BufferObject();
 	newChunkData->normalsBO = new BufferObject();
+	newChunkData->tangentBO = new BufferObject();
+	newChunkData->bitangentBO = new BufferObject();
+
 	BufferObject* normalVBO = newChunkData->normalsBO;
-	BufferObject* heightVBO = (BufferObject*) newChunkData->heightBO;
+	BufferObject* heightVBO = newChunkData->heightBO;
+	BufferObject* tangentVBO = newChunkData->tangentBO;
+	BufferObject* bitangentVBO = newChunkData->bitangentBO;
 	heightVBO->data = new float[this->meshSize * this->meshSize];
 	normalVBO->data = new float[this->meshSize * this->meshSize * 3];
+	tangentVBO->data = new float[this->meshSize * this->meshSize * 3];
+	bitangentVBO->data = new float[this->meshSize * this->meshSize * 3];
+
 	glm::vec3 worldPos(xPos * (this->worldSize * 1), 0, zPos * this->worldSize * 1);
 	newUnit->transformationMatrix = glm::translate(worldPos);
 	chunkEntity->units.push_back(newUnit);
@@ -94,14 +102,22 @@ void Terrain::generateChunk(int xPos, int zPos) {
 			uint index = xIndex + x;
 			dataLoc[index] = TerrainGenerator::getHeight(xWPos, zWPos);
 			glm::vec3 norm = getNormal(xWPos, zWPos);
+			glm::vec3* tans = getTangent(xWPos, zWPos);
 			normLoc[index * 3] = norm.x;
 			normLoc[index * 3 + 1] = norm.y;
 			normLoc[index * 3 + 2] = norm.z;
 
+			memcpy(&((float*)tangentVBO->data)[index * 3], &(tans[0].x), 3 * 4);
+			memcpy(&((float*)bitangentVBO->data)[index * 3], &(tans[1].x), 3 * 4);
 		}
 	}
+	normalVBO->attrib = 3;
+	tangentVBO->attrib = 4;
+	bitangentVBO->attrib = 5;
 	genHeightVBO(heightVBO);
-	genNormalVBO(normalVBO);
+	genBasisVBO(normalVBO, 3);
+	genBasisVBO(tangentVBO, 4);
+	genBasisVBO(bitangentVBO, 5);
 	saveChunk(newChunkData);
 
 }
@@ -119,8 +135,12 @@ void Terrain::registerChunk(int xPos, int zPos) {
 	chunkEntity->units.push_back(newUnit);
 	newChunkData->heightBO = new BufferObject();
 	newChunkData->normalsBO = new BufferObject();
+	newChunkData->tangentBO = new BufferObject();
+	newChunkData->bitangentBO = new BufferObject();
 	genHeightVBO(newChunkData->heightBO);
-	genNormalVBO(newChunkData->normalsBO);
+	genBasisVBO(newChunkData->normalsBO, 3);
+	genBasisVBO(newChunkData->tangentBO, 4);
+	genBasisVBO(newChunkData->bitangentBO, 5);
 	newChunkData->loaded = false;
 }
 
@@ -190,8 +210,6 @@ void Terrain::generateChunk(int xPos, int zPos, float from1, float from2, float 
 
 }
 
-
-
 void Terrain::RenderTerrain(RenderMode* rm) {
 	rm->shader.useShader();
 	for (uniformData *ud : rm->shader.localUBOList) {
@@ -210,17 +228,29 @@ void Terrain::RenderTerrain(RenderMode* rm) {
 
 				BufferObject *heightVBO = ((TerrainChunk*)BU->extraData)->heightBO;
 				BufferObject *normalVBO = ((TerrainChunk*)BU->extraData)->normalsBO;
+				BufferObject *tangemtVBO = ((TerrainChunk*)BU->extraData)->tangentBO;
+				BufferObject *bitangemtVBO = ((TerrainChunk*)BU->extraData)->bitangentBO;
 				glBindBuffer(GL_ARRAY_BUFFER, heightVBO->vboID);
 				glVertexAttribPointer(heightVBO->attrib, heightVBO->dimension, heightVBO->glType, false, 0, 0);
 				glBindBuffer(GL_ARRAY_BUFFER, 0);
 				glBindBuffer(GL_ARRAY_BUFFER, normalVBO->vboID);
 				glVertexAttribPointer(normalVBO->attrib, normalVBO->dimension, normalVBO->glType, false, 0, 0);
 				glBindBuffer(GL_ARRAY_BUFFER, 0);
+				glBindBuffer(GL_ARRAY_BUFFER, tangemtVBO->vboID);
+				glVertexAttribPointer(tangemtVBO->attrib, tangemtVBO->dimension, tangemtVBO->glType, false, 0, 0);
+				glBindBuffer(GL_ARRAY_BUFFER, 0);
+				glBindBuffer(GL_ARRAY_BUFFER, bitangemtVBO->vboID);
+				glVertexAttribPointer(bitangemtVBO->attrib, bitangemtVBO->dimension, bitangemtVBO->glType, false, 0, 0);
+				glBindBuffer(GL_ARRAY_BUFFER, 0);
 				glEnableVertexAttribArray(heightVBO->attrib);
 				glEnableVertexAttribArray(normalVBO->attrib);
+				glEnableVertexAttribArray(tangemtVBO->attrib);
+				glEnableVertexAttribArray(bitangemtVBO->attrib);
 				glDrawElements(rm->mode, chunkEntity->indexCount, GL_UNSIGNED_INT, 0);
 				glDisableVertexAttribArray(heightVBO->attrib);
 				glDisableVertexAttribArray(normalVBO->attrib);
+				glDisableVertexAttribArray(tangemtVBO->attrib);
+				glDisableVertexAttribArray(bitangemtVBO->attrib);
 			}
 		}
 		
@@ -235,7 +265,6 @@ void Terrain::clearMeshData() {
 	delete[] meshDataHolder;
 	BinaryLoader::freeData(meshVBOHolder);
 }
-
 
 void Terrain::genHeightVBO(BufferObject * heightVBO) {
 
@@ -259,9 +288,9 @@ void Terrain::loadVBO(BufferObject* vbo){
 	glBufferSubData(vbo->target, 0, vbo->size * vbo->unitSize, vbo->data);
 	glBindBuffer(vbo->target, 0);
 }
-void Terrain::genNormalVBO(BufferObject * normalVBO) {
+void Terrain::genBasisVBO(BufferObject* normalVBO, GLuint attrib) {
 	glGenBuffers(1, &normalVBO->vboID);
-	normalVBO->attrib = 3;
+	normalVBO->attrib = attrib;
 	normalVBO->unitSize = 4;
 	normalVBO->dimension = 3;
 	normalVBO->glType = GL_FLOAT;
@@ -275,6 +304,52 @@ void Terrain::genNormalVBO(BufferObject * normalVBO) {
 	glBindBuffer(normalVBO->target, 0);
 }
 
+void genTangentShit(float *heights, BufferObject *tangent, BufferObject *bitangent) {
+	int j = 0;
+	tangent->data = new float[256 * 256 * 3];
+	bitangent->data = new float[256 * 256 * 3];
+	std::vector<glm::vec3> tangents, bitangents;
+	for (int i = 0; i < 256; i++) { //x
+		float ival = (float)i / 15.0f;
+		float iMeshx = (float)i - 128.0f;
+		int indexBase = i * 256;
+		for (int j = 0; j < 256; j += 3) { //y
+			float texX = ival;
+			float texY = (float)j / 15.0f;
+			glm::vec2 uv0 = glm::vec2((float)i / 15.0f, (float)j / 15.0f);
+			glm::vec2 uv1 = glm::vec2((float)i / 15.0f, (float)(j + 1.0) / 15.0f);
+			glm::vec2 uv2 = glm::vec2((float)i / 15.0f, (float)(j + 2.0) / 15.0f);
+
+			glm::vec3 v0 = glm::vec3(iMeshx, heights[indexBase + j], (float)j - 128.0f);
+			glm::vec3 v1 = glm::vec3(iMeshx, heights[indexBase + j + 1], (float)j - 127.0f);
+			glm::vec3 v2 = glm::vec3(iMeshx, heights[indexBase + j + 2], (float)j - 126.0f);
+
+			glm::vec3 deltaPos1 = v1 - v0;
+			glm::vec3 deltaPos2 = v2 - v0;
+
+			// UV delta
+			glm::vec2 deltaUV1 = uv1 - uv0;
+			glm::vec2 deltaUV2 = uv2 - uv0;
+
+			float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+			glm::vec3 tangentV = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y)*r;
+			glm::vec3 bitangentV = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x)*r;
+			tangents.push_back(tangentV);
+			bitangents.push_back(bitangentV);
+		}
+	}
+
+	for (int i = 0; i < 256 * 256; i++) {
+		int vectorPos = i / 3;
+		((float*)tangent->data)[i * 3 + 0] = tangents[vectorPos].x;
+		((float*)tangent->data)[i * 3 + 1] = tangents[vectorPos].y;
+		((float*)tangent->data)[i * 3 + 2] = tangents[vectorPos].z;
+
+		((float*)bitangent->data)[i * 3 + 0] = bitangents[vectorPos].x;
+		((float*)bitangent->data)[i * 3 + 1] = bitangents[vectorPos].y;
+		((float*)bitangent->data)[i * 3 + 2] = bitangents[vectorPos].z;
+	}
+}
 
 glm::vec3 Terrain::getNormal(int xPos, int zPos){
 	glm::vec3 worldPos(xPos, 0, zPos);
@@ -286,6 +361,30 @@ glm::vec3 Terrain::getNormal(int xPos, int zPos){
 //	std::cout << "(" << N.x << ", " << N.y << ", " << N.z << ")\n";
 	N = normalize(N);
 	return N;
+}
+
+glm::vec3* Terrain::getTangent(float xPos, float zPos) {
+	float hL = TerrainGenerator::getHeight(xPos - 1, zPos);
+	float hR = TerrainGenerator::getHeight(xPos, zPos);
+	float hD = TerrainGenerator::getHeight(xPos, zPos + 1);
+	glm::vec3 & v2 = glm::vec3(xPos - 1, hL, zPos);
+	glm::vec3 & v1 = glm::vec3(xPos, hD, zPos + 1);
+	glm::vec3 & v0 = glm::vec3(xPos, hR, zPos);
+	glm::vec3 deltaPos1 = v1 - v0;
+	glm::vec3 deltaPos2 = v2 - v0;
+	glm::vec2 & uv0 = glm::vec2((xPos - 1) /15.0f, zPos/15.0f);
+	glm::vec2 & uv1 = glm::vec2((xPos) / 15.0f, zPos / 15.0f);
+	glm::vec2 & uv2 = glm::vec2((xPos + 1) / 15.0f, zPos / 15.0f);
+	glm::vec2 deltaUV1 = glm::vec2(1.0/15.0, 1.0 / 15.0);
+	glm::vec2 deltaUV2 = glm::vec2(1.0 / 15.0, 1.0 / 15.0);
+	float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+	glm::vec3 T = (deltaPos1 * deltaUV2.y - deltaPos2 * deltaUV1.y);
+	glm::vec3 bitangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x);
+
+	T = normalize(T);
+	bitangent = normalize(bitangent);
+	glm::vec3 output[2] = { T, bitangent };
+	return output;
 }
 
 float Terrain::getHeight(glm::vec3 worldPos){
@@ -415,8 +514,12 @@ void Terrain::loadChunk(TerrainChunk* tc){
 	std::vector<BufferObject*> height = loader.readFile(filename.c_str());
 	tc->heightBO->data = height[0]->data;
 	tc->normalsBO->data = height[1]->data;
+	tc->tangentBO->data = height[2]->data;
+	tc->bitangentBO->data = height[3]->data;
 	loadVBO(tc->heightBO);
 	loadVBO(tc->normalsBO);
+	loadVBO(tc->tangentBO);
+	loadVBO(tc->bitangentBO);
 
 	free(tc->normalsBO->data);
 	tc->loaded = true;
@@ -438,6 +541,8 @@ void Terrain::saveChunk(TerrainChunk* tc){
 	std::vector<BufferObject> bos = std::vector<BufferObject>();
 	bos.push_back(*(tc->heightBO));
 	bos.push_back(*(tc->normalsBO));
+	bos.push_back(*(tc->tangentBO));
+	bos.push_back(*(tc->bitangentBO));
 	loader.createFile(filename.c_str(), bos);
 }
 
