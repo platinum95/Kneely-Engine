@@ -23,14 +23,17 @@ static const BoilerPlate::Properties::BufferObjectProperties floatProps{
 	GL_FLOAT
 };
 
+unsigned int ModelLoader::pFlags;
+
 ModelLoader::ModelLoader() {
 }
 
-std::vector<Entity*> *ModelLoader::readModel(const char * filePath) {
+std::vector<Entity*> *ModelLoader::readModel(const char * filePath, unsigned int _pFlags) {
 	std::vector<Entity*> *MeshVec = new std::vector<Entity*>();
 	std::vector<BoilerPlate::Properties::EntityProperties> EntPropVec = std::vector<BoilerPlate::Properties::EntityProperties>();
 	Assimp::Importer *import = new Assimp::Importer;
-	const struct aiScene* scene = import->ReadFile(filePath, aiProcess_Triangulate | aiProcess_FlipUVs);
+	pFlags = _pFlags;
+	const struct aiScene* scene = import->ReadFile(filePath, pFlags);
 	if (!scene || scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 		std::cout << "ERROR::ASSIMP::" << import->GetErrorString() << std::endl;
 		return MeshVec;
@@ -94,7 +97,23 @@ Entity *ModelLoader::processMesh(aiMesh inMesh, const aiScene* inScene) {
 		newEnt->registerBufferObject(texBO);
 
 	}
-	
+	if ((pFlags & aiProcess_CalcTangentSpace) && inMesh.HasTangentsAndBitangents()) {
+		float* tangents = new float[inMesh.mNumVertices * 3];
+		float* bitangents = new float[inMesh.mNumVertices * 3];
+		int j = -1;
+		for (unsigned int i = 0; i < inMesh.mNumVertices; i++) {
+			tangents[++j] = inMesh.mTangents[i].x;
+			bitangents[j] = inMesh.mBitangents[i].x;
+			tangents[++j] = inMesh.mTangents[i].y;
+			bitangents[j] = inMesh.mBitangents[i].y;
+			tangents[++j] = inMesh.mTangents[i].z;
+			bitangents[j] = inMesh.mBitangents[i].z;
+		}
+		BufferObject *tangentBO = new BufferObject(floatProps, 3, inMesh.mNumVertices * 3, tangents);
+		BufferObject *bitangentBO = new BufferObject(floatProps, 4, inMesh.mNumVertices * 3, bitangents);
+		newEnt->registerBufferObject(tangentBO);
+		newEnt->registerBufferObject(bitangentBO);
+	}
 	
 	if (inMesh.mMaterialIndex >= 0) {
 		aiMaterial* material = inScene->mMaterials[inMesh.mMaterialIndex];

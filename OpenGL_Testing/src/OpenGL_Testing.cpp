@@ -305,8 +305,12 @@ void setupShaders() {
 	entityShader.RegisterAttribute("position", 0);
 	entityShader.RegisterAttribute("normal", 1);
 	entityShader.RegisterAttribute("texCoords", 2);
+	entityShader.RegisterAttribute("tangent", 3);
+	entityShader.RegisterAttribute("bitangent", 4);
 	entityShader.RegisterUniform("translation");
-	entityShader.RegisterUniform("test");
+	entityShader.RegisterUniform("normal_mapping");
+	entityShader.RegisterTexture("diffuseTex", 0);
+	entityShader.RegisterTexture("normalTex", 1);
 	entityShader.registerUBO(cameraUBO);
 	entityShader.registerUBO(lightingUBO);
 	entityShader.registerUBO(clipUBO);
@@ -671,7 +675,7 @@ void setupEntities() {
 	/*
 	scissorUnit = new BatchUnit();
 
-	std::vector<Entity*> *scisEnt = ModelLoader::readModel("./res/entities/Scissors.obj");
+	std::vector<Entity*> *scisEnt = ModelLoader::readModel("./res/entities/Scissors.obj",aiProcess_Triangulate | aiProcess_FlipUVs);
 	scissors = (*scisEnt)[0];
 	scissors->uniforms.push_back(uniformData(entityShader.uniformTable.at(0)->uniformLocation, &scissorUnit->transformationMatrix,
 			BoilerPlate::Shaders::Shader::loadMat42));
@@ -724,6 +728,43 @@ void setupEntities() {
 	renderer.addToRenderer(&snakeRenderer);
 	BinaryLoader::freeData(snakeBOList);
 
+	ImageLoader::PNGtoRAW("./res/images/barrel.png", "./res/images/barrel.raw");
+	ImageLoader::PNGtoRAW("./res/images/barrelNormal.png", "./res/images/barrelNormal.raw");
+	ImageData barrelDiffuse = ImageLoader::loadRAW("./res/images/barrel.raw");
+	ImageData barrelNormal = ImageLoader::loadRAW("./res/images/barrelNormal.raw");
+
+	Texture *barrelDiffuseTexture = new Texture(barrelDiffuse, GL_TEXTURE_2D);
+	barrelDiffuseTexture->registerParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	barrelDiffuseTexture->registerParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	barrelDiffuseTexture->registerParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+	barrelDiffuseTexture->registerParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+	barrelDiffuseTexture->textureBank = GL_TEXTURE0;
+	barrelDiffuseTexture->updateTexture();
+	Texture *barrelNormalTexture = new Texture(barrelNormal, GL_TEXTURE_2D);
+	barrelNormalTexture->registerParameter(GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	barrelNormalTexture->registerParameter(GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	barrelNormalTexture->registerParameter(GL_TEXTURE_WRAP_S, GL_REPEAT);
+	barrelNormalTexture->registerParameter(GL_TEXTURE_WRAP_T, GL_REPEAT);
+	barrelNormalTexture->textureBank = GL_TEXTURE1;
+	barrelNormalTexture->updateTexture();
+	ImageLoader::freeData(barrelDiffuse);
+	ImageLoader::freeData(barrelNormal);
+
+	scissorUnit = new BatchUnit();
+	std::vector<Entity*> *barrelEnt = ModelLoader::readModel("./res/entities/barrel.obj", aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+	Entity * barrel = barrelEnt->at(0);
+	scissorUnit->transformationMatrix = glm::translate(glm::vec3(0, 10, 0));
+	barrel->uniforms.push_back(uniformData(entityShader.uniformTable.at(0)->uniformLocation, &scissorUnit->transformationMatrix,
+		BoilerPlate::Shaders::Shader::loadMat42));
+	bool *truee = new bool(true);
+	barrel->uniforms.push_back(uniformData(entityShader.uniformTable.at(1)->uniformLocation, truee,
+		BoilerPlate::Shaders::Shader::loadBool2));
+	barrel->textures.push_back(barrelDiffuseTexture);
+	barrel->textures.push_back(barrelNormalTexture);
+	RenderMode *barrelRenderer = new RenderMode(GL_TRIANGLES, entityShader);
+	barrelRenderer->entityList.push_back(barrel);
+	barrel->units.push_back(scissorUnit);
+	renderer.addToRenderer(barrelRenderer);
 }
 
 void cleanup() {

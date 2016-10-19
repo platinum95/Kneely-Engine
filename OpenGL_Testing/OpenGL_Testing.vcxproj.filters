@@ -30,18 +30,6 @@
     <None Include="res\shaders\entityVShader.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="res\shaders\groundFShader.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\shaders\groundFShader2.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\shaders\groundVShader.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="res\shaders\groundVShader2.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="res\shaders\guiFShader.glsl">
       <Filter>Resource Files</Filter>
     </None>
@@ -79,6 +67,12 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="res\shaders\snakeVShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\groundFShader2.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="res\shaders\groundVShader2.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

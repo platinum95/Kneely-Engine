@@ -4,15 +4,19 @@
 in vec3 position;
 in vec3 normal;
 in vec2 texCoords;
+in vec3 tangent;
+in vec3 bitangent;
 
 
 out vec3 toLightVector;
-out vec3 surfaceNormal;
-
+out vec3 surfaceNormal, p_tangent, p_bitangent;
+out mat4 viewMat;
+out vec3 LightDirection_tangentspace;
+out vec3 EyeDirection_tangentspace;
 out vec2 passTexCoords;
-
+out mat3 TBN;
 uniform mat4 translation;
-uniform float test;
+uniform bool normal_mapping;
 
 
 layout (std140) uniform camera_data
@@ -37,4 +41,19 @@ void main(){
 	toLightVector = normalize(lightpos.xyz - worldPos.xyz);
 	passTexCoords = texCoords;
 	gl_Position = projection * view * worldPos;
+
+	vec3 LightDirection_cameraspace = normalize((view * lightpos).xyz - (view * worldPos).xyz);
+	vec3 EyeDirection_cameraspace = normalize(vec3(0, 0, 0) - (view * worldPos).xyz);
+	p_tangent = tangent;
+	p_bitangent = bitangent;
+	mat4 modelViewMatrix = view * translation;
+
+	TBN = transpose(mat3(
+		modelViewMatrix * vec4(normalize(tangent), 0),
+		modelViewMatrix * vec4(normalize(bitangent), 0),
+		modelViewMatrix * vec4(normalize(normal), 0)
+	)); 
+	LightDirection_tangentspace = TBN * LightDirection_cameraspace;
+	EyeDirection_tangentspace =  TBN * EyeDirection_cameraspace;
+	viewMat = view;
 }
