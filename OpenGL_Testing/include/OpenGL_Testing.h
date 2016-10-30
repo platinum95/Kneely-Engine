@@ -8,6 +8,7 @@
 #include "Matrix.h"
 #include <cmath>
 #include "ParticleSystem.h"
+#include "hash_table.h"
 
 #include "Vector.h"
 #include "Camera.h"
@@ -114,6 +115,8 @@ KeyHandler keyHandler;
 bool keyDown[GLFW_KEY_Z - GLFW_KEY_A];
 keyType *forwardKey, *backKey, *leftKey, *rightKey, *spaceKey, *upCursor, *downCursor;
 Terrain* terrain;
+
+hashtable_t *shader_variable_id_hashtable;
 
 //Audio variables
 AudioPlate* audioPlate; 

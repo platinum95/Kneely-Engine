@@ -293,6 +293,16 @@ void setupShaders() {
 	sphereShader.addShaderType(planeVertexPath, GL_VERTEX_SHADER);
 	sphereShader.addShaderType(planeFragmentPath, GL_FRAGMENT_SHADER);
 	sphereShader.LoadShader();
+	
+	shader_variable_id_hashtable = ht_create(1024);
+	ht_put(shader_variable_id_hashtable, "sphere_shader_position", 0);
+	ht_put(shader_variable_id_hashtable, "sphere_shader_normal", 1);
+	ht_put(shader_variable_id_hashtable, "sphere_shader_timeDiff", sphereShader.uniformTable[0]->uniformLocation);
+	ht_put(shader_variable_id_hashtable, "sphere_shader_waveForm", sphereShader.uniformTable[1]->uniformLocation);
+	ht_put(shader_variable_id_hashtable, "sphere_shader_alpha", sphereShader.uniformTable[2]->uniformLocation);
+	ht_put(shader_variable_id_hashtable, "sphere_shader_clippy", sphereShader.uniformTable[3]->uniformLocation);
+
+	unsigned int test = ht_get(shader_variable_id_hashtable, "sphere_shader_normal");
 
 	skyboxShader.RegisterAttribute("position", 0);
 	skyboxShader.RegisterUniform("cubeMap");
@@ -609,11 +619,11 @@ void setupEntities() {
 	sphere->createEntity(SphereData[0]->data, SphereData[0]->size);
 	sphereRenderer = RenderMode(GL_TRIANGLES, sphereShader);
 	sphereRenderer.entityList.push_back(sphere);
-	sphere->uniforms.push_back(uniformData(sphereShader.uniformTable.at(0)->uniformLocation,
+	sphere->uniforms.push_back(uniformData(ht_get(shader_variable_id_hashtable, "sphere_shader_timeDiff"), 
 			timeDiff, &BoilerPlate::Shaders::Shader::loadFloatArray));
-	sphere->uniforms.push_back(uniformData(sphereShader.uniformTable.at(2)->uniformLocation,
+	sphere->uniforms.push_back(uniformData(ht_get(shader_variable_id_hashtable, "sphere_shader_alpha"),
 			&waveAlpha, &BoilerPlate::Shaders::Shader::loadFloat2));
-	sphere->uniforms.push_back(uniformData(sphereShader.uniformTable.at(3)->uniformLocation,
+	sphere->uniforms.push_back(uniformData(ht_get(shader_variable_id_hashtable, "sphere_shader_clippy"),
 			&clippy, &BoilerPlate::Shaders::Shader::loadBool2));
 	sphere->units.push_back(new BatchUnit());
 	renderer.addToRenderer(&sphereRenderer);
@@ -728,8 +738,6 @@ void setupEntities() {
 	renderer.addToRenderer(&snakeRenderer);
 	BinaryLoader::freeData(snakeBOList);
 
-	ImageLoader::PNGtoRAW("./res/images/barrel.png", "./res/images/barrel.raw");
-	ImageLoader::PNGtoRAW("./res/images/barrelNormal.png", "./res/images/barrelNormal.raw");
 	ImageData barrelDiffuse = ImageLoader::loadRAW("./res/images/barrel.raw");
 	ImageData barrelNormal = ImageLoader::loadRAW("./res/images/barrelNormal.raw");
 

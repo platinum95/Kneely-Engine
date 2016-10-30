@@ -129,6 +129,9 @@
     <ClInclude Include="LoadAudio.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="hash_table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BoilerPlate.cpp">
@@ -223,6 +226,9 @@
     </ClCompile>
     <ClCompile Include="LoadAudio.cpp">
       <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="hash_table.cpp">
+      <Filter>Management</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

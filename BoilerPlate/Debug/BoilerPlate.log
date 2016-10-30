@@ -1,9 +1,56 @@
-﻿openal32.lib(OpenAL32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
-openal32.lib(OpenAL32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-libsndfile.lib(libsndfile-1.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
-libsndfile.lib(libsndfile-1.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-assimpD.lib(assimp-vc140-mt.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
-assimpD.lib(assimp-vc140-mt.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
-ModelLoader.obj : warning LNK4006: "public: enum aiReturn __thiscall aiMaterial::GetTexture(enum aiTextureType,unsigned int,struct aiString *,enum aiTextureMapping *,unsigned int *,float *,enum aiTextureOp *,enum aiTextureMapMode *)const " (?GetTexture@aiMaterial@@QBE?AW4aiReturn@@W4aiTextureType@@IPAUaiString@@PAW4aiTextureMapping@@PAIPAMPAW4aiTextureOp@@PAW4aiTextureMapMode@@@Z) already defined in assimpD.lib(assimp-vc140-mt.dll); second definition ignored
-ModelLoader.obj : warning LNK4006: "public: unsigned int __thiscall aiMaterial::GetTextureCount(enum aiTextureType)const " (?GetTextureCount@aiMaterial@@QBEIW4aiTextureType@@@Z) already defined in assimpD.lib(assimp-vc140-mt.dll); second definition ignored
-  BoilerPlate.vcxproj -> \\134.226.32.3\Ugrad\omaolaip\My Documents\Visual Studio 2015\Projects\Kneely-Engine\libsx86\BoilerPlate.lib
+﻿Build started 30/10/2016 16:06:19.
+     1>Project "D:\Projects\c++\VS2015\Kneely-Engine\BoilerPlate\BoilerPlate.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"D:\Projects\c++\VS2015\Kneely-Engine\include" /ZI /nologo /W3 /WX- /MP /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\BoilerPlate.pdb" /Gd /TP /analyze- /errorReport:prompt hash_table.cpp
+         hash_table.cpp
+     1>d:\projects\c++\vs2015\kneely-engine\boilerplate\hash_table.h(7): warning C4200: nonstandard extension used: zero-sized array in struct/union
+         d:\projects\c++\vs2015\kneely-engine\boilerplate\hash_table.h(7): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>d:\projects\c++\vs2015\kneely-engine\boilerplate\hash_table.cpp(66): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+       Lib:
+         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"D:\Projects\c++\VS2015\Kneely-Engine\libsx86\BoilerPlate.lib" glew32.lib glfw3.lib openal32.lib libsndfile.lib assimpD.lib /LIBPATH:"D:\Projects\c++\VS2015\Kneely-Engine\libsx86" /NOLOGO Debug\AudioEntity.obj
+         Debug\AudioPlate.obj
+         Debug\BinaryLoader.obj
+         Debug\BoilerPlate.obj
+         Debug\Camera.obj
+         Debug\Constants.obj
+         Debug\Entity.obj
+         Debug\Framebuffer.obj
+         Debug\hash_table.obj
+         Debug\ImageLoader.obj
+         Debug\KeyHandler.obj
+         Debug\LoadAudio.obj
+         Debug\lodepng.obj
+         Debug\Maths.obj
+         Debug\ModelLoader.obj
+         Debug\MouseHandler.obj
+         Debug\ObjLoader.obj
+         Debug\ParticleSystem.obj
+         Debug\PhysicsConstants.obj
+         Debug\PhysicsEntity.obj
+         Debug\PhysicsWorld.obj
+         Debug\PostProcessing.obj
+         Debug\Properties.obj
+         Debug\Renderer.obj
+         Debug\Shader.obj
+         Debug\Skybox.obj
+         Debug\Terrain.obj
+         Debug\TerrainGenerator.obj
+         Debug\Texture.obj
+         Debug\Timer.obj
+         Debug\Timing.obj
+         Debug\Water.obj
+     1>openal32.lib(OpenAL32.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
+     1>openal32.lib(OpenAL32.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+     1>libsndfile.lib(libsndfile-1.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
+     1>libsndfile.lib(libsndfile-1.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+     1>assimpD.lib(assimp-vc140-mt.dll) : warning LNK4006: __NULL_IMPORT_DESCRIPTOR already defined in glew32.lib(glew32.dll); second definition ignored
+     1>assimpD.lib(assimp-vc140-mt.dll) : warning LNK4221: This object file does not define any previously undefined public symbols, so it will not be used by any link operation that consumes this library
+     1>ModelLoader.obj : warning LNK4006: "public: enum aiReturn __thiscall aiMaterial::GetTexture(enum aiTextureType,unsigned int,struct aiString *,enum aiTextureMapping *,unsigned int *,float *,enum aiTextureOp *,enum aiTextureMapMode *)const " (?GetTexture@aiMaterial@@QBE?AW4aiReturn@@W4aiTextureType@@IPAUaiString@@PAW4aiTextureMapping@@PAIPAMPAW4aiTextureOp@@PAW4aiTextureMapMode@@@Z) already defined in assimpD.lib(assimp-vc140-mt.dll); second definition ignored
+     1>ModelLoader.obj : warning LNK4006: "public: unsigned int __thiscall aiMaterial::GetTextureCount(enum aiTextureType)const " (?GetTextureCount@aiMaterial@@QBEIW4aiTextureType@@@Z) already defined in assimpD.lib(assimp-vc140-mt.dll); second definition ignored
+         BoilerPlate.vcxproj -> D:\Projects\c++\VS2015\Kneely-Engine\libsx86\BoilerPlate.lib
+     1>Done Building Project "D:\Projects\c++\VS2015\Kneely-Engine\BoilerPlate\BoilerPlate.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.18
