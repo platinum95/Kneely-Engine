@@ -18,12 +18,7 @@ struct cameraData {
 };
 
 class Camera {
-
-
-
 public:
-
-
 	Camera();
 	~Camera();
 	void rotateX(float angle);

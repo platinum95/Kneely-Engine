@@ -1,12 +1,9 @@
-﻿Build started 30/10/2016 16:06:19.
+﻿Build started 19/12/2016 19:46:56.
      1>Project "D:\Projects\c++\VS2015\Kneely-Engine\BoilerPlate\BoilerPlate.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"D:\Projects\c++\VS2015\Kneely-Engine\include" /ZI /nologo /W3 /WX- /MP /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\BoilerPlate.pdb" /Gd /TP /analyze- /errorReport:prompt hash_table.cpp
-         hash_table.cpp
-     1>d:\projects\c++\vs2015\kneely-engine\boilerplate\hash_table.h(7): warning C4200: nonstandard extension used: zero-sized array in struct/union
-         d:\projects\c++\vs2015\kneely-engine\boilerplate\hash_table.h(7): note: Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
-     1>d:\projects\c++\vs2015\kneely-engine\boilerplate\hash_table.cpp(66): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(119): note: see declaration of 'strcpy'
+         D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /I"D:\Projects\c++\VS2015\Kneely-Engine\include" /ZI /nologo /W3 /WX- /MP /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\" /Fd"Debug\BoilerPlate.pdb" /Gd /TP /analyze- /errorReport:prompt Camera.cpp Water.cpp
+         Camera.cpp
+         Water.cpp
        Lib:
          D:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\Lib.exe /OUT:"D:\Projects\c++\VS2015\Kneely-Engine\libsx86\BoilerPlate.lib" glew32.lib glfw3.lib openal32.lib libsndfile.lib assimpD.lib /LIBPATH:"D:\Projects\c++\VS2015\Kneely-Engine\libsx86" /NOLOGO Debug\AudioEntity.obj
          Debug\AudioPlate.obj
@@ -53,4 +50,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.18
+Time Elapsed 00:00:03.01

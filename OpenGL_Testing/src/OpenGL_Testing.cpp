@@ -1,16 +1,22 @@
-// OpenGL_Testing.cpp : Defines the entry point for the console application.
+// OpenGL_Testing main file
+//This is the example implementation of the engine
 //
 
 
 #include "OpenGL_Testing.h"
-
 #include <sys/stat.h>
+
+//Comment this out to enable the song
 #define NO_AUDIO
+
+#define QUICK_SPHERE 1
+
+//TODO get rid of this
 unsigned int ScissorvertexCount = 93132;
 unsigned int ScissorindexCount = 136572;
 
-//65 or 66
-
+//Show the currnt FPS as the window title.
+//Can change it to debug some stuff in the title
 void ShowFps(GLFWwindow *pWindow) {
 	double WorldTime = glfwGetTime();
 	double delta = WorldTime - DisplayFrameTime;
@@ -28,36 +34,33 @@ void ShowFps(GLFWwindow *pWindow) {
 	}
 }
 
+
 int main(){
-	glfwProps = boiler.startGLFW(displayProps);
-	glewExperimental = GL_TRUE;
-	glewProps = boiler.startGLEW();
 
-	
-//	std::thread InitialisationThread(Initialise);
-//	InitialisationThread.detach();
-	splashScreen();
 	Initialise();
-	while (!InitialisationComplete) {
-		;
-	}
+	
 
+	//Start playing the sound file
 #ifndef NO_AUDIO
-	music->playSound(*testFile->buffer);
+	music->playSound(*soundFile->buffer);
 #endif
+
 	double lastTime = clock();
-	int beatCount = 63;
+	int beatCount = QUICK_SPHERE ? 63 : 0;
+
+	//Main loop, checks for GLFW close signal or ingame button signal
 	while (!glfwWindowShouldClose(glfwProps.window) && clickedExit < 1) {
+		//Update timings and FPS
 		double timeSince = (clock() - lastTime) / CLOCKS_PER_SEC;
 		lastTime = clock();
 		changeFrameTimer->setTime(glfwGetTime());
 		double fps = 1.0 / timeSince;
 		ShowFps(glfwProps.window);
 
+		//Sphere update, should move this somewhere else
 		if (sendWave) {
 			*timey = (float) glfwGetTime() * 5.3f;
 			double diff = *timey - (timeSinceWave[0] + 5.3);
-			//std::cout << glfwGetTime() << std::endl;
 			if (clippy) {
 				float startingPoint = timeDiff[0] * 40.0f;
 				float endingPoint = startingPoint - 10.0f;
@@ -81,91 +84,134 @@ int main(){
 			}
 		}
 		timeDiff[0] = *timey - timeSinceWave[0];
+
+		//Update which ground chunks are visible
 		updateActiveEntities();
+		//Render all active registered entities
 		render();
+		//Update GLFW events
 		glfwPollEvents();
+		//Update the key handler
 		keyHandler.update(glfwProps.window);
+		//Update the camera view
 		updateView();
 	}
+	//Delete stuff on exit
 	cleanup();
-	
 	changeFrameTimer->end();
     return 0;
 }
 
+//Update which ground chunks are visible
 void updateActiveEntities() {
 	for (BatchUnit *BU : terrain->chunkEntity->units) {
 			glm::vec4 origin = glm::vec4(0, 0, 0, 1);
 			origin = BU->transformationMatrix * origin;
 			float clip = glm::dot(origin, camera.plane);
 			if (clip < -1) {
-			//	BU->active = false;
+				BU->active = false;
 			}
-			//else
-			//	BU->active = true;
+			else
+				BU->active = true;
 		}
 
 }
 
+//Rendering function
 void render() {	
 	if (!pauseRender) {
 		glEnable(GL_CLIP_DISTANCE0);
 		water->waveOffset += 0.01f;
 		updateView();
 
+		//Clear the screen
 		renderer.clear();
 
+		//Render to a framebuffer
 		mainFrameBuffer->bindBuffer();
 		mainFrameBuffer->clear();
 		renderer.Render();
-
 		mainFrameBuffer->unbindBuffer();
+
+		//Do post processing on the buffer rendered to
 		postProcessPipeline->getOutputBuffer()->clearBlack();
 		postProcessPipeline->Render();
 
+		//Render GUI stuff
 		guiRenderer.Render();
 
+		//Swap the display buffers
 		glfwSwapBuffers(glfwProps.window);	//Swap the window buffers
 	}
 }
 
+//Initialise components
 void Initialise() {
+	//OpenGL window and library setup
+	//First create a window with a predefined struct (made in header)
+	glfwProps = boiler.startGLFW(displayProps);
+	glewExperimental = GL_TRUE;
+
+	//Next start glew, and get some info back
+	glewProps = boiler.startGLEW();
+
+	/*	Experiment with threading
+
+	std::thread InitialisationThread(Initialise);
+	InitialisationThread.detach();
+	while (!InitialisationComplete) {
+		;
+	}
+	*/
+
+	//Display the loading screen and Initialise components
+	splashScreen();
+
+	//Set up timing stuff
 	Timing::genTimingID(&performance_checking_id, 1);
 	Timing::start(performance_checking_id);
 	double performance_time = 0;
 	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
 	std::cout << "Starting at: " << performance_time << std::endl;
 
+	//Set up an event to stop rendering the sphere 11.52 seconds after starting
 	changeFrameTimer = new Timer(EXT_TIMER, true);
 	changeFrameTimer->addEvent(new TimerEvent(&changeWireframe, nullptr, 11.52110));
 	glEnable(GL_CLIP_DISTANCE0);
 	glEnable(GL_COLOR_MATERIAL);
+
+	//Make a temporary folder for storage during runtime
+
 	_mkdir("temp");
 	
 	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
 	std::cout << "First bits at: " << performance_time << std::endl;
 
+	//Set up audio stuff
 	audioPlate = new AudioPlate();
-	testFile = new WAV_File();
-	*testFile = LoadAudio::loadWav("./res/sounds/stm.wav");
+	soundFile = new WAV_File();
+	//Load in an audio file
+	*soundFile = LoadAudio::loadWav("./res/sounds/stm.wav");
 
-	audioPlate->loadAudio(testFile);
+	audioPlate->loadAudio(soundFile);
 	audioPlate->setListenerData();
 	music = new AudioEntity();
 	
 
-	LoadAudio::freeData(*testFile);
+	LoadAudio::freeData(*soundFile);
 	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
 	std::cout << "Audio: " << performance_time << std::endl;
 
+	//Start setting up physics engine, specifying constants
 	BoilerPlate::Physics::PhysicsConstants::gravity = -9.81f;
 	BoilerPlate::Physics::PhysicsConstants::drag_coef = 0.001f;
 
-
+	//Set up the camera
 	setupView();
 	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
 	std::cout << "View: " << performance_time << std::endl;
 
+	//Set up various shaders
 	setupShaders();
 
 	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
@@ -173,6 +219,7 @@ void Initialise() {
 
 	
 	wireframe = GL_FILL;
+	//Do the heartbeat stuff (please get rid of this)
 	for (int i = 0; i < 1544; i++) {
 		heartbeat[i] *= 2;
 		heartbeat[i] -= 1;
@@ -180,10 +227,12 @@ void Initialise() {
 	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
 	std::cout << "Heartbeat: " << performance_time << std::endl;
 
+	//Set up the various world entities
 	setupEntities();
 	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
 	std::cout << "Entities: " << performance_time << std::endl;
 
+	//Set up the key events
 	*timey = 0;
 	forwardKey = new keyType(keyType(GLFW_KEY_W));
 	backKey = new keyType(GLFW_KEY_S);
@@ -199,7 +248,7 @@ void Initialise() {
 	keyHandler.addToList(keyType(&(FOV),				2.0f, GLFW_KEY_1, GLFW_KEY_2, GLFW_CLICK));
 	keyHandler.addToList(keyType(&(clickedExit),		1.0f, GLFW_KEY_ESCAPE, GLFW_KEY_F1, GLFW_CLICK));
 	keyHandler.addToList(keyType(&(lighting.position[1]), 1.0f, GLFW_KEY_Y, GLFW_KEY_U, GLFW_CLICK));
-	keyHandler.addToList(keyType(nullptr,				&changeWireframe2, GLFW_KEY_H, GLFW_CLICK));
+	//keyHandler.addToList(keyType(nullptr,				&changeWireframe2, GLFW_KEY_H, GLFW_CLICK));
 	//keyHandler.addToList(keyType(nullptr,				&disableGround, GLFW_KEY_L, GLFW_CLICK));
 	keyHandler.addToList(keyType(&(sData->amount), 0.1f, GLFW_KEY_P, GLFW_KEY_SEMICOLON , GLFW_CLICK));
 	keyHandler.addToList(keyType(&(cData->amount), 0.1f, GLFW_KEY_O, GLFW_KEY_L, GLFW_CLICK));
@@ -212,11 +261,12 @@ void Initialise() {
 	keyHandler.addToList(upCursor);
 	keyHandler.addToList(downCursor);
 
+	//Set up the mouse handler and events
 	mouse = new MouseHandler();
-	//mouse->addCallback(&checkMouse, GLFW_MOUSE_BUTTON_LEFT);
 	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
 	std::cout << "Inputs: " << performance_time << std::endl;
 
+	//Set up various timers
 	Timing::genTimingID(&particle_timing_id, 1);
 	Timing::genTimingID(&physics_timing_id, 1);
 	Timing::genTimingID(&snake_timing_id, 1);
@@ -233,16 +283,20 @@ void Initialise() {
 	changeFrameTimer->start();
 
 	*timey = 0;
-	InitialisationComplete = true;
 	performance_time = Timing::getTimeDiff<std::chrono::milliseconds>(performance_checking_id).count();
 	std::cout << "Other timers: " << performance_time << std::endl;
+	InitialisationComplete = true;
 }
 
+//Set up the various shaders and associated items
 void setupShaders() {
 
+	//Set up the camera uniform buffer object, contains view and projection matrices
 	cameraUBO = new uniformData(GL_UNIFORM_BUFFER, &camera.camera_data, (2 * 16) * sizeof(float) , "camera_data");
 	cameraUBO->active = true;
 	cameraUBO->binding_index = 0;
+
+	//Set up the heartbeat effect (jesus christ fix this)
 	int j = -1;
 	for (int i = 0; i < 1544; i++) {
 		heart_wave.offsetwave[i] = heartbeat[i] * 2;
@@ -259,7 +313,7 @@ void setupShaders() {
 		heart_wave.colourwave[++j] = 1;
 		heart_wave.colourwave[++j] = 1;
 	}
-
+	//Set up a ubo for the heartbeat data
 	waveformUBO = new uniformData(GL_UNIFORM_BUFFER, &heart_wave, 1544 * 8 * sizeof(float) , "waveform");
 	waveformUBO->active = true;
 	waveformUBO->binding_index = 1;
@@ -272,14 +326,14 @@ void setupShaders() {
 	clipUBO->active = true;
 	clipUBO->binding_index = 3;
 	
-	//Dump(&heart_wave, 1544 * 5 * sizeof(float));
+	//Add the UBOs as global (please please fix this)
 	BoilerPlate::Shaders::Shader::addUBO(cameraUBO);
 	BoilerPlate::Shaders::Shader::addUBO(waveformUBO);
 	BoilerPlate::Shaders::Shader::addUBO(lightingUBO);
 	BoilerPlate::Shaders::Shader::addUBO(clipUBO);
 	BoilerPlate::Shaders::Shader::generateUBO();
 
-	
+	//Set up the sphere shader
 	sphereShader.RegisterAttribute("position", 0);
 	sphereShader.RegisterAttribute("normal", 1);
 	sphereShader.RegisterAttribute("distance", 2);
@@ -294,6 +348,7 @@ void setupShaders() {
 	sphereShader.addShaderType(planeFragmentPath, GL_FRAGMENT_SHADER);
 	sphereShader.LoadShader();
 	
+	//Put stuff in hash table (?)
 	shader_variable_id_hashtable = ht_create(1024);
 	ht_put(shader_variable_id_hashtable, "sphere_shader_position", 0);
 	ht_put(shader_variable_id_hashtable, "sphere_shader_normal", 1);
@@ -302,8 +357,7 @@ void setupShaders() {
 	ht_put(shader_variable_id_hashtable, "sphere_shader_alpha", sphereShader.uniformTable[2]->uniformLocation);
 	ht_put(shader_variable_id_hashtable, "sphere_shader_clippy", sphereShader.uniformTable[3]->uniformLocation);
 
-	unsigned int test = ht_get(shader_variable_id_hashtable, "sphere_shader_normal");
-
+	//Set up the skybox shader
 	skyboxShader.RegisterAttribute("position", 0);
 	skyboxShader.RegisterUniform("cubeMap");
 	skyboxShader.registerUBO(cameraUBO);
@@ -312,6 +366,7 @@ void setupShaders() {
 	skyboxShader.addShaderType(skyboxFPath, GL_FRAGMENT_SHADER);
 	skyboxShader.LoadShader();
 
+	//Set up the entity shader
 	entityShader.RegisterAttribute("position", 0);
 	entityShader.RegisterAttribute("normal", 1);
 	entityShader.RegisterAttribute("texCoords", 2);

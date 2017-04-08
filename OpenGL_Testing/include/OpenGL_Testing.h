@@ -120,7 +120,7 @@ hashtable_t *shader_variable_id_hashtable;
 
 //Audio variables
 AudioPlate* audioPlate; 
-WAV_File* testFile;
+WAV_File* soundFile;
 AudioEntity* music;
 
 
