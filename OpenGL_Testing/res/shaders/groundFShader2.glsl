@@ -29,7 +29,7 @@ void main(){
 	float cosTheta = clamp( dot( unitNormal, LightDirection_tangentspace ), 0,1 );
 	vec3 direction_to_light_tan = normalize(-light_dir_tan);
 	float dot_prod = max(dot(direction_to_light_tan, unitNormal), 0);
-	vec3 Id = vec3(0.7, 0.7, 0.7) * vec3(1.0, 0.5, 0.0) * dot_prod;
+	vec3 Id = vec3(0.7, 0.7, 0.7) * vec3(0.7, 0.8, 0.7) * dot_prod;
 
 	vec3 R = reflect(-LightDirection_tangentspace,unitNormal);
 	float cosAlpha = clamp( dot( EyeDirection_tangentspace,R ), 0,1 );
@@ -49,9 +49,9 @@ void main(){
 	}
 	else{
 		FragColor = vec4(Id, 1.0) + MaterialColour;//outputColour;//vec4(unitNormal, 1.0);//outputColour;
+		//FragColor = outputColour;
 	}
 
-	
 
 	float brightness2 = dot(FragColor.rgb, vec3(0.2126, 0.7152, 0.0722));
     

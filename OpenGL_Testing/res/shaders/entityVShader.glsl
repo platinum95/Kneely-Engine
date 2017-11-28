@@ -1,5 +1,4 @@
-
-#version 330 core
+ #version 330 core
 
 in vec3 position;
 in vec3 normal;
@@ -37,16 +36,18 @@ layout (std140) uniform clip_plane{
 void main(){
 	vec4 worldPos = translation * vec4(position, 1);
 	gl_ClipDistance[0] = dot(worldPos, plane);
-	surfaceNormal = normalize((translation * vec4(normal, 0.0)).xyz);
 	toLightVector = normalize(lightpos.xyz - worldPos.xyz);
 	passTexCoords = texCoords;
 	gl_Position = projection * view * worldPos;
 
 	vec3 LightDirection_cameraspace = normalize((view * lightpos).xyz - (view * worldPos).xyz);
 	vec3 EyeDirection_cameraspace = normalize(vec3(0, 0, 0) - (view * worldPos).xyz);
+	
+	mat4 modelViewMatrix = view * translation;
+
 	p_tangent = tangent;
 	p_bitangent = bitangent;
-	mat4 modelViewMatrix = view * translation;
+	surfaceNormal = normal;
 
 	TBN = transpose(mat3(
 		modelViewMatrix * vec4(normalize(tangent), 0),

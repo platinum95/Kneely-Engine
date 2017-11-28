@@ -508,6 +508,7 @@ void updateView() {
 		camera.position.y += (terrain->getHeight(camera.position) + yOffset) - camera.position.y;
 
 	updateSnakes();
+	pSystem->UpdateParticleSystem(physics_diff_double);
 	timeytime += 0.15f;
 
 }
@@ -773,6 +774,11 @@ void setupEntities() {
 	barrelRenderer->entityList.push_back(barrel);
 	barrel->units.push_back(scissorUnit);
 	renderer.addToRenderer(barrelRenderer);
+
+	pSystem = new ParticleSystem(8000, cameraUBO, glm::vec3(0, 5, 0));
+	ParticlePack *pPack = pSystem->getParticlePack();
+	pPack->transformation_matrix = glm::translate(glm::mat4(1.0), glm::vec3(0, 15, 0));
+	renderer.addToRenderer(pSystem->getRenderMode());
 }
 
 void cleanup() {

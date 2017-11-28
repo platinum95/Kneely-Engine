@@ -71,7 +71,7 @@ float Skybox::vertices[24] = {
 //GL_QUAD Clockwise
 unsigned int Skybox::indices[36] = {
 	0, 1, 3, 1, 2, 3,	//F1 Front
-	2, 3, 7, 2, 7, 6, //F2 Right
+	2, 3, 7, 2, 7, 6,	//F2 Right
 	4, 5, 7, 5, 7, 6,	//F3 Back
 	0, 1, 4, 1, 4, 5,	//F4 Left
 	1, 2, 6, 1, 6, 5,	//F5 Bottom

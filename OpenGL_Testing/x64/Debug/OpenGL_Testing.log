@@ -1,0 +1,44 @@
+﻿Build started 05/10/2017 16:37:20.
+     1>Project "X:\CG\kneely-engine\OpenGL_Testing\OpenGL_Testing.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"X:\CG\kneely-engine\include" /I"X:\CG\kneely-engine\BoilerPlate" /I"X:\CG\kneely-engine\OpenGL_Testing/include" /Zi /nologo /W3 /WX- /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt src\Ground.cpp src\Heartbeat.cpp src\OpenGL_Testing.cpp src\Snake.cpp src\SphereDistace.cpp
+         SphereDistace.cpp
+         Snake.cpp
+     1>X:\CG\kneely-engine\BoilerPlate\ParticleSystem.h(56): error C2797: 'ParticleSystem::floatPropsThreeD': list initialization inside member initializer list or non-static data member initializer is not implemented
+     1>X:\CG\kneely-engine\BoilerPlate\ParticleSystem.h(65): error C2797: 'ParticleSystem::floatPropsOneD': list initialization inside member initializer list or non-static data member initializer is not implemented
+     1>src\Snake.cpp(51): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>src\Snake.cpp(53): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+     1>src\Snake.cpp(54): warning C4244: 'initializing' : conversion from 'double' to 'float', possible loss of data
+         OpenGL_Testing.cpp
+     1>X:\CG\kneely-engine\BoilerPlate\ParticleSystem.h(56): error C2797: 'ParticleSystem::floatPropsThreeD': list initialization inside member initializer list or non-static data member initializer is not implemented
+     1>X:\CG\kneely-engine\BoilerPlate\ParticleSystem.h(65): error C2797: 'ParticleSystem::floatPropsOneD': list initialization inside member initializer list or non-static data member initializer is not implemented
+     1>X:\CG\kneely-engine\BoilerPlate\hash_table.h(7): warning C4200: nonstandard extension used : zero-sized array in struct/union
+                 Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>X:\CG\kneely-engine\BoilerPlate\PostProcessing.h(196): error C2536: 'PostProcessing::PostProcessing::vertices' : cannot specify explicit initializer for arrays
+                 X:\CG\kneely-engine\BoilerPlate\PostProcessing.h(191) : see declaration of 'PostProcessing::vertices'
+     1>X:\CG\kneely-engine\BoilerPlate\PostProcessing.h(203): error C2536: 'PostProcessing::PostProcessing::textureCoords' : cannot specify explicit initializer for arrays
+                 X:\CG\kneely-engine\BoilerPlate\PostProcessing.h(198) : see declaration of 'PostProcessing::textureCoords'
+     1>X:\CG\kneely-engine\BoilerPlate\PostProcessing.h(208): error C2536: 'PostProcessing::PostProcessing::Indices' : cannot specify explicit initializer for arrays
+                 X:\CG\kneely-engine\BoilerPlate\PostProcessing.h(205) : see declaration of 'PostProcessing::Indices'
+     1>X:\CG\kneely-engine\BoilerPlate\PostProcessing.h(216): error C2797: 'PostProcessing::floatPropsTwoD': list initialization inside member initializer list or non-static data member initializer is not implemented
+     1>X:\CG\kneely-engine\OpenGL_Testing\include\OpenGL_Testing.h(218): error C2536: 'clip::clip::plane' : cannot specify explicit initializer for arrays
+                 X:\CG\kneely-engine\OpenGL_Testing\include\OpenGL_Testing.h(218) : see declaration of 'clip::plane'
+     1>src\OpenGL_Testing.cpp(136): warning C4244: '=' : conversion from '__int64' to 'double', possible loss of data
+     1>src\OpenGL_Testing.cpp(145): warning C4244: '=' : conversion from '__int64' to 'double', possible loss of data
+     1>src\OpenGL_Testing.cpp(158): warning C4244: '=' : conversion from '__int64' to 'double', possible loss of data
+     1>src\OpenGL_Testing.cpp(166): warning C4244: '=' : conversion from '__int64' to 'double', possible loss of data
+     1>src\OpenGL_Testing.cpp(171): warning C4244: '=' : conversion from '__int64' to 'double', possible loss of data
+     1>src\OpenGL_Testing.cpp(180): warning C4244: '=' : conversion from '__int64' to 'double', possible loss of data
+     1>src\OpenGL_Testing.cpp(184): warning C4244: '=' : conversion from '__int64' to 'double', possible loss of data
+     1>src\OpenGL_Testing.cpp(217): warning C4244: '=' : conversion from '__int64' to 'double', possible loss of data
+     1>src\OpenGL_Testing.cpp(226): warning C4244: '=' : conversion from '__int64' to 'double', possible loss of data
+     1>src\OpenGL_Testing.cpp(237): warning C4244: '=' : conversion from '__int64' to 'double', possible loss of data
+     1>src\OpenGL_Testing.cpp(788): warning C4244: 'initializing' : conversion from '__int64' to 'float', possible loss of data
+         Heartbeat.cpp
+         Ground.cpp
+         Generating Code...
+     1>Done Building Project "X:\CG\kneely-engine\OpenGL_Testing\OpenGL_Testing.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:03.78

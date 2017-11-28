@@ -1,10 +1,90 @@
-﻿C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(368,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  ObjLoader.cpp
-c:\users\plati\onedrive\documents\visual studio 2015\projects\opengl_testing2\boilerplate\objloader.cpp(42): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
-c:\users\plati\onedrive\documents\visual studio 2015\projects\opengl_testing2\boilerplate\objloader.cpp(43): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
-c:\users\plati\onedrive\documents\visual studio 2015\projects\opengl_testing2\boilerplate\objloader.cpp(44): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
-c:\users\plati\onedrive\documents\visual studio 2015\projects\opengl_testing2\boilerplate\objloader.cpp(68): warning C4838: conversion from 'unsigned __int64' to 'unsigned int' requires a narrowing conversion
-c:\users\plati\onedrive\documents\visual studio 2015\projects\opengl_testing2\boilerplate\objloader.cpp(68): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
-c:\users\plati\onedrive\documents\visual studio 2015\projects\opengl_testing2\boilerplate\objloader.cpp(206): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
-c:\users\plati\onedrive\documents\visual studio 2015\projects\opengl_testing2\boilerplate\objloader.cpp(207): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
-  BoilerPlate.vcxproj -> C:\Users\plati\OneDrive\Documents\Visual Studio 2015\Projects\OpenGL_Testing2\BoilerPlate\..\libs\BoilerPlate.lib
+﻿Build started 05/10/2017 16:36:55.
+     1>Project "X:\CG\kneely-engine\BoilerPlate\BoilerPlate.vcxproj" on node 2 (Build target(s)).
+     1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(364,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\x86_amd64\CL.exe /c /I"X:\CG\kneely-engine\include" /Zi /nologo /W3 /WX- /Od /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"x64\Debug\\" /Fd"x64\Debug\vc120.pdb" /Gd /TP /errorReport:prompt AudioEntity.cpp AudioPlate.cpp BinaryLoader.cpp BoilerPlate.cpp Camera.cpp Constants.cpp Entity.cpp Framebuffer.cpp hash_table.cpp ImageLoader.cpp KeyHandler.cpp LoadAudio.cpp lodepng.cpp Maths.cpp ModelLoader.cpp MouseHandler.cpp ObjLoader.cpp ParticleSystem.cpp PhysicsConstants.cpp PhysicsEntity.cpp PhysicsWorld.cpp PostProcessing.cpp Properties.cpp Renderer.cpp Shader.cpp Skybox.cpp Terrain.cpp TerrainGenerator.cpp Texture.cpp Timer.cpp Timing.cpp Water.cpp
+         Water.cpp
+         Timing.cpp
+     1>Timing.cpp(24): warning C4267: 'initializing' : conversion from 'size_t' to 'Timing::uint', possible loss of data
+         Timer.cpp
+         Texture.cpp
+         TerrainGenerator.cpp
+         Terrain.cpp
+     1>Terrain.cpp(105): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+     1>Terrain.cpp(367): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Terrain.cpp(368): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Terrain.cpp(369): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Terrain.cpp(387): warning C4172: returning address of local variable or temporary
+         Skybox.cpp
+         Shader.cpp
+         Renderer.cpp
+         Properties.cpp
+         PostProcessing.cpp
+     1>x:\cg\kneely-engine\boilerplate\PostProcessing.h(196): error C2536: 'PostProcessing::PostProcessing::vertices' : cannot specify explicit initializer for arrays
+                 x:\cg\kneely-engine\boilerplate\PostProcessing.h(191) : see declaration of 'PostProcessing::vertices'
+     1>x:\cg\kneely-engine\boilerplate\PostProcessing.h(203): error C2536: 'PostProcessing::PostProcessing::textureCoords' : cannot specify explicit initializer for arrays
+                 x:\cg\kneely-engine\boilerplate\PostProcessing.h(198) : see declaration of 'PostProcessing::textureCoords'
+     1>x:\cg\kneely-engine\boilerplate\PostProcessing.h(208): error C2536: 'PostProcessing::PostProcessing::Indices' : cannot specify explicit initializer for arrays
+                 x:\cg\kneely-engine\boilerplate\PostProcessing.h(205) : see declaration of 'PostProcessing::Indices'
+     1>x:\cg\kneely-engine\boilerplate\PostProcessing.h(216): error C2797: 'PostProcessing::floatPropsTwoD': list initialization inside member initializer list or non-static data member initializer is not implemented
+                 x:\cg\kneely-engine\boilerplate\PostProcessing.h(191) : see declaration of 'PostProcessing::vertices'
+                 x:\cg\kneely-engine\boilerplate\PostProcessing.h(198) : see declaration of 'PostProcessing::textureCoords'
+                 x:\cg\kneely-engine\boilerplate\PostProcessing.h(205) : see declaration of 'PostProcessing::Indices'
+                 x:\cg\kneely-engine\boilerplate\PostProcessing.h(191) : see declaration of 'PostProcessing::vertices'
+                 x:\cg\kneely-engine\boilerplate\PostProcessing.h(198) : see declaration of 'PostProcessing::textureCoords'
+                 x:\cg\kneely-engine\boilerplate\PostProcessing.h(205) : see declaration of 'PostProcessing::Indices'
+         PhysicsWorld.cpp
+     1>PhysicsWorld.cpp(55): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+     1>PhysicsWorld.cpp(75): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+         PhysicsEntity.cpp
+         PhysicsConstants.cpp
+         ParticleSystem.cpp
+     1>x:\cg\kneely-engine\boilerplate\ParticleSystem.h(56): error C2797: 'ParticleSystem::floatPropsThreeD': list initialization inside member initializer list or non-static data member initializer is not implemented
+     1>x:\cg\kneely-engine\boilerplate\ParticleSystem.h(65): error C2797: 'ParticleSystem::floatPropsOneD': list initialization inside member initializer list or non-static data member initializer is not implemented
+         ObjLoader.cpp
+     1>ObjLoader.cpp(68): warning C4267: 'initializing' : conversion from 'size_t' to 'unsigned int', possible loss of data
+     1>ObjLoader.cpp(204): warning C4267: '=' : conversion from 'size_t' to 'unsigned int', possible loss of data
+     1>ObjLoader.cpp(205): warning C4267: '=' : conversion from 'size_t' to 'unsigned int', possible loss of data
+     1>ObjLoader.cpp(354): warning C4267: '=' : conversion from 'size_t' to 'unsigned int', possible loss of data
+     1>ObjLoader.cpp(355): warning C4267: '=' : conversion from 'size_t' to 'unsigned int', possible loss of data
+         MouseHandler.cpp
+     1>MouseHandler.cpp(48): warning C4267: 'initializing' : conversion from 'size_t' to 'int', possible loss of data
+         ModelLoader.cpp
+         Maths.cpp
+         lodepng.cpp
+     1>lodepng.cpp(699): warning C4334: '<<' : result of 32-bit shift implicitly converted to 64 bits (was 64-bit shift intended?)
+     1>lodepng.cpp(1315): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>lodepng.cpp(1319): warning C4267: '=' : conversion from 'size_t' to 'int', possible loss of data
+     1>lodepng.cpp(1386): warning C4267: '=' : conversion from 'size_t' to 'unsigned int', possible loss of data
+     1>lodepng.cpp(3125): warning C4267: 'argument' : conversion from 'size_t' to 'unsigned int', possible loss of data
+     1>lodepng.cpp(3842): warning C4267: '=' : conversion from 'size_t' to 'unsigned int', possible loss of data
+     1>lodepng.cpp(3889): warning C4267: '=' : conversion from 'size_t' to 'unsigned int', possible loss of data
+     1>lodepng.cpp(3968): warning C4267: '=' : conversion from 'size_t' to 'unsigned int', possible loss of data
+     1>lodepng.cpp(4807): warning C4267: 'initializing' : conversion from 'size_t' to 'unsigned int', possible loss of data
+         Generating Code...
+         Compiling...
+         LoadAudio.cpp
+         KeyHandler.cpp
+         ImageLoader.cpp
+     1>ImageLoader.cpp(18): warning C4267: 'initializing' : conversion from 'size_t' to 'unsigned int', possible loss of data
+         hash_table.cpp
+     1>x:\cg\kneely-engine\boilerplate\hash_table.h(7): warning C4200: nonstandard extension used : zero-sized array in struct/union
+                 Cannot generate copy-ctor or copy-assignment operator when UDT contains a zero-sized array
+     1>hash_table.cpp(66): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+                 C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\include\string.h(112) : see declaration of 'strcpy'
+         Framebuffer.cpp
+     1>Framebuffer.cpp(114): warning C4267: 'argument' : conversion from 'size_t' to 'GLenum', possible loss of data
+         Entity.cpp
+         Constants.cpp
+         Camera.cpp
+         BoilerPlate.cpp
+         BinaryLoader.cpp
+     1>BinaryLoader.cpp(124): warning C4267: 'initializing' : conversion from 'size_t' to 'uint', possible loss of data
+         AudioPlate.cpp
+         AudioEntity.cpp
+         Generating Code...
+     1>Done Building Project "X:\CG\kneely-engine\BoilerPlate\BoilerPlate.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:25.10

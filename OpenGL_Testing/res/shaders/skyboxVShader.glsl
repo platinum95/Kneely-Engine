@@ -22,7 +22,5 @@ void main(void){
 	view2[3][2]= 0;
 	textureCoords = position;
 	gl_ClipDistance[0] = dot(currentPos, plane);
-	gl_Position = projection * view2 * currentPos; 
-	
-	
+	gl_Position = projection * view2 * currentPos;
 }

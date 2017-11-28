@@ -51,10 +51,10 @@ glm::mat4 Camera::updateCam() {
 	glm::mat4 toTran = glm::translate(this->position);
 	direction = glm::vec4(sin(this->roll) * sin(this->yaw), cos(this->roll), sin(this->roll) * cos(this->yaw), 1);
 	plane = glm::vec4(direction.x, direction.y, direction.z, glm::distance(pos, glm::vec3(0, 0, 0)));
-	glm::vec4 toLook = toTran * direction;
+	//glm::vec4 toLook = toTran * direction;
+	glm::vec3 toLook = this->position + glm::vec3(direction);
 	glm::vec3 up = glm::vec3(0, 1, 0);
-	glm::vec3 lookeHere(toLook.x, toLook.y, toLook.z);
-	cameraMatrix = glm::lookAt(pos, lookeHere, up);
+	cameraMatrix = glm::lookAt(pos, glm::vec3(toLook.x, toLook.y, toLook.z), up);
 
 	updateCamData();
 

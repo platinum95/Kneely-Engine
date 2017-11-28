@@ -51,7 +51,6 @@ namespace BoilerPlate {
 		glewProperties.result = glewInit();
 		glewProperties.success = (glewProperties.result == GLEW_OK) ? true : false;
 		glEnable(GL_DEPTH_TEST);
-
 		return glewProperties;
 	}
 

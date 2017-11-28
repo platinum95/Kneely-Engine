@@ -166,6 +166,8 @@ uniformData timeUniform, projectionUniform, viewUniform, timeDiffUniform, wavefo
 RenderMode sphereRenderer, normalRenderer, skyboxRenderer, groundRenderer, scissorRenderer, testTexRenderer, waterRenderer, snakeRenderer;
 Renderer renderer, guiRenderer;
 
+ParticleSystem *pSystem;
+
 
 //Structs etc
 float waterPlaneTex[8] = {
