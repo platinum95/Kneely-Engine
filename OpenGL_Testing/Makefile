@@ -25,18 +25,18 @@ INSTALLDIR  = ../binaries
 .PHONY: all
 all: OpenGL_Testing
 
-$(ODIR)/%.o : %.cpp
-	$(CC) -c -o $@ $< $(CFLAGS)
+$(ODIR)/%.o : src/%.cpp
+	$(CC) -c -o $@ $< $(CFLAGS) $(INCLUDEDIR)
 
-$(ODIR)/Heartbeat.o : src/Heartbeat.cpp
-	$(CC) -c -o $@ $< $(CFLAGS)
+#$(ODIR)/Heartbeat.o : src/Heartbeat.cpp
+#	$(CC) -c -o $@ $< $(CFLAGS)
 	
-$(ODIR)/Snake.o : src/Snake.cpp
-	$(CC) -c -o $(ODIR)/Snake.o Snake.cpp
+#$(ODIR)/Snake.o : src/Snake.cpp
+#	$(CC) -c -o $(ODIR)/Snake.o Snake.cpp
 
 
-OpenGL_Testing : src/OpenGL_Testing.cpp $(OBJ) 
-	$(CC) $(GLFWPKGCA) -o $@ $< $(ODIR)/Snake.o $(ODIR)/Heartbeat.o $(LDFLAGS) $(INCLUDEDIR) $(CFLAGS) $(GLFWPKGCB)
+OpenGL_Testing : $(OBJ) 
+	$(CC) src/OpenGL_Testing.cpp $(GLFWPKGCA) -o $@ $^ $(LDFLAGS) $(INCLUDEDIR) $(CFLAGS) $(GLFWPKGCB)
 
 
 
