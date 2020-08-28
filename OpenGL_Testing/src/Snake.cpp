@@ -24,6 +24,7 @@ Snake::~Snake() {
 }
 
 void Snake::updateSnake(float timeDiff) {
+    timeDiff *= 0.1f;
 	snakeDirSecDeriv += glm::vec3(-1.0 + ((float)rand() / (float)RAND_MAX) * 2.0f, -1.0 + ((float)rand() / (float)RAND_MAX) * 2.0f, -1.0 + ((float)rand() / (float)RAND_MAX) * 2.0f) * 150.0f;
 	snakeDirDeriv += snakeDirSecDeriv * timeDiff;
 	snakeDir += snakeDirDeriv * timeDiff;
